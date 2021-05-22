@@ -13,9 +13,9 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "idPessoa")
 public class Aluno extends Pessoa implements Serializable {
     
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "emprestimo", fetch = FetchType.EAGER)
-    //private List<Emprestimo> emprestimo;
-
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+    private List<Emprestimo> emprestimo;
+    
     public Aluno() {
     }
 
@@ -23,11 +23,11 @@ public class Aluno extends Pessoa implements Serializable {
         super(id, nome, cpf, email, senha, matricula);
     }
     
-//    public List<Emprestimo> getEmprestimo() {
-//        return emprestimo;
-//    }
-//
-//    public void setEmprestimo(List<Emprestimo> emprestimo) {
-//        this.emprestimo = emprestimo;
-//    }
+    public List<Emprestimo> getEmprestimo() {
+        return emprestimo;
+    }
+
+    public void setEmprestimo(List<Emprestimo> emprestimo) {
+        this.emprestimo = emprestimo;
+    }
 }
