@@ -10,6 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "emprestimo")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Emprestimo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -22,6 +23,10 @@ public class Emprestimo implements Serializable {
     private Date dataPrevista;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataDevolucao;
+    
+    //@ManyToOne()
+    //@JoinColumn(name = "idAluno")
+    //private Aluno aluno;
 
     public Emprestimo() {
     }
@@ -65,6 +70,14 @@ public class Emprestimo implements Serializable {
     public void setDataDevolucao(Date dataDevolucao) {
         this. dataDevolucao = dataDevolucao;
     }
+    
+//     public Aluno getAluno() {
+//        return aluno;
+//    }
+//
+//    public void setAluno(Aluno aluno) {
+//        this.aluno = aluno;
+//    }
 
     @Override
     public int hashCode()
