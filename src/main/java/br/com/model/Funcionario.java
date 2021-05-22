@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package br.com.model;
 
-import entidade.Cartao;
+import javax.persistence.*;
 
 /**
- * @author felipe.souza2
+ * @author Felipe
  */
-public interface CartaoDao extends BaseDao<Cartao, Long>{
-    
+@Entity
+@Table(name = "funcionario")
+@PrimaryKeyJoinColumn(name = "idPessoa")
+public class Funcionario extends Pessoa {
+
 }

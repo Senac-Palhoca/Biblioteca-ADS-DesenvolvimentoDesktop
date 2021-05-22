@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package util;
+package br.com.util;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,8 +12,9 @@ import javax.persistence.Persistence;
  * @author felipe.souza2
  */
 public class GeradorTabela {
+
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Desktop_hibernatePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bibliotecaPU");
         emf.close();
     }
 }

@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package br.com.dao;
 
-import entidade.Cartao;
-import entidade.Chamado;
-import entidade.Correntista;
-import entidade.Fornecedor;
-import entidade.Perfil;
-import entidade.Usuario;
+import br.com.model.Funcionario;
+import br.com.model.Perfil;
+import br.com.model.Pessoa;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,7 +18,7 @@ import org.hibernate.cfg.Configuration;
  * Hibernate Utility class with a convenient method to get Session Factory
  * object.
  *
- * @author felipe.souza2
+ * @author felipe.souza
  */
 public class HibernateUtil {
 
@@ -30,12 +27,9 @@ public class HibernateUtil {
     static {
         try {
             Configuration cfg = new Configuration();
-            cfg.addAnnotatedClass(Fornecedor.class);
-            cfg.addAnnotatedClass(Cartao.class);
-            cfg.addAnnotatedClass(Correntista.class);
-            cfg.addAnnotatedClass(Chamado.class);
+            cfg.addAnnotatedClass(Pessoa.class);
             cfg.addAnnotatedClass(Perfil.class);
-            cfg.addAnnotatedClass(Usuario.class);
+            cfg.addAnnotatedClass(Funcionario.class);
             
             cfg.configure("/META-INF/hibernate.cfg.xml");
             StandardServiceRegistryBuilder build = new StandardServiceRegistryBuilder().
