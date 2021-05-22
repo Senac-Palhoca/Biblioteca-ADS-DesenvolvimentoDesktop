@@ -5,9 +5,7 @@
  */
 package br.com.dao;
 
-import br.com.model.Funcionario;
-import br.com.model.Perfil;
-import br.com.model.Pessoa;
+import br.com.model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,6 +28,8 @@ public class HibernateUtil {
             cfg.addAnnotatedClass(Pessoa.class);
             cfg.addAnnotatedClass(Perfil.class);
             cfg.addAnnotatedClass(Funcionario.class);
+            cfg.addAnnotatedClass(Aluno.class);
+            cfg.addAnnotatedClass(Emprestimo.class);
             
             cfg.configure("/META-INF/hibernate.cfg.xml");
             StandardServiceRegistryBuilder build = new StandardServiceRegistryBuilder().
