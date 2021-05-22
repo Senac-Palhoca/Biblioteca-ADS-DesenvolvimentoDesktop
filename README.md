@@ -1,4 +1,4 @@
-# Biblioteca ADS Desenvolvimento Desktop - Professor Silvio (Xuxu)
+# Biblioteca ADS Desenvolvimento Desktop - Professor Silvio
 
 ## Trabalho do curso da 3ª Fase de ADS - Análise e Desenvolvimeno de Sistema - Faculdade Senac Palhoça
 
