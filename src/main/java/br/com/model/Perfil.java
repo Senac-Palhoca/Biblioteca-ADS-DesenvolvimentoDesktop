@@ -75,6 +75,6 @@ public class Perfil implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.modelo.Perfil[ id=" + id + "]";
+        return "br.com.model.Perfil[ id=" + id + "]";
     }
 }

@@ -67,7 +67,7 @@ public class PnMenuAluno extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Buscar Livro");
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/asset/livro.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/livro.png"))); // NOI18N
 
         javax.swing.GroupLayout pnBuscarLivroLayout = new javax.swing.GroupLayout(pnBuscarLivro);
         pnBuscarLivro.setLayout(pnBuscarLivroLayout);
@@ -123,7 +123,7 @@ public class PnMenuAluno extends javax.swing.JPanel {
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Livros Reservados");
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/asset/reserva.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/reserva.png"))); // NOI18N
 
         javax.swing.GroupLayout pnLivroReservadoLayout = new javax.swing.GroupLayout(pnLivroReservado);
         pnLivroReservado.setLayout(pnLivroReservadoLayout);
@@ -163,7 +163,7 @@ public class PnMenuAluno extends javax.swing.JPanel {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Ranking da Leitura");
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/asset/ranking.png"))); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/ranking.png"))); // NOI18N
 
         javax.swing.GroupLayout pnRankingLayout = new javax.swing.GroupLayout(pnRanking);
         pnRanking.setLayout(pnRankingLayout);
@@ -203,7 +203,7 @@ public class PnMenuAluno extends javax.swing.JPanel {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Meus Dados");
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/asset/pessoa.png"))); // NOI18N
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/pessoa.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -266,7 +266,7 @@ public class PnMenuAluno extends javax.swing.JPanel {
                 .addComponent(pnRanking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)

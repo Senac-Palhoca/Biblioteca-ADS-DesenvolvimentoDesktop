@@ -39,14 +39,14 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 488, Short.MAX_VALUE)
+            .addGap(0, 821, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
+            .addGap(0, 457, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(504, 392));
+        setSize(new java.awt.Dimension(837, 496));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

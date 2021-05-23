@@ -84,7 +84,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/asset/biblioteca-bg.jpg"/>
+              <Image iconType="3" name="/META-INF/biblioteca-bg.jpg"/>
             </Property>
           </Properties>
         </Component>
