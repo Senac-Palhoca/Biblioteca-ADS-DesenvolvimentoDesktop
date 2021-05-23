@@ -5,12 +5,18 @@
  */
 package br.com.view;
 
+import br.com.util.Animacao;
+import java.awt.Dimension;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Felip
  */
 public class Principal extends javax.swing.JFrame {
-
+    
+    public static PnPrincipal pnPrincipal;
+    public static Principal principal;
     /**
      * Creates new form Principal
      */
@@ -33,14 +39,15 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 488, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 353, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(504, 392));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -69,13 +76,28 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
+        try {
+            SplashScreen splash = new SplashScreen();
+            splash.setVisible(true);
+            
+            for (int i = 0; i < 100; i++) {
+                Thread.sleep(1);
+            }
+            splash.setVisible(false);
+            //splash.dispose();
+        } catch (Exception e) {
+        }
+        principal = new Principal();
+        principal.setContentPane(new PnLogin());
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                principal.setVisible(true);
             }
         });
+          
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
