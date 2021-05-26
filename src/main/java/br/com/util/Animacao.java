@@ -49,7 +49,7 @@ public class Animacao extends Thread{
     
     private void abrir(){
         Dimension menuDimension = painel.getPreferredSize();
-        int widthMenu = 296;
+        int widthMenu = 312;
         for (int i = 0; i <= widthMenu; i++) {
             if(i < (widthMenu - 2)){
                 i = i + 2;
