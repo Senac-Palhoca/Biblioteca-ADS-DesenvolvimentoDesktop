@@ -112,7 +112,7 @@ public class PnPrincipal extends javax.swing.JPanel {
 
         head.setBackground(new java.awt.Color(59, 50, 135));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/senac_logo.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/imagem/senac_logo.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Sitka Subheading", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,7 +134,7 @@ public class PnPrincipal extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/menu.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/imagem/menu.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

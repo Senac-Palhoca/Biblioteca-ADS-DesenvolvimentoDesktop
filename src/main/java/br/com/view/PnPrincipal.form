@@ -148,7 +148,7 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/META-INF/senac_logo.png"/>
+              <Image iconType="3" name="/META-INF/imagem/senac_logo.png"/>
             </Property>
           </Properties>
         </Component>
@@ -207,7 +207,7 @@
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/META-INF/menu.png"/>
+                  <Image iconType="3" name="/META-INF/imagem/menu.png"/>
                 </Property>
               </Properties>
             </Component>

@@ -152,7 +152,7 @@
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/META-INF/livro.png"/>
+                  <Image iconType="3" name="/META-INF/imagem/livro.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -259,7 +259,7 @@
             <Component class="javax.swing.JLabel" name="jLabel13">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/META-INF/reserva.png"/>
+                  <Image iconType="3" name="/META-INF/imagem/reserva.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -322,7 +322,7 @@
             <Component class="javax.swing.JLabel" name="jLabel15">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/META-INF/ranking.png"/>
+                  <Image iconType="3" name="/META-INF/imagem/ranking.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -385,7 +385,7 @@
             <Component class="javax.swing.JLabel" name="jLabel17">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/META-INF/pessoa.png"/>
+                  <Image iconType="3" name="/META-INF/imagem/pessoa.png"/>
                 </Property>
               </Properties>
             </Component>
