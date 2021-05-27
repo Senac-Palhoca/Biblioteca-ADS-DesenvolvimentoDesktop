@@ -52,6 +52,30 @@ public class UtilGerador {
         return sobrenome;
     }
 
+    public static String gerarCodigoLivro() {
+        return gerarCaracter(3) + gerarNumero(6);
+    }
+
+    public static String gerarTitulo() {
+        String sobrenome;
+        int indice;
+        String[] nomes = {"Use a Cabeça - Java", "Pequenos incêndios por toda parte", "Dom Quixote", "Guerra e Paz", "A Montanha Mágica", "Cem Anos de Solidão",
+            "Em Busca do Tempo Perdido", "A Divina Comédia", "O Homem sem Qualidades", "O Som e a Fúria", "Orgulho e Preconceito", "Os Lusíadas"};
+        indice = (int) (Math.random() * nomes.length);
+        sobrenome = nomes[indice];
+        return sobrenome;
+    }
+
+    public static String gerarEditora() {
+        String sobrenome;
+        int indice;
+        String[] nomes = {"Companhia da Letras", "Aleph", "Suma", "Editora Intrínseca", "Grupo Editorial Record", "Editora Rocco",
+            "Globo Livros", "Darkside Books", "Harper Collins"};
+        indice = (int) (Math.random() * nomes.length);
+        sobrenome = nomes[indice];
+        return sobrenome;
+    }
+
     public static String gerarCidade() {
         String cidade;
         int indice;
