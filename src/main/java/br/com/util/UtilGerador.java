@@ -111,4 +111,8 @@ public class UtilGerador {
         String placa = gerarLetraPlaca() + "-" + gerarNumero(4);
         return placa;
     }
+
+    public static String gerarCPF() {
+        return gerarNumero(3) + "." + gerarNumero(3) + "." + gerarNumero(3) + "-" + gerarNumero(2);
+    }
 }
