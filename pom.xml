@@ -61,6 +61,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.21</version>
         </dependency>
+        <dependency>
+            <groupId>org.UtilGerador</groupId>
+            <artifactId>Gerador</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

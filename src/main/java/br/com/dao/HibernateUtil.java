@@ -16,7 +16,7 @@ import org.hibernate.cfg.Configuration;
  * Hibernate Utility class with a convenient method to get Session Factory
  * object.
  *
- * @author felipe.souza
+ * @author Titione.Amorim
  */
 public class HibernateUtil {
 
@@ -30,6 +30,8 @@ public class HibernateUtil {
             cfg.addAnnotatedClass(Funcionario.class);
             cfg.addAnnotatedClass(Aluno.class);
             cfg.addAnnotatedClass(Emprestimo.class);
+            cfg.addAnnotatedClass(Curso.class);
+            cfg.addAnnotatedClass(Turma.class);
             
             cfg.configure("/META-INF/hibernate.cfg.xml");
             StandardServiceRegistryBuilder build = new StandardServiceRegistryBuilder().

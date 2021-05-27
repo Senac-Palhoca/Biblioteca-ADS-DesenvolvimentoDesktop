@@ -22,6 +22,8 @@ public class Turma implements Serializable {
     private String ano;
     @Column(length = 45)
     private String periodo;
+    @Column(length = 45)
+    private String nome;
     @ManyToOne
     @JoinColumn(name = "idCurso")
     private Curso curso;
@@ -29,10 +31,11 @@ public class Turma implements Serializable {
     public Turma() {
     }
 
-    public Turma(Long id, String fase, String ano, String periodo) {
+    public Turma(Long id, String fase, String ano, String periodo, String nome) {
         this.fase = fase;
         this.ano = ano;
         this.periodo = periodo;
+        this.nome = nome;
     }
 
     public Long getId()
@@ -75,6 +78,14 @@ public class Turma implements Serializable {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     
     
