@@ -7,7 +7,6 @@ package br.com.dao;
 
 import br.com.model.Aluno;
 import br.com.util.UtilGerador;
-import static br.com.util.UtilGerador.*;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;

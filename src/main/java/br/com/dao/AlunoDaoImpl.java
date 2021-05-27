@@ -6,6 +6,7 @@
 package br.com.dao;
 
 import br.com.model.Aluno;
+import br.com.model.Emprestimo;
 import java.util.List;
 import org.hibernate.*;
 
@@ -30,5 +31,15 @@ public class AlunoDaoImpl extends BaseDaoImpl<Aluno, Long> implements AlunoDao{
     public List<Aluno> listarTodos(Session sessao) throws HibernateException {
         Query consulta = sessao.createQuery(("FROM Aluno"));
         return consulta.list();
+    }
+
+    @Override
+    public List<Emprestimo> listarTodosEmprestimos() throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Emprestimo> listarEmprestimosAtivos() throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

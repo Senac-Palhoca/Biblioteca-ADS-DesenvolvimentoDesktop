@@ -304,7 +304,7 @@ public class PnMenuAluno extends javax.swing.JPanel {
     }//GEN-LAST:event_pnBuscarLivroMouseClicked
 
     private void abrirPanel(javax.swing.JPanel panel, java.awt.Component component){
-        Principal.pnPrincipal.AbrirPanel(new PnBuscarLivro());
+        Principal.pnPrincipal.AbrirPanel(panel);
         ativarPanel(component);
     }
     private void ativarPanel(java.awt.Component componentPanel){

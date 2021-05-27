@@ -6,6 +6,7 @@
 package br.com.dao;
 
 import br.com.model.Aluno;
+import br.com.model.Emprestimo;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -17,4 +18,6 @@ import org.hibernate.Session;
 public interface AlunoDao extends BaseDao<Aluno, Long>{
     List<Aluno> pesquisarPorNome(String nome, Session sessao) throws HibernateException;
     List<Aluno> listarTodos(Session sessao) throws HibernateException;
+    List<Emprestimo> listarTodosEmprestimos() throws HibernateException;
+    List<Emprestimo> listarEmprestimosAtivos() throws HibernateException;
 }
