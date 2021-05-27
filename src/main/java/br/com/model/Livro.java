@@ -31,6 +31,10 @@ public class Livro implements Serializable {
     @Column(nullable = false, unique = true)
     private String isbn;
 
+    @ManyToOne
+    @JoinColumn(name = "id_exemplar")
+    private Exemplar exemplar;
+    
     public Livro() {
     }
 
