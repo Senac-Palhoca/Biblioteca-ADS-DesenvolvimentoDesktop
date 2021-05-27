@@ -2,7 +2,7 @@ package br.com.dao;
 
 import br.com.model.Curso;
 import br.com.model.Turma;
-import static br.com.utilitario.UtilGerador.*;
+import static br.com.util.UtilGerador.*;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;

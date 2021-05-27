@@ -1,9 +1,8 @@
 package br.com.dao;
 
 import br.com.model.Curso;
-import static br.com.utilitario.UtilGerador.*;
+import br.com.util.UtilGerador;
 import java.util.*;
-import org.junit.Test;
 import static org.junit.Assert.*;
 import org.hibernate.*;
 
@@ -22,7 +21,7 @@ public class CursoDaoImplTest {
     
     //@Test
     public void testSalvar() {
-        curso = new Curso(null, "Curso " + gerarNome());
+        curso = new Curso(null, "Curso " + UtilGerador.gerarNome());
         sessao = HibernateUtil.abrirConexao();
         cursoDao.salvarOuAlterar(curso, sessao);
         sessao.close();
