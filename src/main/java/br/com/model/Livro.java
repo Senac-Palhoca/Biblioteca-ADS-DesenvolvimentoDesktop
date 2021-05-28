@@ -33,7 +33,7 @@ public class Livro implements Serializable {
     private String isbn;
 
     @OneToMany
-    @JoinColumn(name = "id_exemplar")
+    @JoinColumn(name = "id_livro")
     private List<Exemplar> exemplares;
 
     public Livro() {
