@@ -6,6 +6,7 @@
 package br.com.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -31,10 +32,10 @@ public class Livro implements Serializable {
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "id_exemplar")
-    private Exemplar exemplar;
-    
+    private List<Exemplar> exemplares;
+
     public Livro() {
     }
 
