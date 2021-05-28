@@ -29,6 +29,8 @@ public class Turma implements Serializable {
     private Curso curso;
     @OneToMany(mappedBy = "turma")
     private List<Aluno> alunos;
+    
+    private int quantidadeEmprestimo;
 
     public Turma() {
     }
@@ -96,6 +98,14 @@ public class Turma implements Serializable {
 
     public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
+    }
+
+    public int getQuantidadeEmprestimo() {
+        return quantidadeEmprestimo;
+    }
+
+    public void setQuantidadeEmprestimo(int quantidadeEmprestimo) {
+        this.quantidadeEmprestimo = quantidadeEmprestimo;
     }
 
     @Override
