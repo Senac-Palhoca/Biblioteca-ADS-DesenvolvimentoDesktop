@@ -13,7 +13,7 @@ import org.hibernate.Session;
 /**
  * @author Felipe
  */
-public class FuncionarioDaoImpl extends BaseDaoImpl<Funcionario, Long> implements Serializable{
+public class FuncionarioDaoImpl extends BaseDaoImpl<Funcionario, Long> implements Serializable, FuncionarioDao{
 
     @Override
     public Funcionario pesquisarPorId(Long id, Session sessao) throws HibernateException {
