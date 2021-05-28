@@ -27,6 +27,8 @@ public class Turma implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idCurso")
     private Curso curso;
+    @OneToMany(mappedBy = "turma")
+    private List<Aluno> alunos;
 
     public Turma() {
     }
@@ -88,7 +90,13 @@ public class Turma implements Serializable {
         this.nome = nome;
     }
     
-    
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
 
     @Override
     public int hashCode()

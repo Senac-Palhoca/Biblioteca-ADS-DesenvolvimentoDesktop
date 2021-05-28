@@ -13,8 +13,12 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "idPessoa")
 public class Aluno extends Pessoa implements Serializable {
     
-    @OneToMany(mappedBy = "aluno") /* Removido cascade pois não é necessário gravar emprestimo sempre que gravar o aluno*/
-    private List<Emprestimo> emprestimo;
+    @OneToMany(mappedBy = "aluno")
+    private List<Emprestimo> emprestimos;
+    
+    @ManyToOne()
+    @JoinColumn(name = "idTurma")
+    private Turma turma;
     
     public Aluno() {
     }
@@ -23,11 +27,20 @@ public class Aluno extends Pessoa implements Serializable {
         super(id, nome, cpf, email, senha, matricula);
     }
     
-    public List<Emprestimo> getEmprestimo() {
-        return emprestimo;
+    public List<Emprestimo> getEmprestimos() {
+        return emprestimos;
     }
 
-    public void setEmprestimo(List<Emprestimo> emprestimo) {
-        this.emprestimo = emprestimo;
+    public void setEmprestimos(List<Emprestimo> emprestimo) {
+        this.emprestimos = emprestimo;
+    }
+    
+    
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 }
