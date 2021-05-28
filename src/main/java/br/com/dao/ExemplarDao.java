@@ -6,6 +6,7 @@
 package br.com.dao;
 
 import br.com.model.Exemplar;
+import br.com.model.Livro;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -16,7 +17,7 @@ import org.hibernate.Session;
  */
 public interface ExemplarDao extends BaseDao<Exemplar, Long>{
     
-    List<Exemplar> pesquisarPorTitulo(String nome, Session sessao) throws HibernateException;
+    List<Exemplar> pesquisarPorLivro(Livro livro, Session sessao) throws HibernateException;
     
     List<Exemplar> listarTodos(Session sessao) throws HibernateException;
     

@@ -5,7 +5,10 @@
  */
 package br.com.dao;
 
+import br.com.model.Aluno;
 import br.com.model.Emprestimo;
+import br.com.model.Turma;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.*;
 
@@ -14,6 +17,13 @@ import org.hibernate.*;
  * @author Felip
  */
 public interface EmprestimoDao extends BaseDao<Emprestimo, Long>{
-    List<Emprestimo> pesquisarPorNome(String nome, Session sessao) throws HibernateException;
+    List<Emprestimo> pesquisarPorAluno(Aluno aluno, Session sessao) throws HibernateException;
+    
+    List<Emprestimo> pesquisarPorTurmaData(Turma turma, Date data, Session sessao) throws HibernateException;
+    
+    List<Emprestimo> pesquisarPorAlunoData(Aluno aluno, Date data, Session sessao) throws HibernateException;
+    
     List<Emprestimo> listarTodos(Session sessao) throws HibernateException;
+    
+    List<Emprestimo> listarTodosEmAberto(Session sessao) throws HibernateException;
 }
