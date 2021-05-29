@@ -5,7 +5,10 @@
  */
 package br.com.dao;
 
+import br.com.model.Aluno;
 import br.com.model.Emprestimo;
+import br.com.model.Turma;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.*;
 /**
@@ -19,15 +22,28 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
     }
     
     @Override
-    public List<Emprestimo> pesquisarPorNome(String nome, Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Emprestimo where nome like :nome");
-        consulta.setParameter("nome", "%" + nome + "%");
-        return consulta.list();
-    }
-    
-    @Override
     public List<Emprestimo> listarTodos(Session sessao) throws HibernateException {
         Query consulta = sessao.createQuery(("FROM Emprestimo"));
         return consulta.list();
+    }
+
+    @Override
+    public List<Emprestimo> pesquisarPorAluno(Aluno aluno, Session sessao) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Emprestimo> pesquisarPorTurmaData(Turma turma, Date data, Session sessao) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Emprestimo> pesquisarPorAlunoData(Aluno aluno, Date data, Session sessao) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Emprestimo> listarTodosEmAberto(Session sessao) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
