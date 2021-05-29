@@ -83,7 +83,7 @@ public class Principal extends javax.swing.JFrame {
             splash.setVisible(true);
             
             for (int i = 0; i < 100; i++) {
-                Thread.sleep(100);
+                Thread.sleep(1);
             }
             splash.setVisible(false);
             //splash.dispose();
