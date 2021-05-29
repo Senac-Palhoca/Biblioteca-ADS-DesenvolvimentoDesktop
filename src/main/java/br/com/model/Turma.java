@@ -24,6 +24,7 @@ public class Turma implements Serializable {
     private String periodo;
     @Column(length = 45)
     private String nome;
+    private boolean aberto;
     @ManyToOne
     @JoinColumn(name = "idCurso")
     private Curso curso;
@@ -90,6 +91,15 @@ public class Turma implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    
+    public boolean isAberto() {
+        return aberto;
+    }
+
+    public void setAberto(boolean aberto) {
+        this.aberto = aberto;
     }
     
     public List<Aluno> getAlunos() {
