@@ -38,11 +38,11 @@ public class ExemplarDaoImplTest {
 
 //    @Test
     public void testPesquisarPorTitulo() {
-        gerarExemplarBd();
-        sessao = HibernateUtil.abrirConexao();
-        List<Exemplar> exemplars = exemplarDao.pesquisarPorTitulo(exemplar.getCodigoLivro().substring(1, 3), sessao);
-        sessao.close();
-        assertFalse(exemplars.isEmpty());
+//        gerarExemplarBd();
+//        sessao = HibernateUtil.abrirConexao();
+//        List<Exemplar> exemplars = exemplarDao.pesquisarPorTitulo(exemplar.getCodigoLivro().substring(1, 3), sessao);
+//        sessao.close();
+//        assertFalse(exemplars.isEmpty());
     }
 
 //    @Test
