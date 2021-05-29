@@ -7,9 +7,7 @@ package br.com.dao;
 
 import br.com.model.Perfil;
 import java.util.List;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -34,5 +32,4 @@ public class PerfilDaoImplTest {
         session.close();
         assertTrue(!perfis.isEmpty());
     }
-
 }
