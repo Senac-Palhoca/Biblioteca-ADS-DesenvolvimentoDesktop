@@ -24,6 +24,10 @@ public class Emprestimo implements Serializable {
     private Date dataDevolucao;
     
     @ManyToOne()
+    @JoinColumn(name = "idExemplar")
+    private Exemplar exemplar;
+    
+    @ManyToOne()
     @JoinColumn(name = "idAluno")
     private Aluno aluno;
 
@@ -78,6 +82,14 @@ public class Emprestimo implements Serializable {
         this.aluno = aluno;
     }
 
+    public Exemplar getExemplar() {
+        return exemplar;
+    }
+
+    public void setExemplar(Exemplar exemplar) {
+        this.exemplar = exemplar;
+    }
+    
     @Override
     public int hashCode()
     {

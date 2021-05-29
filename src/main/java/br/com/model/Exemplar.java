@@ -6,6 +6,7 @@
 package br.com.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -23,6 +24,9 @@ public class Exemplar implements Serializable {
     private boolean status;
     @Column(nullable = false)
     private String codigoLivro;
+    
+    @OneToMany(mappedBy = "exemplar")
+    private List<Emprestimo> emprestimo;
 
     public Exemplar() {
     }
@@ -56,6 +60,15 @@ public class Exemplar implements Serializable {
 
     public void setCodigoLivro(String codigoLivro) {
         this. codigoLivro = codigoLivro;
+    }
+    
+    
+    public List<Emprestimo> getEmprestimo() {
+        return emprestimo;
+    }
+
+    public void setEmprestimo(List<Emprestimo> emprestimo) {
+        this.emprestimo = emprestimo;
     }
 
     @Override
