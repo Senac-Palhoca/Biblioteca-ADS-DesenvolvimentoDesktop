@@ -28,17 +28,17 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
     }
 
     @Override
-    public List<Emprestimo> pesquisarPorAluno(Aluno aluno, Session sessao) throws HibernateException {
+    public List<Emprestimo> pesquisarPorAlunoAberto(Aluno aluno, Session sessao) throws HibernateException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Emprestimo> pesquisarPorTurmaData(Turma turma, Date data, Session sessao) throws HibernateException {
+    public List<Emprestimo> pesquisarPorTurmaMes(Turma turma, Integer mes, Session sessao) throws HibernateException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Emprestimo> pesquisarPorAlunoData(Aluno aluno, Date data, Session sessao) throws HibernateException {
+    public List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, Integer mes, Session sessao) throws HibernateException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -46,4 +46,5 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
     public List<Emprestimo> listarTodosEmAberto(Session sessao) throws HibernateException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }
