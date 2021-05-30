@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.view;
+package br.com.view.funcionario;
 
 /**
  *
  * @author Felip
  */
-public class PnCadastrarLivro extends javax.swing.JPanel {
+public class PnEmprestimo extends javax.swing.JPanel {
 
     /**
-     * Creates new form PnCadastrarLivro
+     * Creates new form PnEmprestimo
      */
-    public PnCadastrarLivro() {
+    public PnEmprestimo() {
         initComponents();
     }
 
@@ -33,7 +33,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
-        jLabel1.setText("Cadastrar Livro");
+        jLabel1.setText("Emprestimo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -46,7 +46,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1)
-                .addContainerGap(368, Short.MAX_VALUE))
+                .addContainerGap(603, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -55,7 +55,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(299, Short.MAX_VALUE))
+                .addContainerGap(465, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

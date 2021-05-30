@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.view;
+package br.com.view.menu;
+
+import br.com.view.funcionario.PnCadastrarLivro;
+import br.com.view.Principal;
 
 /**
  *
@@ -41,9 +44,6 @@ public class PnMenuFuncionario extends javax.swing.JPanel {
         pnRanking = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
 
         menu.setBackground(new java.awt.Color(59, 58, 149));
 
@@ -186,53 +186,12 @@ public class PnMenuFuncionario extends javax.swing.JPanel {
                 .addGap(10, 10, 10))
         );
 
-        jPanel6.setBackground(new java.awt.Color(59, 58, 149));
-        jPanel6.setPreferredSize(new java.awt.Dimension(160, 60));
-        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel6btGetFocus(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jPanel6btLostFocus(evt);
-            }
-        });
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Meus Dados");
-
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/imagem/pessoa.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel17)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel16)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
-        );
-
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
         menu.setLayout(menuLayout);
         menuLayout.setHorizontalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnBuscarLivro, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
             .addComponent(pnRanking, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
             .addGroup(menuLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
@@ -262,9 +221,7 @@ public class PnMenuFuncionario extends javax.swing.JPanel {
                 .addComponent(pnBuscarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(pnRanking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 293, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
@@ -322,16 +279,6 @@ public class PnMenuFuncionario extends javax.swing.JPanel {
             evt.getComponent().setBackground(new java.awt.Color(59, 58, 149));
         }
     }//GEN-LAST:event_pnRankingbtLostFocus
-
-    private void jPanel6btGetFocus(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6btGetFocus
-        evt.getComponent().setBackground(new java.awt.Color(59, 50, 130));
-    }//GEN-LAST:event_jPanel6btGetFocus
-
-    private void jPanel6btLostFocus(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6btLostFocus
-        if(evt.getComponent() != panelAtivo){
-            evt.getComponent().setBackground(new java.awt.Color(59, 58, 149));
-        }
-    }//GEN-LAST:event_jPanel6btLostFocus
  
     private void abrirPanel(javax.swing.JPanel panel, java.awt.Component component){
         Principal.pnPrincipal.AbrirPanel(panel);
@@ -352,13 +299,10 @@ public class PnMenuFuncionario extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel pnBuscarLivro;
     private javax.swing.JPanel pnLivroReservado;

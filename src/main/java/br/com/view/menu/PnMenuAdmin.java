@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.view;
+package br.com.view.menu;
+
+import br.com.view.admin.PnCursoTurma;
+import br.com.view.admin.PnUsuario;
+import br.com.view.Principal;
 
 /**
  *

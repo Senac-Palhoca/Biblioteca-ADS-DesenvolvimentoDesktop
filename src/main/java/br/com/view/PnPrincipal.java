@@ -5,6 +5,9 @@
  */
 package br.com.view;
 
+import br.com.view.menu.PnMenuFuncionario;
+import br.com.view.menu.PnMenuAluno;
+import br.com.view.menu.PnMenuAdmin;
 import br.com.util.Animacao;
 import java.awt.Dimension;
 
@@ -29,7 +32,7 @@ public class PnPrincipal extends javax.swing.JPanel {
                 case "funcionario":
                     abrirMenu(new PnMenuFuncionario());
                     break;
-                case "administrador":
+                case "admin":
                     abrirMenu(new PnMenuAdmin());
                     break;
         }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.view;
+package br.com.view.admin;
 
 import br.com.dao.*;
 import br.com.model.*;
