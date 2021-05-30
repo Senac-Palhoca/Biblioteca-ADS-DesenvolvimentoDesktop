@@ -6,6 +6,7 @@
 package br.com.view.menu;
 
 import br.com.view.Principal;
+import br.com.view.aluno.*;
 
 /**
  *
@@ -18,6 +19,7 @@ public class PnMenuAluno extends javax.swing.JPanel {
      */
     public PnMenuAluno() {
         initComponents();
+        ativarPanel(pnLivroReservado);
     }
 
     /**
@@ -70,6 +72,9 @@ public class PnMenuAluno extends javax.swing.JPanel {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btLostFocus(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnLivroReservadoMousePressed(evt);
+            }
         });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -109,6 +114,9 @@ public class PnMenuAluno extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btLostFocus(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnLivroMousePressed(evt);
             }
         });
 
@@ -171,9 +179,9 @@ public class PnMenuAluno extends javax.swing.JPanel {
                 .addComponent(jLabel5)
                 .addGap(26, 26, 26)
                 .addComponent(pnLivroReservado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(pnLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
@@ -207,6 +215,14 @@ public class PnMenuAluno extends javax.swing.JPanel {
             evt.getComponent().setBackground(new java.awt.Color(59, 58, 149));
         }
     }//GEN-LAST:event_btLostFocus
+
+    private void pnLivroReservadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnLivroReservadoMousePressed
+        abrirPanel(new PnMeuEmprestimo(), evt.getComponent());
+    }//GEN-LAST:event_pnLivroReservadoMousePressed
+
+    private void pnLivroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnLivroMousePressed
+        abrirPanel(new PnPesquisarLivro(), evt.getComponent());
+    }//GEN-LAST:event_pnLivroMousePressed
 
     private void abrirPanel(javax.swing.JPanel panel, java.awt.Component component){
         Principal.pnPrincipal.AbrirPanel(panel);

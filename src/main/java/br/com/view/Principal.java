@@ -9,6 +9,7 @@ import br.com.dao.HibernateUtil;
 import br.com.dao.*;
 import br.com.model.*;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.Session;
 
 /**
@@ -103,7 +104,8 @@ public class Principal extends javax.swing.JFrame {
     }
     
     private static void validarPerfil(){
-        Session sessao = HibernateUtil.abrirConexao();
+        try {
+            Session sessao = HibernateUtil.abrirConexao();
         PerfilDao impl = new PerfilDaoImpl();
         List<Perfil> perfil = impl.pesquisarPerfil(sessao);
         
@@ -118,6 +120,10 @@ public class Principal extends javax.swing.JFrame {
         }
         
         sessao.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(principal, "Erro no cadastro dos perfis, verifique a conexão com o seu banco de dados! " + e.getMessage());
+        }
+        
         
     }
 
