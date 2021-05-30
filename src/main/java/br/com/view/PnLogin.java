@@ -18,9 +18,10 @@ public class PnLogin extends javax.swing.JPanel {
         initComponents();
     }
 
-    private void abrir(String perfil){
+    private void abrir(String perfil, javax.swing.JPanel panelInicial){
         PnPrincipal pnPrincipal = new PnPrincipal(perfil);
         Principal.pnPrincipal = pnPrincipal;
+        Principal.pnPrincipal.AbrirPanel(panelInicial);
         Principal.principal.setContentPane(pnPrincipal);
         Principal.principal.setVisible(true);
     }
@@ -168,7 +169,7 @@ public class PnLogin extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        abrir("funcionario");
+        abrir("administrador", new PnCursoTurma());
     }//GEN-LAST:event_btLoginActionPerformed
 
 

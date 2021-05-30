@@ -24,7 +24,7 @@ public class TurmaDaoImplTest {
         turmaDao = new TurmaDaoImpl();
     }
 
-    //@Test
+    @Test
     public void testSalvar() {
         CursoDaoImplTest cursoDaoImplTest = new CursoDaoImplTest();
         curso = cursoDaoImplTest.buscarCursoBd();

@@ -5,9 +5,11 @@
  */
 package br.com.view;
 
-import br.com.util.Animacao;
-import java.awt.Dimension;
-import javax.swing.JOptionPane;
+import br.com.dao.HibernateUtil;
+import br.com.dao.*;
+import br.com.model.*;
+import java.util.List;
+import org.hibernate.Session;
 
 /**
  *
@@ -77,14 +79,14 @@ public class Principal extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+       
         try {
             SplashScreen splash = new SplashScreen();
             splash.setVisible(true);
-            
-            for (int i = 0; i < 100; i++) {
-                Thread.sleep(1);
-            }
+            validarPerfil();
+//            for (int i = 0; i < 100; i++) {
+//                Thread.sleep(1);
+//            }
             splash.setVisible(false);
             //splash.dispose();
         } catch (Exception e) {
@@ -98,6 +100,25 @@ public class Principal extends javax.swing.JFrame {
             }
         });
           
+    }
+    
+    private static void validarPerfil(){
+        Session sessao = HibernateUtil.abrirConexao();
+        PerfilDao impl = new PerfilDaoImpl();
+        List<Perfil> perfil = impl.pesquisarPerfil(sessao);
+        
+        
+        if(perfil.isEmpty()){
+            Perfil perfAux = new Perfil(null, "aluno", "");
+            Perfil perfAux2 = new Perfil(null, "bibliotecario", "");
+            Perfil perfAux3 = new Perfil(null, "coordenador", "");
+            impl.salvarOuAlterar(perfAux, sessao);
+            impl.salvarOuAlterar(perfAux2, sessao);
+            impl.salvarOuAlterar(perfAux3, sessao);
+        }
+        
+        sessao.close();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
