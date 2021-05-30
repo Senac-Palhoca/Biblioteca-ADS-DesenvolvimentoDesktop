@@ -83,6 +83,6 @@ public class Curso implements Serializable {
     @Override
     public String toString()
     {
-        return "br.com.modelo.Curso[ id=" + id + "]";
+        return getNome();
     }
 }
