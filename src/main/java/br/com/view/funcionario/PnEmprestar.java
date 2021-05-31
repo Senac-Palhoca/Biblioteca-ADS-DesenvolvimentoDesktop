@@ -196,7 +196,7 @@ public class PnEmprestar extends javax.swing.JPanel {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        Principal.pnPrincipal.AbrirPanel(new PnCadastroLivro());
+        Principal.pnPrincipal.AbrirPanel(new PnLivro());
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btBuscarExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarExemplarActionPerformed

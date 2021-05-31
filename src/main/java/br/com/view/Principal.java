@@ -37,6 +37,7 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Biblioteca Senac");
         setExtendedState(6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

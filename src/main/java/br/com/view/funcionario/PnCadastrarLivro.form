@@ -135,9 +135,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txTitulo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField2"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="txAutor">
       <Properties>
@@ -145,9 +142,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField2"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -160,14 +154,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txEdicao">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField2"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txEdicaoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txEditora">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField2"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
@@ -175,9 +166,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txIsbn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField2"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btExcluir">
       <Properties>

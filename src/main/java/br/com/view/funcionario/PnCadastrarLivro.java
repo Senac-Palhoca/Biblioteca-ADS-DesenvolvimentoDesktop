@@ -12,12 +12,12 @@ import br.com.view.Principal;
  *
  * @author Felip
  */
-public class PnCadastrarLivroUnico extends javax.swing.JPanel {
+public class PnCadastrarLivro extends javax.swing.JPanel {
     private Livro livro;
     /**
      * Creates new form PnCadatrarLivroUnico
      */
-    public PnCadastrarLivroUnico(Livro livro) {
+    public PnCadastrarLivro(Livro livro) {
         initComponents();
         this.livro = livro;
     }
@@ -58,23 +58,19 @@ public class PnCadastrarLivroUnico extends javax.swing.JPanel {
 
         jLabel3.setText("Título");
 
-        txTitulo.setText("jTextField2");
-
         txAutor.setText("Autor");
-
-        jTextField3.setText("jTextField2");
 
         jLabel6.setText("Editora");
 
         jLabel5.setText("Edição");
 
-        txEdicao.setText("jTextField2");
-
-        txEditora.setText("jTextField2");
+        txEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txEdicaoActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("ISBN");
-
-        txIsbn.setText("jTextField2");
 
         btExcluir.setText("Excluir");
         btExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -196,20 +192,24 @@ public class PnCadastrarLivroUnico extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        Principal.pnPrincipal.AbrirPanel(new PnCadastroLivro());
+        Principal.pnPrincipal.AbrirPanel(new PnLivro());
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         //fazer o método de salvar aqui
         
-        Principal.pnPrincipal.AbrirPanel(new PnCadastroLivro());
+        Principal.pnPrincipal.AbrirPanel(new PnLivro());
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         //fazer o método de excluir aqui
         
-        Principal.pnPrincipal.AbrirPanel(new PnCadastroLivro());
+        Principal.pnPrincipal.AbrirPanel(new PnLivro());
     }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void txEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txEdicaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txEdicaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

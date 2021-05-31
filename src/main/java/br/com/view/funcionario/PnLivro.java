@@ -12,12 +12,12 @@ import br.com.view.Principal;
  *
  * @author Felip
  */
-public class PnCadastroLivro extends javax.swing.JPanel {
+public class PnLivro extends javax.swing.JPanel {
 
     /**
      * Creates new form PnCadastrarLivro
      */
-    public PnCadastroLivro() {
+    public PnLivro() {
         initComponents();
     }
 
@@ -43,26 +43,24 @@ public class PnCadastroLivro extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
-        jLabel1.setText("Cadastros de Livros");
+        jLabel1.setText("Livros");
 
         tbLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Título", "Autor", "ISBN"
+                "Título", "Autor", "ISBN", "Exemplares Disponíveis", "Total Exemplares"
             }
         ));
         jScrollPane1.setViewportView(tbLivro);
 
-        txBuscarLivro.setText("jTextField1");
-
         btBuscarLivro.setText("Buscar");
 
-        jLabel2.setText("Buscar Título/Autor/ISBN");
+        jLabel2.setText("Buscar Título/Autor");
 
         btNovoLivro.setText("+ Novo Livro");
         btNovoLivro.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +90,7 @@ public class PnCadastroLivro extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(btNovoLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 47, Short.MAX_VALUE)))
+                        .addGap(0, 217, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
@@ -131,11 +129,11 @@ public class PnCadastroLivro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoLivroActionPerformed
-        Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivroUnico(new Livro()));
+        Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(new Livro()));
     }//GEN-LAST:event_btNovoLivroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivroUnico(new Livro()));
+        Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(new Livro()));
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
