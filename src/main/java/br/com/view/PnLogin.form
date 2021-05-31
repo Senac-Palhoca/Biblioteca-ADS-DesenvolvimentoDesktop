@@ -163,7 +163,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txUsuario">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Admin"/>
+            <Property name="text" type="java.lang.String" value="Funcionario"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btLogin">

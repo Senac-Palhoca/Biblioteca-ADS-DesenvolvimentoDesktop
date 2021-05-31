@@ -64,7 +64,7 @@ public class PnMenuFuncionario extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Cadastrar Livro");
+        jLabel1.setText("Cadastro de Livros");
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/imagem/livro.png"))); // NOI18N
 
@@ -288,7 +288,7 @@ public class PnMenuFuncionario extends javax.swing.JPanel {
     }//GEN-LAST:event_pnEmprestimoMousePressed
 
     private void pnCadastrarLivroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCadastrarLivroMousePressed
-        abrirPanel(new PnCadastrarLivro(), evt.getComponent());
+        abrirPanel(new PnCadastroLivro(), evt.getComponent());
     }//GEN-LAST:event_pnCadastrarLivroMousePressed
 
     private void pnRankingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnRankingMousePressed

@@ -67,7 +67,7 @@ public class PnLogin extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Login Biblioteca");
 
-        txUsuario.setText("Admin");
+        txUsuario.setText("Funcionario");
 
         btLogin.setText("Logar");
         btLogin.addActionListener(new java.awt.event.ActionListener() {
