@@ -33,12 +33,12 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
     }
 
     @Override
-    public List<Emprestimo> pesquisarPorTurmaMes(Turma turma, Integer mes, Session sessao) throws HibernateException {
+    public List<Emprestimo> pesquisarPorTurmaMes(Turma turma, Integer mes, Integer ano, Session sessao) throws HibernateException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, Integer mes, Session sessao) throws HibernateException {
+    public List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, Integer mes, Integer ano, Session sessao) throws HibernateException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
