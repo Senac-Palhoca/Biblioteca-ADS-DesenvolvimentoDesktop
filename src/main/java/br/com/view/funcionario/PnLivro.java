@@ -34,11 +34,11 @@ public class PnLivro extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLivro = new javax.swing.JTable();
-        txBuscarLivro = new javax.swing.JTextField();
-        btBuscarLivro = new javax.swing.JButton();
+        tfTituloAutor = new javax.swing.JTextField();
+        btBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btNovoLivro = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btEditarLivroSelecionado = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -58,7 +58,9 @@ public class PnLivro extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbLivro);
 
-        btBuscarLivro.setText("Buscar");
+        tfTituloAutor.setToolTipText("Digite o titulo do liro ou o autor que deseja pesquisar");
+
+        btBuscar.setText("Buscar");
 
         jLabel2.setText("Buscar Título/Autor");
 
@@ -69,10 +71,10 @@ public class PnLivro extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Editar Livro Selecionado");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btEditarLivroSelecionado.setText("Editar Livro Selecionado");
+        btEditarLivroSelecionado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btEditarLivroSelecionadoActionPerformed(evt);
             }
         });
 
@@ -95,12 +97,12 @@ public class PnLivro extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btEditarLivroSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(txBuscarLivro)
+                            .addComponent(tfTituloAutor)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btBuscarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(jLabel2)))
                 .addGap(30, 30, 30))
@@ -118,12 +120,12 @@ public class PnLivro extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txBuscarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btBuscarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfTituloAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(btEditarLivroSelecionado)
                 .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -132,20 +134,20 @@ public class PnLivro extends javax.swing.JPanel {
         Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(new Livro()));
     }//GEN-LAST:event_btNovoLivroActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btEditarLivroSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarLivroSelecionadoActionPerformed
         Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(new Livro()));
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btEditarLivroSelecionadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btBuscarLivro;
+    private javax.swing.JButton btBuscar;
+    private javax.swing.JButton btEditarLivroSelecionado;
     private javax.swing.JButton btNovoLivro;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tbLivro;
-    private javax.swing.JTextField txBuscarLivro;
+    private javax.swing.JTextField tfTituloAutor;
     // End of variables declaration//GEN-END:variables
 }

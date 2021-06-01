@@ -40,12 +40,12 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jButton1" min="-2" pref="194" max="-2" attributes="0"/>
+                  <Component id="btEditarLivroSelecionado" min="-2" pref="194" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="txBuscarLivro" max="32767" attributes="0"/>
+                          <Component id="tfTituloAutor" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                          <Component id="btBuscarLivro" min="-2" pref="77" max="-2" attributes="0"/>
+                          <Component id="btBuscar" min="-2" pref="77" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -69,13 +69,13 @@
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txBuscarLivro" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="btBuscarLivro" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="tfTituloAutor" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btBuscar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="154" max="32767" attributes="0"/>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="btEditarLivroSelecionado" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -114,9 +114,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="txBuscarLivro">
+    <Component class="javax.swing.JTextField" name="tfTituloAutor">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Digite o titulo do liro ou o autor que deseja pesquisar"/>
+      </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btBuscarLivro">
+    <Component class="javax.swing.JButton" name="btBuscar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar"/>
       </Properties>
@@ -134,12 +137,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNovoLivroActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btEditarLivroSelecionado">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar Livro Selecionado"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btEditarLivroSelecionadoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
