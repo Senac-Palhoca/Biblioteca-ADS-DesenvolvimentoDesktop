@@ -65,7 +65,7 @@ public class FuncionarioDaoImplTest {
         assertEquals(funcionario.getNome(), funcionarioAlt.getNome());
     }
 
-    @Test
+//    @Test
     public void testPesquisarPorId() {
         System.out.println("pesquisarPorId");
         funcionario = buscarFuncionarioBd();

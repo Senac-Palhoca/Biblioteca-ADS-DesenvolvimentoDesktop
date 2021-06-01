@@ -24,7 +24,7 @@ public class PerfilDaoImplTest {
         perfilDao = new PerfilDaoImpl();
     }
 
-    @Test
+//    @Test
     public void testPesquisarPerfil() {
         System.out.println("pesquisarPerfil");
         session = HibernateUtil.abrirConexao();
