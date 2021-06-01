@@ -6,10 +6,13 @@
 package br.com.dao;
 
 import br.com.model.Funcionario;
+import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 
 /**
  * @author Felipe
  */
 public interface FuncionarioDao extends BaseDao<Funcionario, Long>{
-    
+    List<Funcionario> listarTodos(Session sessao) throws HibernateException;
 }

@@ -5,8 +5,10 @@
  */
 package br.com.view;
 
+import br.com.view.menu.PnMenuFuncionario;
+import br.com.view.menu.PnMenuAluno;
+import br.com.view.menu.PnMenuAdmin;
 import br.com.util.Animacao;
-import static br.com.view.Principal.principal;
 import java.awt.Dimension;
 
 /**
@@ -14,17 +16,25 @@ import java.awt.Dimension;
  * @author Felip
  */
 public class PnPrincipal extends javax.swing.JPanel {
-    private String perfil;
+
     /**
      * Creates new form PnPrincipal
+     * @param perfil
      */
     public PnPrincipal(String perfil) {
         initComponents();
-        this.perfil = perfil;
-        if(perfil.toLowerCase() == "aluno"){
-            abrirMenu(new PnMenuAluno());
-        }else if(perfil.toLowerCase() == "funcionario"){
-            abrirMenu(new PnMenuFuncionario());
+        
+        if(null != perfil.toLowerCase())
+            switch (perfil.toLowerCase()) {
+                case "aluno":
+                    abrirMenu(new PnMenuAluno());
+                    break;
+                case "funcionario":
+                    abrirMenu(new PnMenuFuncionario());
+                    break;
+                case "admin":
+                    abrirMenu(new PnMenuAdmin());
+                    break;
         }
     }
     

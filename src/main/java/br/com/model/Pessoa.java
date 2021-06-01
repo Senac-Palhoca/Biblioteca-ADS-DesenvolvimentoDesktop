@@ -121,6 +121,6 @@ public class Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.model.Pessoa[ id=" + id + "]";
+        return getNome();
     }
 }

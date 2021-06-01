@@ -26,10 +26,12 @@ public class HibernateUtil {
         try {
             Configuration cfg = new Configuration();
             cfg.addAnnotatedClass(Pessoa.class);
+            cfg.addAnnotatedClass(Aluno.class);
             cfg.addAnnotatedClass(Perfil.class);
             cfg.addAnnotatedClass(Funcionario.class);
-            cfg.addAnnotatedClass(Aluno.class);
+            cfg.addAnnotatedClass(Exemplar.class);
             cfg.addAnnotatedClass(Emprestimo.class);
+            cfg.addAnnotatedClass(Livro.class);
             cfg.addAnnotatedClass(Curso.class);
             cfg.addAnnotatedClass(Turma.class);
             cfg.addAnnotatedClass(Livro.class);

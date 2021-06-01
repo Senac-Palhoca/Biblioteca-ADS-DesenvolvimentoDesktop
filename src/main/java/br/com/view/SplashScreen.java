@@ -32,6 +32,7 @@ public class SplashScreen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Biblioteca - Carregando...");
         setBackground(new java.awt.Color(0, 0, 0));
         setUndecorated(true);
         setResizable(false);

@@ -26,4 +26,9 @@ public class TurmaDaoImpl extends BaseDaoImpl<Turma, Long> implements TurmaDao{
         Query consulta = sessao.createQuery(("FROM Turma"));
         return consulta.list();
     }
+
+    @Override
+    public List<Turma> listarRanking(Session sessao) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -7,7 +7,9 @@ package br.com.dao;
 
 import br.com.model.Funcionario;
 import java.io.Serializable;
+import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -18,6 +20,12 @@ public class FuncionarioDaoImpl extends BaseDaoImpl<Funcionario, Long> implement
     @Override
     public Funcionario pesquisarPorId(Long id, Session sessao) throws HibernateException {
         return (Funcionario) sessao.get(Funcionario.class, id);
+    }
+
+    @Override
+    public List<Funcionario> listarTodos(Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery(("FROM Funcionario"));
+        return consulta.list();
     }
     
 }

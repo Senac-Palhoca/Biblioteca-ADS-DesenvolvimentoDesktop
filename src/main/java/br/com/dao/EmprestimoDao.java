@@ -17,11 +17,11 @@ import org.hibernate.*;
  * @author Felip
  */
 public interface EmprestimoDao extends BaseDao<Emprestimo, Long>{
-    List<Emprestimo> pesquisarPorAluno(Aluno aluno, Session sessao) throws HibernateException;
+    List<Emprestimo> pesquisarPorAlunoAberto(Aluno aluno, Session sessao) throws HibernateException;
     
-    List<Emprestimo> pesquisarPorTurmaData(Turma turma, Date data, Session sessao) throws HibernateException;
+    List<Emprestimo> pesquisarPorTurmaMes(Turma turma, Integer mes, Integer ano, Session sessao) throws HibernateException;
     
-    List<Emprestimo> pesquisarPorAlunoData(Aluno aluno, Date data, Session sessao) throws HibernateException;
+    List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, Integer mes, Integer ano, Session sessao) throws HibernateException;
     
     List<Emprestimo> listarTodos(Session sessao) throws HibernateException;
     
