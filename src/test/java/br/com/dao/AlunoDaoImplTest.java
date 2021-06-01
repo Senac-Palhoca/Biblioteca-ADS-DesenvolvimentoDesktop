@@ -26,7 +26,7 @@ public class AlunoDaoImplTest {
         alunoDao = new AlunoDaoImpl();
     }
     
-    @Test
+    //@Test
     public void testSalvar() {
         aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarNumero(12), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
         sessao = HibernateUtil.abrirConexao();
@@ -35,7 +35,7 @@ public class AlunoDaoImplTest {
         assertNotNull(aluno.getId());
     }
     
-    @Test
+    //@Test
     public void testAlterar() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -44,7 +44,7 @@ public class AlunoDaoImplTest {
         assertNotNull(alunoId);
     }
     
-    @Test
+   // @Test
     public void testPesquisarPorId() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -53,7 +53,7 @@ public class AlunoDaoImplTest {
         assertNotNull(alunoId);
     }
     
-    @Test
+   // @Test
     public void testPesquisarPorNome() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -62,7 +62,7 @@ public class AlunoDaoImplTest {
         assertFalse(alunos.isEmpty());
     }
     
-    @Test
+    //@Test
     public void testListarTodos() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -72,7 +72,7 @@ public class AlunoDaoImplTest {
         assertFalse(isEmpty);
     }
     
-    @Test
+    //@Test
     public void testExcluir() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
