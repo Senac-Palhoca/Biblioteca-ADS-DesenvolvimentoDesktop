@@ -16,14 +16,14 @@ public class UtilGerador {
         String[] minusculas = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
             "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
 
-        String[] maiusculas = {"A", "B", "C",
-            "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-            "U", "V", "W", "X", "Y", "Z"};
+//        String[] maiusculas = {"A", "B", "C",
+//            "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+//            "U", "V", "W", "X", "Y", "Z"};
+//
+//        indice = (int) (Math.random() * maiusculas.length);
+//        palavra += maiusculas[indice];
 
-        indice = (int) (Math.random() * maiusculas.length);
-        palavra += maiusculas[indice];
-
-        for (int i = 0; i < qtdLetra - 1; i++) {
+        for (int i = 0; i < qtdLetra; i++) {
             indice = (int) (Math.random() * minusculas.length);
             palavra += minusculas[indice];
         }
@@ -112,28 +112,6 @@ public class UtilGerador {
         numero = numero + menor;
 
         return numero;
-    }
-
-    private static String gerarLetraPlaca() {
-        String letra = "";
-        String[] maiusculas = {"A", "B", "C",
-            "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-            "U", "V", "W", "X", "Y", "Z"};
-        for (int i = 0; i < 3; i++) {
-            letra += maiusculas[(int) (Math.random() * maiusculas.length)];
-        }
-        return letra;
-    }
-
-    public static String gerarTipoVeiculo() {
-        String[] tipos = {"Moto", "Automóvel", "Caminhão", "Ônibus"};
-        String tipoVeiculo = tipos[(int) (Math.random() * tipos.length)];
-        return tipoVeiculo;
-    }
-
-    public static String gerarPlaca() {
-        String placa = gerarLetraPlaca() + "-" + gerarNumero(4);
-        return placa;
     }
 
     public static String gerarCPF() {
