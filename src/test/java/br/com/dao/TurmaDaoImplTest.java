@@ -24,7 +24,7 @@ public class TurmaDaoImplTest {
         turmaDao = new TurmaDaoImpl();
     }
 
-    //@Test
+//    @Test
     public void testSalvar() {
         CursoDaoImplTest cursoDaoImplTest = new CursoDaoImplTest();
         curso = cursoDaoImplTest.buscarCursoBd();
@@ -68,7 +68,7 @@ public class TurmaDaoImplTest {
         assertFalse(turmas.isEmpty());
     }
 
-    //@Test
+//    @Test
     public void testListarTodos() {
         buscarTurmaBd();
         sessao = HibernateUtil.abrirConexao();

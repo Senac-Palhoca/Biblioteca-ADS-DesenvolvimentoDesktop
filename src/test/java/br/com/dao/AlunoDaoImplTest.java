@@ -26,10 +26,12 @@ public class AlunoDaoImplTest {
         alunoDao = new AlunoDaoImpl();
     }
     
-    //@Test
+//    @Test
     public void testSalvar() {
-        aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarNumero(12), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
+        PerfilDao perfilDao = new PerfilDaoImpl();
+        aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarCPF(), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
         sessao = HibernateUtil.abrirConexao();
+        aluno.setPerfil(perfilDao.pesquisarPerfil(sessao).get(3));
         alunoDao.salvarOuAlterar(aluno, sessao);
         sessao.close();
         assertNotNull(aluno.getId());
