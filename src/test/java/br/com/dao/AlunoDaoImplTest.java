@@ -29,9 +29,11 @@ public class AlunoDaoImplTest {
 //    @Test
     public void testSalvar() {
         PerfilDao perfilDao = new PerfilDaoImpl();
-        aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarCPF(), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
+        TurmaDao turmaDao = new TurmaDaoImpl();
+       aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarCPF(), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
         sessao = HibernateUtil.abrirConexao();
         aluno.setPerfil(perfilDao.pesquisarPerfil(sessao).get(3));
+        aluno.setTurma(turmaDao.pesquisarPorId(1L, sessao));
         alunoDao.salvarOuAlterar(aluno, sessao);
         sessao.close();
         assertNotNull(aluno.getId());
