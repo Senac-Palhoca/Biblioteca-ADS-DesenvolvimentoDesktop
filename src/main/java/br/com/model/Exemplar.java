@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "exemplar")
 public class Exemplar implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +24,13 @@ public class Exemplar implements Serializable {
     private boolean status;
     @Column(nullable = false, unique = true)
     private String codigoLivro;
-    
+
     @OneToMany(mappedBy = "exemplar")
     private List<Emprestimo> emprestimo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_livro")
+    private Livro livro;
 
     public Exemplar() {
     }
@@ -35,13 +40,11 @@ public class Exemplar implements Serializable {
         this.codigoLivro = codigoLivro;
     }
 
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,7 +53,7 @@ public class Exemplar implements Serializable {
     }
 
     public void setStatus(boolean status) {
-        this. status = status;
+        this.status = status;
     }
 
     public String getCodigoLivro() {
@@ -58,10 +61,9 @@ public class Exemplar implements Serializable {
     }
 
     public void setCodigoLivro(String codigoLivro) {
-        this. codigoLivro = codigoLivro;
+        this.codigoLivro = codigoLivro;
     }
-    
-    
+
     public List<Emprestimo> getEmprestimo() {
         return emprestimo;
     }
@@ -70,32 +72,36 @@ public class Exemplar implements Serializable {
         this.emprestimo = emprestimo;
     }
 
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object)
-    {
+    public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Exemplar)) {
             return false;
         }
-        Exemplar other = (Exemplar)object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
+        Exemplar other = (Exemplar) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "br.com.modelo.Exemplar[ id=" + id + "]";
     }
 }

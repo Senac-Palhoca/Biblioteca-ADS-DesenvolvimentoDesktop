@@ -198,29 +198,33 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         if (validarCampo()) {
             sessao = HibernateUtil.abrirConexao();
 
-            if (livro == null) {
-                livro = new Livro(tfTitulo.getText(), tfAutor.getText(),
-                        tfEdicao.getText(), tfEditora.getText(), tfIsbn.getText());
-                exemplar = new Exemplar(tfCodigo.getText());
-            } else {
-                livro.setTitulo(tfTitulo.getText());
-                livro.setAutor(tfAutor.getText());
-                livro.setEdicao(tfEdicao.getText());
-                livro.setEditora(tfEditora.getText());
-                livro.setIsbn(tfIsbn.getText());
-                exemplar.setCodigoLivro(tfCodigo.getText());
-            }
-
             try {
+
+                if (livro == null) {
+                    livro = new Livro(tfTitulo.getText(), tfAutor.getText(),
+                            tfEdicao.getText(), tfEditora.getText(), tfIsbn.getText());
+                    exemplar = new Exemplar(tfCodigo.getText());
+                    exemplar.setLivro(livro);
+                } else {
+                    livro.setTitulo(tfTitulo.getText());
+                    livro.setAutor(tfAutor.getText());
+                    livro.setEdicao(tfEdicao.getText());
+                    livro.setEditora(tfEditora.getText());
+                    livro.setIsbn(tfIsbn.getText());
+                    exemplar.setCodigoLivro(tfCodigo.getText());
+                }
+
                 livroDao.salvarOuAlterar(livro, sessao);
                 JOptionPane.showMessageDialog(null, "Salvo com sucesso");
                 limpar();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar");
+            } finally {
+                sessao.close();
             }
         }
 
-        Principal.pnPrincipal.AbrirPanel(new PnLivro());
+//        Principal.pnPrincipal.AbrirPanel(new PnLivro());
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
