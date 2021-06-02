@@ -26,7 +26,7 @@ public class ExemplarDaoImplTest {
         exemplarDao = new ExemplarDaoImpl();
     }
 
-//    @Test
+    @Test
     public void testListarTodos() {
         gerarExemplarBd();
         sessao = HibernateUtil.abrirConexao();
@@ -45,7 +45,7 @@ public class ExemplarDaoImplTest {
 //        assertFalse(exemplars.isEmpty());
     }
 
-//    @Test
+    @Test
     public void testPesquisarPorId() {
         gerarExemplarBd();
         sessao = HibernateUtil.abrirConexao();
@@ -54,7 +54,7 @@ public class ExemplarDaoImplTest {
         assertNotNull(exemplarId);
     }
 
-//    @Test
+    @Test
     public void testSalvar() {
         exemplar = new Exemplar(gerarCodigoLivro());
         sessao = HibernateUtil.abrirConexao();
@@ -63,7 +63,7 @@ public class ExemplarDaoImplTest {
         assertNotNull(exemplar.getId());
     }
 
-//    @Test
+    @Test
     public void testAlterar() {
         gerarExemplarBd();
         sessao = HibernateUtil.abrirConexao();

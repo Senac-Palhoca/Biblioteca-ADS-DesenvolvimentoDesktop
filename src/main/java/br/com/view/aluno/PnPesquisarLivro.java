@@ -5,17 +5,32 @@
  */
 package br.com.view.aluno;
 
+import br.com.dao.HibernateUtil;
+import br.com.dao.LivroDao;
+import br.com.dao.LivroDaoImpl;
+import br.com.model.Livro;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
 /**
  *
  * @author Felip
  */
 public class PnPesquisarLivro extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PnBuscarLivro
-     */
+    private Session sessao;
+    private Livro livro;
+    private LivroDao livroDao;
+    private List<Livro> livros;
+    private DefaultTableModel tabelaModelo;
+
     public PnPesquisarLivro() {
         initComponents();
+        livroDao = new LivroDaoImpl();
     }
 
     /**
@@ -32,7 +47,7 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLivro = new javax.swing.JTable();
         tfTituloAutor = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lbTituloAutor = new javax.swing.JLabel();
         btBuscar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -42,22 +57,27 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
 
         tbLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Título", "Autor", "Editora", "Isbn", "Exemplares Disponíveis", "Qtd. Exemplares"
+                "Título", "Autor", "Editora", "Isbn"
             }
         ));
         jScrollPane1.setViewportView(tbLivro);
 
         tfTituloAutor.setToolTipText("Digite o titulo do liro ou o autor que deseja pesquisar");
 
-        jLabel2.setText("Título/Autor:");
+        lbTituloAutor.setText("Título/Autor:");
 
         btBuscar.setText("Buscar");
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -77,7 +97,7 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
                                 .addGap(20, 20, 20)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
+                                        .addComponent(lbTituloAutor)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -97,7 +117,7 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(lbTituloAutor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfTituloAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -108,13 +128,52 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        if (!validarCampo()) {
+            try {
+                sessao = HibernateUtil.abrirConexao();
+                livros = livroDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
+                if (livros.isEmpty()) {
+                    if (tabelaModelo != null) {
+                        tabelaModelo.setNumRows(0);
+                    }
+                    JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
+                } else {
+                    popularTabela();
+                }
+            } catch (HibernateException e) {
+                System.err.println("Erro ao pesquisar " + e.getMessage());
+            } finally {
+                sessao.close();
+            }
+    }//GEN-LAST:event_btBuscarActionPerformed
+    }
 
+    private void popularTabela() {
+        tabelaModelo = (DefaultTableModel) tbLivro.getModel();
+        tabelaModelo.setNumRows(0);
+        String ativo;
+        for (Livro livro : livros) {
+            tabelaModelo.addRow(new Object[]{livro.getTitulo(), livro.getAutor(), livro.getEditora(), livro.getIsbn()});
+        }
+    }
+
+    private boolean validarCampo() {
+        boolean erro = false;
+        String livro = tfTituloAutor.getText().trim();
+        if (livro.length() <= 3) {
+            JOptionPane.showMessageDialog(null, "Informe um título válido!");
+            erro = true;
+        }
+        return erro;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbTituloAutor;
     private javax.swing.JTable tbLivro;
     private javax.swing.JTextField tfTituloAutor;
     // End of variables declaration//GEN-END:variables

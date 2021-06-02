@@ -5,8 +5,14 @@
  */
 package br.com.view.funcionario;
 
+import br.com.dao.ExemplarDao;
+import br.com.dao.ExemplarDaoImpl;
+import br.com.dao.LivroDao;
+import br.com.dao.LivroDaoImpl;
+import br.com.model.Exemplar;
 import br.com.model.Livro;
 import br.com.view.Principal;
+import org.hibernate.Session;
 
 /**
  *
@@ -14,11 +20,11 @@ import br.com.view.Principal;
  */
 public class PnLivro extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PnCadastrarLivro
-     */
+
+
     public PnLivro() {
         initComponents();
+
     }
 
     /**
@@ -53,7 +59,7 @@ public class PnLivro extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Título", "Autor", "ISBN", "Exemplares Disponíveis", "Total Exemplares"
+                "Título", "Autor", "Editora", "Edição", "Código"
             }
         ));
         jScrollPane1.setViewportView(tbLivro);

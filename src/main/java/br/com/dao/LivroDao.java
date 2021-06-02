@@ -18,6 +18,6 @@ public interface LivroDao extends BaseDao<Livro, Long>{
     
     List<Livro> listarTodo(Session sessao) throws HibernateException;
     
-    List<Livro> pesquisarPorTitulo(String titulo, Session sessao) throws HibernateException;
+    List<Livro> pesquisarPorTituloAutor(String titulo, String autor, Session sessao) throws HibernateException;
     
 }

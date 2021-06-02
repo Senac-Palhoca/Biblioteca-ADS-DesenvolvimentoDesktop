@@ -25,16 +25,15 @@ public class Livro implements Serializable {
     private String titulo;
     @Column(nullable = false)
     private String autor;
-    @Column(nullable = false)
     private String edicao;
     @Column(nullable = false)
     private String editora;
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_livro")
-    private List<Exemplar> exemplares;
+    private Exemplar exemplar;
 
     public Livro() {
     }

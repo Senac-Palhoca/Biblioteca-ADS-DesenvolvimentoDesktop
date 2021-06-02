@@ -20,9 +20,8 @@ public class Exemplar implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private boolean status;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String codigoLivro;
     
     @OneToMany(mappedBy = "exemplar")

@@ -24,10 +24,10 @@ public class LivroDaoImpl extends BaseDaoImpl<Livro, Long> implements LivroDao, 
     }
 
     @Override
-    public List<Livro> pesquisarPorTitulo(String titulo, Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Livro where nome like :titulo");
+    public List<Livro> pesquisarPorTituloAutor(String titulo, String autor, Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery("from Livro where titulo like :titulo or autor like :autor");
         consulta.setParameter("titulo", "%" + titulo + "%");
+        consulta.setParameter("autor", "%" + autor + "%");
         return consulta.list();
     }
-
 }
