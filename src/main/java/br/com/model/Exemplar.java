@@ -25,9 +25,6 @@ public class Exemplar implements Serializable {
     @Column(nullable = false, unique = true)
     private String codigoLivro;
 
-    @OneToMany(mappedBy = "exemplar")
-    private List<Emprestimo> emprestimo;
-
     @ManyToOne
     @JoinColumn(name = "id_livro")
     private Livro livro;
@@ -62,14 +59,6 @@ public class Exemplar implements Serializable {
 
     public void setCodigoLivro(String codigoLivro) {
         this.codigoLivro = codigoLivro;
-    }
-
-    public List<Emprestimo> getEmprestimo() {
-        return emprestimo;
-    }
-
-    public void setEmprestimo(List<Emprestimo> emprestimo) {
-        this.emprestimo = emprestimo;
     }
 
     public Livro getLivro() {
