@@ -17,7 +17,7 @@ import org.hibernate.Session;
  */
 public interface ExemplarDao extends BaseDao<Exemplar, Long>{
     
-    List<Exemplar> pesquisarPorLivro(Livro livro, Session sessao) throws HibernateException;
+    List<Exemplar> pesquisarPorTituloLivro(String titulo, Session sessao) throws HibernateException;
     
     List<Exemplar> listarTodos(Session sessao) throws HibernateException;
     

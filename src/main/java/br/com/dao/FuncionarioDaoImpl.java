@@ -24,7 +24,7 @@ public class FuncionarioDaoImpl extends BaseDaoImpl<Funcionario, Long> implement
 
     @Override
     public List<Funcionario> listarTodos(Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery(("FROM Funcionario"));
+        Query consulta = sessao.createQuery(("FROM Funcionario order by nome"));
         return consulta.list();
     }
     

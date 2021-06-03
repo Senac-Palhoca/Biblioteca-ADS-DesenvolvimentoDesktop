@@ -75,7 +75,7 @@ public class EmprestimoDaoImplTest {
     public void testListarTodos() {
         gerarEmprestimoBd();
         sessao = HibernateUtil.abrirConexao();
-        List<Emprestimo> emprestimos = emprestimoDao.listarTodos(sessao);
+        emprestimos = emprestimoDao.listarTodos(sessao);
         sessao.close();
         boolean isEmpty = emprestimos.isEmpty();
         assertFalse(isEmpty);
@@ -168,13 +168,16 @@ public class EmprestimoDaoImplTest {
         emprestimos = emprestimoDao.listarAtrasados(sessao);
         sessao.close();
 
-        for (Emprestimo emp : emprestimos) {
-            System.out.println(emp.getDataPrevista());
-            System.out.println(emp.getDataRetirada());
-            System.out.println(emp.getAluno().getNome());
-            System.out.println(emp.getExemplar().getLivro().getTitulo());
-            System.out.println("");
-        }
         assertTrue(!emprestimos.isEmpty());
+    }
+    
+    public Emprestimo gerarEmprestimoAlunoBd(Aluno aluno) {
+        emprestimo = new Emprestimo(null, new Date(), new Date(), new Date());
+        emprestimo.setAluno(aluno);
+        sessao = HibernateUtil.abrirConexao();
+        emprestimoDao.salvarOuAlterar(emprestimo, sessao);
+        sessao.close();
+ 
+        return emprestimo;
     }
 }

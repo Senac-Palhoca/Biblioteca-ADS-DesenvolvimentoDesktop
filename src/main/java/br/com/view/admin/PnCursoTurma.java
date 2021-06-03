@@ -93,7 +93,6 @@ public class PnCursoTurma extends javax.swing.JPanel {
         txFaseTurma = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         ckAbertoTurma = new javax.swing.JCheckBox();
-        btSalvarTurma = new javax.swing.JButton();
         cbPeriodo = new javax.swing.JComboBox<>();
         cbCurso = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
@@ -101,6 +100,8 @@ public class PnCursoTurma extends javax.swing.JPanel {
         btListarTurmas = new javax.swing.JButton();
         btALterar = new javax.swing.JButton();
         btDeletarTurma = new javax.swing.JButton();
+        btSalvarTurma = new javax.swing.JButton();
+        btLimpar = new javax.swing.JButton();
         txCursoSelecionado = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         btDeletarCurso = new javax.swing.JButton();
@@ -170,14 +171,12 @@ public class PnCursoTurma extends javax.swing.JPanel {
         ckAbertoTurma.setBackground(new java.awt.Color(204, 204, 204));
         ckAbertoTurma.setText("Ativo");
 
-        btSalvarTurma.setText("Salvar");
-        btSalvarTurma.addActionListener(new java.awt.event.ActionListener() {
+        cbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Matutino", "Vespertino", "Noturno" }));
+        cbPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSalvarTurmaActionPerformed(evt);
+                cbPeriodoActionPerformed(evt);
             }
         });
-
-        cbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Matutino", "Vespertino", "Noturno" }));
 
         cbCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
 
@@ -197,14 +196,12 @@ public class PnCursoTurma extends javax.swing.JPanel {
                             .addGroup(pnTurmaLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(cbPeriodo, 0, 170, Short.MAX_VALUE))
+                            .addComponent(cbPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(pnTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnTurmaLayout.createSequentialGroup()
-                                .addComponent(cbAno, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(174, 174, 174)
-                                .addComponent(btSalvarTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6)))
+                            .addComponent(cbAno, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(271, 271, 271))
                     .addGroup(pnTurmaLayout.createSequentialGroup()
                         .addGroup(pnTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -240,22 +237,17 @@ public class PnCursoTurma extends javax.swing.JPanel {
                             .addComponent(txFaseTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(ckAbertoTurma))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTurmaLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(btSalvarTurma))
                     .addGroup(pnTurmaLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnTurmaLayout.createSequentialGroup()
-                                .addGroup(pnTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6))
-                                .addGap(26, 26, 26))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cbAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 9, Short.MAX_VALUE))
+                        .addGroup(pnTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6))
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         btListarTurmas.setText("Listar turmas");
@@ -281,6 +273,20 @@ public class PnCursoTurma extends javax.swing.JPanel {
             }
         });
 
+        btSalvarTurma.setText("Salvar");
+        btSalvarTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarTurmaActionPerformed(evt);
+            }
+        });
+
+        btLimpar.setText("Limpar Campos");
+        btLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnCursoTurmaLayout = new javax.swing.GroupLayout(pnCursoTurma);
         pnCursoTurma.setLayout(pnCursoTurmaLayout);
         pnCursoTurmaLayout.setHorizontalGroup(
@@ -288,21 +294,20 @@ public class PnCursoTurma extends javax.swing.JPanel {
             .addGroup(pnCursoTurmaLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(pnCursoTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(pnTurma, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
                     .addGroup(pnCursoTurmaLayout.createSequentialGroup()
                         .addComponent(btListarTurmas)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btALterar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btDeletarTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnCursoTurmaLayout.createSequentialGroup()
-                        .addGroup(pnCursoTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pnTurma, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnCursoTurmaLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(21, 21, 21))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btSalvarTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         pnCursoTurmaLayout.setVerticalGroup(
             pnCursoTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,12 +318,14 @@ public class PnCursoTurma extends javax.swing.JPanel {
                 .addGroup(pnCursoTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btListarTurmas)
                     .addComponent(btALterar)
-                    .addComponent(btDeletarTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btDeletarTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSalvarTurma)
+                    .addComponent(btLimpar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         txCursoSelecionado.setEditable(false);
@@ -414,22 +421,24 @@ public class PnCursoTurma extends javax.swing.JPanel {
                         .addGap(3, 3, 3)
                         .addComponent(txCursoSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btAddCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddCursoActionPerformed
-        if (txCurso.getText().trim().isEmpty()) {
-            return;
+        if (txCurso.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Você deve preencer o nome.");
+        } else {
+            sessao = HibernateUtil.abrirConexao();
+            CursoDao impl = new CursoDaoImpl();
+            Curso newCurso = new Curso(null, txCurso.getText());
+            impl.salvarOuAlterar(newCurso, sessao);
+            sessao.close();
+            listarCurso();
+            txCurso.setText("");
+            JOptionPane.showMessageDialog(null, "Curso cadastrado com sucesso.");
         }
-        sessao = HibernateUtil.abrirConexao();
-        CursoDao impl = new CursoDaoImpl();
-        Curso newCurso = new Curso(null, txCurso.getText());
-        impl.salvarOuAlterar(newCurso, sessao);
-        sessao.close();
-        listarCurso();
-        txCurso.setText("");
     }//GEN-LAST:event_btAddCursoActionPerformed
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
@@ -446,6 +455,7 @@ public class PnCursoTurma extends javax.swing.JPanel {
             listarCurso();
             btAlterar.setText("Alterar");
             txCursoSelecionado.setEditable(false);
+            JOptionPane.showMessageDialog(null, "Curso alterado com sucesso.");
         }
     }//GEN-LAST:event_btAlterarActionPerformed
 
@@ -466,43 +476,51 @@ public class PnCursoTurma extends javax.swing.JPanel {
     }//GEN-LAST:event_btDeletarCursoActionPerformed
 
     private void btSalvarTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarTurmaActionPerformed
-        turma = new Turma();
+        if (cbAno.getSelectedIndex() != 0
+                || cbCurso.getSelectedIndex() != 0
+                || cbPeriodo.getSelectedIndex() != 0
+                || !txNomeTurma.getText().isEmpty()
+                || !txFaseTurma.getText().isEmpty()) {
+            turma = new Turma();
 
-        sessao = HibernateUtil.abrirConexao();
-        TurmaDao impl = new TurmaDaoImpl();
+            sessao = HibernateUtil.abrirConexao();
+            TurmaDao impl = new TurmaDaoImpl();
 
-        int cursoSelecionado = cbCurso.getSelectedIndex() - 1;
+            int cursoSelecionado = cbCurso.getSelectedIndex() - 1;
 
-        if (btSalvarTurma.getText() == "Salvar") {
+            if (btSalvarTurma.getText() == "Salvar") {
 
-            turma.setNome(txNomeTurma.getText());
-            turma.setFase(txFaseTurma.getText());
-            turma.setAno(cbAno.getSelectedItem().toString());
-            turma.setPeriodo(cbPeriodo.getSelectedItem().toString());
-            turma.setAberto(ckAbertoTurma.isSelected());
-            turma.setCurso(cursosCombo.get(cursoSelecionado));
-            impl.salvarOuAlterar(turma, sessao);
-            sessao.close();
+                turma.setNome(txNomeTurma.getText());
+                turma.setFase(txFaseTurma.getText());
+                turma.setAno(cbAno.getSelectedItem().toString());
+                turma.setPeriodo(cbPeriodo.getSelectedItem().toString());
+                turma.setAberto(ckAbertoTurma.isSelected());
+                turma.setCurso(cursosCombo.get(cursoSelecionado));
+                impl.salvarOuAlterar(turma, sessao);
+                sessao.close();
 
-            if (turma.getId() != null) {
-                JOptionPane.showMessageDialog(null, "Turma registrada com sucesso.");
+                if (turma.getId() != null) {
+                    JOptionPane.showMessageDialog(null, "Turma registrada com sucesso.");
+                    btListarTurmasActionPerformed(evt);
+                    limparCamposTurma();
+                }
+            } else {
+
+                turmaAlterar.setNome(txNomeTurma.getText());
+                turmaAlterar.setFase(txFaseTurma.getText());
+                turmaAlterar.setAno(cbAno.getSelectedItem().toString());
+                turmaAlterar.setPeriodo(cbPeriodo.getSelectedItem().toString());
+                turmaAlterar.setAberto(ckAbertoTurma.isSelected());
+                turmaAlterar.setCurso(cursosCombo.get(cursoSelecionado));
+                impl.salvarOuAlterar(turmaAlterar, sessao);
+                sessao.close();
+                JOptionPane.showMessageDialog(null, "Turma alterada com sucesso.");
                 btListarTurmasActionPerformed(evt);
                 limparCamposTurma();
+                btSalvarTurma.setText("Salvar");
             }
         } else {
-
-            turmaAlterar.setNome(txNomeTurma.getText());
-            turmaAlterar.setFase(txFaseTurma.getText());
-            turmaAlterar.setAno(cbAno.getSelectedItem().toString());
-            turmaAlterar.setPeriodo(cbPeriodo.getSelectedItem().toString());
-            turmaAlterar.setAberto(ckAbertoTurma.isSelected());
-            turmaAlterar.setCurso(cursosCombo.get(cursoSelecionado));
-            impl.salvarOuAlterar(turmaAlterar, sessao);
-            sessao.close();
-            JOptionPane.showMessageDialog(null, "Turma alterada com sucesso.");
-            btListarTurmasActionPerformed(evt);
-            limparCamposTurma();
-            btSalvarTurma.setText("Salvar");
+            JOptionPane.showMessageDialog(null, "Você deve selecionar todos os campos.");
         }
 
     }//GEN-LAST:event_btSalvarTurmaActionPerformed
@@ -578,11 +596,24 @@ public class PnCursoTurma extends javax.swing.JPanel {
         cursoAlterar = turmas.get(indiceTurma).getCurso();
         turmaAlterar = turmas.get(indiceTurma);
 
+        cbCurso.setSelectedItem(turmaAlterar.getCurso().getNome());
+        cbPeriodo.setSelectedItem(turmaAlterar.getPeriodo());
+        cbAno.setSelectedItem(turmaAlterar.getAno());
+        ckAbertoTurma.setSelected(turmaAlterar.isAberto());
+
         txNomeTurma.setText(turmas.get(indiceTurma).getNome());
         txFaseTurma.setText(turmas.get(indiceTurma).getFase());
         cbAno.setToolTipText(turmas.get(indiceTurma).getAno());
-        btSalvarTurma.setText("Alterar");
+        btSalvarTurma.setText("Salvar alteração");
     }//GEN-LAST:event_btALterarActionPerformed
+
+    private void cbPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPeriodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbPeriodoActionPerformed
+
+    private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
+        limparCamposTurma();
+    }//GEN-LAST:event_btLimparActionPerformed
 
     private void populaTabela() {
         DefaultListModel lista = new DefaultListModel();
@@ -600,6 +631,7 @@ public class PnCursoTurma extends javax.swing.JPanel {
     private javax.swing.JButton btAlterar;
     private javax.swing.JButton btDeletarCurso;
     private javax.swing.JButton btDeletarTurma;
+    private javax.swing.JButton btLimpar;
     private javax.swing.JButton btListarTurmas;
     private javax.swing.JButton btPesquisarCurso;
     private javax.swing.JButton btSalvarTurma;

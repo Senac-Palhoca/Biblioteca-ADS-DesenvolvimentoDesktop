@@ -25,10 +25,9 @@ public class ExemplarDaoImpl extends BaseDaoImpl<Exemplar, Long> implements Exem
     }
 
     @Override
-    public List<Exemplar> pesquisarPorLivro(Livro livro, Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Exemplar where nome like :titulo");
-        consulta.setParameter("titulo", "%" + livro.getTitulo() + "%");
+    public List<Exemplar> pesquisarPorTituloLivro(String titulo, Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery("from Exemplar e where e.livro.titulo like :titulo");
+        consulta.setParameter("titulo", "%" + titulo + "%");
         return consulta.list();
     }
-
 }
