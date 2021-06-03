@@ -30,7 +30,7 @@ public class AlunoDaoImpl extends BaseDaoImpl<Aluno, Long> implements AlunoDao{
     
     @Override
     public List<Aluno> listarTodos(Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery(("FROM Aluno"));
+        Query consulta = sessao.createQuery(("FROM Aluno order by nome"));
         return consulta.list();
     }
 

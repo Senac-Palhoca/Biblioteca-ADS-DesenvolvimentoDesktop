@@ -6,6 +6,7 @@
 package br.com.dao;
 
 import br.com.model.Exemplar;
+import br.com.model.Livro;
 import static br.com.util.UtilGerador.*;
 import java.util.*;
 import org.junit.Test;
@@ -21,6 +22,7 @@ public class ExemplarDaoImplTest {
     private Exemplar exemplar;
     private ExemplarDao exemplarDao;
     private Session sessao;
+    private Livro livro;
 
     public ExemplarDaoImplTest() {
         exemplarDao = new ExemplarDaoImpl();
@@ -28,6 +30,9 @@ public class ExemplarDaoImplTest {
 
     @Test
     public void testListarTodos() {
+        System.out.println("######################");
+        System.out.println("# Teste Listar Todos #");
+        System.out.println("######################");
         gerarExemplarBd();
         sessao = HibernateUtil.abrirConexao();
         List<Exemplar> exemplars = exemplarDao.listarTodos(sessao);
@@ -36,17 +41,23 @@ public class ExemplarDaoImplTest {
         assertFalse(isEmpty);
     }
 
-//    @Test
-    public void testPesquisarPorTitulo() {
-//        gerarExemplarBd();
-//        sessao = HibernateUtil.abrirConexao();
-//        List<Exemplar> exemplars = exemplarDao.pesquisarPorTitulo(exemplar.getCodigoLivro().substring(1, 3), sessao);
-//        sessao.close();
-//        assertFalse(exemplars.isEmpty());
+    @Test
+    public void pesquisarPorTituloLivro() {
+        System.out.println("##############################");
+        System.out.println("# Pesquisar Por Titulo Livro #");
+        System.out.println("##############################");
+        gerarExemplarBd();
+        sessao = HibernateUtil.abrirConexao();
+        List<Exemplar> exemplars = exemplarDao.pesquisarPorTituloLivro("java", sessao);
+        sessao.close();
+        assertNotNull(exemplars.isEmpty());
     }
 
     @Test
     public void testPesquisarPorId() {
+        System.out.println("##########################");
+        System.out.println("# Teste Pesquisar Por Id #");
+        System.out.println("##########################");
         gerarExemplarBd();
         sessao = HibernateUtil.abrirConexao();
         Exemplar exemplarId = exemplarDao.pesquisarPorId(exemplar.getId(), sessao);
@@ -56,6 +67,9 @@ public class ExemplarDaoImplTest {
 
     @Test
     public void testSalvar() {
+        System.out.println("################");
+        System.out.println("# Teste Salvar #");
+        System.out.println("################");
         exemplar = new Exemplar(gerarCodigoLivro());
         sessao = HibernateUtil.abrirConexao();
         exemplarDao.salvarOuAlterar(exemplar, sessao);
@@ -65,6 +79,9 @@ public class ExemplarDaoImplTest {
 
     @Test
     public void testAlterar() {
+        System.out.println("#################");
+        System.out.println("# Teste Alterar #");
+        System.out.println("#################");
         gerarExemplarBd();
         sessao = HibernateUtil.abrirConexao();
         Exemplar exemplarId = exemplarDao.pesquisarPorId(exemplar.getId(), sessao);
@@ -74,6 +91,9 @@ public class ExemplarDaoImplTest {
 
 //    @Test
     public void testExcluir() {
+        System.out.println("#################");
+        System.out.println("# Teste Excluir #");
+        System.out.println("#################");
         gerarExemplarBd();
         sessao = HibernateUtil.abrirConexao();
         exemplarDao.excluir(exemplar, sessao);

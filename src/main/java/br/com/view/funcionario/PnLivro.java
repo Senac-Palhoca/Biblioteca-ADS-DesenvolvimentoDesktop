@@ -53,13 +53,13 @@ public class PnLivro extends javax.swing.JPanel {
 
         tbLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Título", "Autor", "Editora", "Edição", "Código"
+                "Título", "Autor", "Editora", "Edição", "Código", "Status"
             }
         ));
         jScrollPane1.setViewportView(tbLivro);
