@@ -5,6 +5,7 @@
  */
 package br.com.dao;
 
+import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.util.UtilGerador;
 import java.util.*;
@@ -25,9 +26,11 @@ public class EmprestimoDaoImplTest {
         emprestimoDao = new EmprestimoDaoImpl();
     }
     
-    //@Test
+    @Test
     public void testSalvar() {
+        AlunoDaoImplTest alunoTest = new AlunoDaoImplTest();
         emprestimo = new Emprestimo(null, new Date(), new Date(), new Date());
+        emprestimo.setAluno(alunoTest.gerarAlunoBd());
         sessao = HibernateUtil.abrirConexao();
         emprestimoDao.salvarOuAlterar(emprestimo, sessao);
         sessao.close();
@@ -91,6 +94,16 @@ public class EmprestimoDaoImplTest {
         }else{
            emprestimo = emprestimos.get(0);
         }
+        return emprestimo;
+    }
+    
+    public Emprestimo gerarEmprestimoAlunoBd(Aluno aluno) {
+        emprestimo = new Emprestimo(null, new Date(), new Date(), new Date());
+        emprestimo.setAluno(aluno);
+        sessao = HibernateUtil.abrirConexao();
+        emprestimoDao.salvarOuAlterar(emprestimo, sessao);
+        sessao.close();
+ 
         return emprestimo;
     }
 }

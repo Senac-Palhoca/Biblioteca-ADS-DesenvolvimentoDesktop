@@ -13,7 +13,7 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "idPessoa")
 public class Aluno extends Pessoa implements Serializable {
     
-    @OneToMany(mappedBy = "aluno")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno", fetch = FetchType.EAGER)
     private List<Emprestimo> emprestimos;
     
     @ManyToOne()
