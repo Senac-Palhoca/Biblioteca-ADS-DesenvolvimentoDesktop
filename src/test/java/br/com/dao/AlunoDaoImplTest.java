@@ -120,10 +120,10 @@ public class AlunoDaoImplTest {
         sessao = HibernateUtil.abrirConexao();
         Date data = aluno.getEmprestimos().get(0).getDataRetirada();
  
-        List<Aluno> alunos = alunoDao.listarRankingMes(data, sessao);
+        List<Object[]> objAlunos = alunoDao.listarRankingMes(data, sessao);
         sessao.close();
         //assertNotNull(data);
-        assertFalse(alunos.isEmpty());
+        assertFalse(objAlunos.isEmpty());
     }
     
     public Aluno gerarAlunoBd() {
