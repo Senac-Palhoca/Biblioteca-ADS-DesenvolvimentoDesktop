@@ -26,20 +26,20 @@ public class AlunoDaoImplTest {
         alunoDao = new AlunoDaoImpl();
     }
     
-//    @Test
+    @Test
     public void testSalvar() {
-        PerfilDao perfilDao = new PerfilDaoImpl();
-        TurmaDao turmaDao = new TurmaDaoImpl();
-       aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarCPF(), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
+        PerfilDaoImplTest perfilTest = new PerfilDaoImplTest();
+        TurmaDaoImplTest turmaTest = new TurmaDaoImplTest();
+        aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarCPF(), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
         sessao = HibernateUtil.abrirConexao();
-        aluno.setPerfil(perfilDao.pesquisarPerfil(sessao).get(3));
-        aluno.setTurma(turmaDao.pesquisarPorId(1L, sessao));
+        aluno.setPerfil(perfilTest.gerarPerfilBd());
+        aluno.setTurma(turmaTest.buscarTurmaBd());
         alunoDao.salvarOuAlterar(aluno, sessao);
         sessao.close();
         assertNotNull(aluno.getId());
     }
     
-    //@Test
+    @Test
     public void testAlterar() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -48,7 +48,7 @@ public class AlunoDaoImplTest {
         assertNotNull(alunoId);
     }
     
-   // @Test
+    @Test
     public void testPesquisarPorId() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -57,7 +57,7 @@ public class AlunoDaoImplTest {
         assertNotNull(alunoId);
     }
     
-   // @Test
+    @Test
     public void testPesquisarPorNome() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -66,7 +66,7 @@ public class AlunoDaoImplTest {
         assertFalse(alunos.isEmpty());
     }
     
-    //@Test
+    @Test
     public void testListarTodos() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -76,7 +76,7 @@ public class AlunoDaoImplTest {
         assertFalse(isEmpty);
     }
     
-    //@Test
+    @Test
     public void testExcluir() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -84,6 +84,24 @@ public class AlunoDaoImplTest {
         Aluno alunoExc = alunoDao.pesquisarPorId(aluno.getId(), sessao);
         sessao.close();
         assertNull(alunoExc);
+    }
+    
+    @Test
+    public void testPesquisarPorMatricula(){
+        gerarAlunoBd();
+        sessao = HibernateUtil.abrirConexao();
+        List<Aluno> alunos = alunoDao.pesquisarPorMatricula(aluno.getMatricula(), sessao);
+        sessao.close();
+        assertFalse(alunos.isEmpty());
+    }
+    
+    @Test
+    public void testPesquisarPorTurma(){
+        gerarAlunoBd();
+        sessao = HibernateUtil.abrirConexao();
+        List<Aluno> alunos = alunoDao.pesquisarPorTurma(aluno.getTurma(), sessao);
+        sessao.close();
+        assertFalse(alunos.isEmpty());
     }
     
     public Aluno gerarAlunoBd() {
