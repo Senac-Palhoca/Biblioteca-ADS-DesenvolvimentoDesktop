@@ -6,7 +6,7 @@
 package br.com.dao;
 
 import br.com.model.Aluno;
-import br.com.model.Curso;
+import br.com.model.Turma;
 import java.util.List;
 import org.hibernate.*;
 
@@ -35,12 +35,16 @@ public class AlunoDaoImpl extends BaseDaoImpl<Aluno, Long> implements AlunoDao{
 
     @Override
     public List<Aluno> pesquisarPorMatricula(String matricula, Session sessao) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query consulta = sessao.createQuery("from Aluno where matricula like :matricula");
+        consulta.setParameter("matricula", "%" + matricula + "%");
+        return consulta.list();
     }
 
     @Override
-    public List<Aluno> pesquisarPorCurso(Curso curso, Session sessao) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Aluno> pesquisarPorTurma(Turma turma, Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery("from Aluno where idTurma like :idTurma");
+        consulta.setParameter("idTurma", turma.getId());
+        return consulta.list();
     }
 
     @Override
