@@ -8,10 +8,13 @@ package br.com.view.admin;
 import br.com.dao.*;
 import br.com.dao.HibernateUtil;
 import br.com.model.*;
+import br.com.util.UtilGerador;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
@@ -75,7 +78,7 @@ public class PnUsuario extends javax.swing.JPanel {
             listaAluno.addElement(al);
         });
         
-        lsAluno.setModel(listaAluno);
+        tbAluno.setModel(listaAluno);
     }
     
     private void listarFuncionarios(){
@@ -92,7 +95,7 @@ public class PnUsuario extends javax.swing.JPanel {
             listaFuncionario.addElement(fu);
         });
         
-        lsFuncionario.setModel(listaFuncionario);
+        tbFuncionario.setModel(listaFuncionario);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,7 +110,7 @@ public class PnUsuario extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lsFuncionario = new javax.swing.JList<>();
+        tbFuncionario = new javax.swing.JList<>();
         btAddAluno = new javax.swing.JButton();
         pnUsuarioAtual = new javax.swing.JPanel();
         txNome = new javax.swing.JTextField();
@@ -130,7 +133,7 @@ public class PnUsuario extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         cbTurma = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lsAluno = new javax.swing.JList<>();
+        tbAluno = new javax.swing.JList<>();
         jLabel11 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -141,17 +144,12 @@ public class PnUsuario extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Funcionários");
 
-        lsFuncionario.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        lsFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                lsFuncionarioMousePressed(evt);
+                tbFuncionarioMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(lsFuncionario);
+        jScrollPane1.setViewportView(tbFuncionario);
 
         btAddAluno.setText("Adicionar Novo Usuário");
         btAddAluno.addActionListener(new java.awt.event.ActionListener() {
@@ -160,23 +158,17 @@ public class PnUsuario extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setText("Nome");
+        jLabel3.setText("* Nome");
 
-        jLabel4.setText("Email");
+        jLabel4.setText("* Email");
 
-        txEmail.setText("jTextField1");
+        jLabel5.setText("* Senha");
 
-        jLabel5.setText("Senha");
+        jLabel6.setText("* CPF");
 
-        txSenha.setText("jTextField1");
+        txMatricula.setEditable(false);
 
-        jLabel6.setText("CPF");
-
-        txCPF.setText("jTextField1");
-
-        txMatricula.setText("jTextField1");
-
-        jLabel7.setText("Matricula");
+        jLabel7.setText("Matrícula");
 
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -187,7 +179,7 @@ public class PnUsuario extends javax.swing.JPanel {
 
         btDeletar.setText("Deletar");
 
-        cbPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         cbPerfil.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbPerfilItemStateChanged(evt);
@@ -198,7 +190,7 @@ public class PnUsuario extends javax.swing.JPanel {
 
         jLabel8.setText("Curso");
 
-        cbCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbCursoItemStateChanged(evt);
@@ -207,35 +199,32 @@ public class PnUsuario extends javax.swing.JPanel {
 
         jLabel9.setText("Turma");
 
-        cbTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
 
         javax.swing.GroupLayout pnAlunoAtributoLayout = new javax.swing.GroupLayout(pnAlunoAtributo);
         pnAlunoAtributo.setLayout(pnAlunoAtributoLayout);
         pnAlunoAtributoLayout.setHorizontalGroup(
             pnAlunoAtributoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnAlunoAtributoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(pnAlunoAtributoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(cbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnAlunoAtributoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbTurma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnAlunoAtributoLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(cbTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)))
         );
         pnAlunoAtributoLayout.setVerticalGroup(
             pnAlunoAtributoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAlunoAtributoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnAlunoAtributoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnAlunoAtributoLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnAlunoAtributoLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                    .addComponent(cbTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnAlunoAtributoLayout.createSequentialGroup()
+                        .addGroup(pnAlunoAtributoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -323,17 +312,12 @@ public class PnUsuario extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        lsAluno.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        lsAluno.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbAluno.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                lsAlunoMousePressed(evt);
+                tbAlunoMousePressed(evt);
             }
         });
-        jScrollPane2.setViewportView(lsAluno);
+        jScrollPane2.setViewportView(tbAluno);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel11.setText("Alunos");
@@ -392,23 +376,14 @@ public class PnUsuario extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lsFuncionarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsFuncionarioMousePressed
-        DefaultListModel aa = (DefaultListModel) this.lsFuncionario.getModel();
-        funcionario = (Funcionario)aa.get(lsFuncionario.getSelectedIndex());
+    private void tbFuncionarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbFuncionarioMousePressed
+        DefaultListModel aa = (DefaultListModel) this.tbFuncionario.getModel();
+        funcionario = (Funcionario)aa.get(tbFuncionario.getSelectedIndex());
         pessoa = funcionario;
         if(!pnUsuarioAtual.isVisible())
             pnUsuarioAtual.setVisible(true);
         preencherCampos();
-    }//GEN-LAST:event_lsFuncionarioMousePressed
-
-    private void lsAlunoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsAlunoMousePressed
-        DefaultListModel aa = (DefaultListModel) this.lsAluno.getModel();
-        aluno = (Aluno)aa.get(lsAluno.getSelectedIndex());
-        pessoa = aluno;
-        if(!pnUsuarioAtual.isVisible())
-            pnUsuarioAtual.setVisible(true);
-        preencherCampos();
-    }//GEN-LAST:event_lsAlunoMousePressed
+    }//GEN-LAST:event_tbFuncionarioMousePressed
 
     private void btAddAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddAlunoActionPerformed
         pessoa = new Pessoa();
@@ -422,37 +397,66 @@ public class PnUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_cbPerfilItemStateChanged
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        sessao = HibernateUtil.abrirConexao();
-
-        if(cbPerfil.getSelectedItem().toString().equalsIgnoreCase("aluno")){
-            if(aluno == null)
-                aluno = new Aluno();
-            aluno.setNome(txNome.getText());
-            aluno.setCpf(txCPF.getText());
-            aluno.setEmail(txEmail.getText());
-            aluno.setMatricula(txMatricula.getText());
-            aluno.setSenha(txSenha.getText());
-            aluno.setPerfil(perfils.get(cbPerfil.getSelectedIndex()));
-            aluno.setTurma(turmas.get(cbTurma.getSelectedIndex()));
+        if (txEmail.getText().contains("@") 
+                || !txNome.getText().isEmpty()
+                || !txSenha.getText().isEmpty()
+                || !txCPF.getText().isEmpty()) {
+            sessao = HibernateUtil.abrirConexao();
             
-            AlunoDao implAluno = new AlunoDaoImpl();
-            implAluno.salvarOuAlterar(aluno, sessao);
-            sessao.close();
-            listarAlunos();
-        }else if(cbPerfil.getSelectedItem().toString().equalsIgnoreCase("bibliotecario") || cbPerfil.getSelectedItem().toString().equalsIgnoreCase("coordenador")){
-            if(funcionario == null)
-                funcionario = new Funcionario();
-            funcionario.setNome(txNome.getText());
-            funcionario.setCpf(txCPF.getText());
-            funcionario.setEmail(txEmail.getText());
-            funcionario.setMatricula(txMatricula.getText());
-            funcionario.setSenha(txSenha.getText());
-            funcionario.setPerfil(perfils.get(cbPerfil.getSelectedIndex()));
-            
-            FuncionarioDao implFunc = new FuncionarioDaoImpl();
-            implFunc.salvarOuAlterar(funcionario, sessao);
-            sessao.close();
-            listarFuncionarios();
+            if (cbPerfil.getSelectedItem().toString().equalsIgnoreCase("aluno")) {
+                if (aluno == null) {
+                    aluno = new Aluno();
+                }
+                aluno.setNome(txNome.getText());
+                aluno.setCpf(txCPF.getText());
+                aluno.setEmail(txEmail.getText());
+                aluno.setMatricula(UtilGerador.gerarNumero(16));
+                aluno.setSenha(txSenha.getText());
+                aluno.setPerfil(perfils.get(cbPerfil.getSelectedIndex()));
+                aluno.setTurma(turmas.get(cbTurma.getSelectedIndex()));
+                try {
+                    
+                    AlunoDao implAluno = new AlunoDaoImpl();
+                    implAluno.salvarOuAlterar(aluno, sessao);
+                    sessao.close();
+                } catch (HibernateException e) {
+                    String erro = e.getCause().toString();
+                    if (erro.contains("Duplicate")) {
+                        JOptionPane.showMessageDialog(null, "Cpf já cadastrado");
+                    }
+                    
+                } finally {
+                      sessao.close();
+                }
+                listarAlunos();
+            } else if (cbPerfil.getSelectedItem().toString().equalsIgnoreCase("bibliotecario") || cbPerfil.getSelectedItem().toString().equalsIgnoreCase("coordenador")) {
+                if (funcionario == null) {
+                    funcionario = new Funcionario();
+                }
+                funcionario.setNome(txNome.getText());
+                funcionario.setCpf(txCPF.getText());
+                funcionario.setEmail(txEmail.getText());
+                funcionario.setMatricula(UtilGerador.gerarNumero(16));
+                funcionario.setSenha(txSenha.getText());
+                funcionario.setPerfil(perfils.get(cbPerfil.getSelectedIndex()));
+                try {
+                FuncionarioDao implFunc = new FuncionarioDaoImpl();
+                implFunc.salvarOuAlterar(funcionario, sessao);
+                sessao.close();
+                } catch (HibernateException e) {
+                    System.out.println(e.getCause());
+                    String erro = e.getCause().toString();
+                    if (erro.contains("Duplicate")) {
+                        JOptionPane.showMessageDialog(null, "Cpf já cadastrado");
+                    }
+                } finally {
+                      sessao.close();
+                      
+                }
+                listarFuncionarios();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Os campos que contém * são obrigatórios.");
         }
         
         
@@ -463,6 +467,15 @@ public class PnUsuario extends javax.swing.JPanel {
             preencherTurma();
         }
     }//GEN-LAST:event_cbCursoItemStateChanged
+
+    private void tbAlunoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAlunoMousePressed
+        DefaultListModel aa = (DefaultListModel) this.tbAluno.getModel();
+        aluno = (Aluno)aa.get(tbAluno.getSelectedIndex());
+        pessoa = aluno;
+        if(!pnUsuarioAtual.isVisible())
+            pnUsuarioAtual.setVisible(true);
+        preencherCampos();
+    }//GEN-LAST:event_tbAlunoMousePressed
 
     private void validarAtributoAluno(){
         if(cbPerfil.getSelectedItem() != null && cbPerfil.getSelectedItem().toString().equals("aluno")){
@@ -532,10 +545,10 @@ public class PnUsuario extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JList<String> lsAluno;
-    private javax.swing.JList<String> lsFuncionario;
     private javax.swing.JPanel pnAlunoAtributo;
     private javax.swing.JPanel pnUsuarioAtual;
+    private javax.swing.JList<String> tbAluno;
+    private javax.swing.JList<String> tbFuncionario;
     private javax.swing.JTextField txCPF;
     private javax.swing.JTextField txEmail;
     private javax.swing.JTextField txMatricula;
