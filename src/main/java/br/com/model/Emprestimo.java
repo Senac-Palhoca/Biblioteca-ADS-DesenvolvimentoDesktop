@@ -24,11 +24,11 @@ public class Emprestimo implements Serializable {
     private Date dataDevolucao;
     
     @ManyToOne()
-    @JoinColumn(name = "idExemplar")
+    @JoinColumn(name = "id_Exemplar")
     private Exemplar exemplar;
     
     @ManyToOne()
-    @JoinColumn(name = "idAluno")
+    @JoinColumn(name = "id_Aluno")
     private Aluno aluno;
 
     public Emprestimo() {

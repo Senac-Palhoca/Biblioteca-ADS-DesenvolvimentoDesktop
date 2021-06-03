@@ -8,22 +8,23 @@ package br.com.dao;
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.model.Turma;
-import java.util.Date;
 import java.util.List;
 import org.hibernate.*;
 
 /**
- *
- * @author Felip
+ * @author Felipe
  */
-public interface EmprestimoDao extends BaseDao<Emprestimo, Long>{
+public interface EmprestimoDao extends BaseDao<Emprestimo, Long> {
+
     List<Emprestimo> pesquisarPorAlunoAberto(Aluno aluno, Session sessao) throws HibernateException;
-    
-    List<Emprestimo> pesquisarPorTurmaMes(Turma turma, Integer mes, Integer ano, Session sessao) throws HibernateException;
-    
-    List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, Integer mes, Integer ano, Session sessao) throws HibernateException;
-    
+
+    List<Emprestimo> pesquisarPorTurmaMes(Turma turma, String mes, String ano, Session sessao) throws HibernateException;
+
+    List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, String mes, String ano, Session sessao) throws HibernateException;
+
     List<Emprestimo> listarTodos(Session sessao) throws HibernateException;
-    
+
     List<Emprestimo> listarTodosEmAberto(Session sessao) throws HibernateException;
+    
+    List<Emprestimo> listarAtrasados(Session sessao) throws HibernateException;
 }

@@ -11,16 +11,18 @@ import br.com.model.Turma;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.*;
+
 /**
  *
  * @author Felip
  */
-public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements EmprestimoDao{
+public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements EmprestimoDao {
+
     @Override
     public Emprestimo pesquisarPorId(Long id, Session sessao) throws HibernateException {
         return (Emprestimo) sessao.get(Emprestimo.class, id);
     }
-    
+
     @Override
     public List<Emprestimo> listarTodos(Session sessao) throws HibernateException {
         Query consulta = sessao.createQuery(("FROM Emprestimo"));
@@ -29,22 +31,40 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
 
     @Override
     public List<Emprestimo> pesquisarPorAlunoAberto(Aluno aluno, Session sessao) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query consulta = sessao.createQuery("from Emprestimo e where e.aluno.id = :aluno and e.dataDevolucao = null");
+        consulta.setParameter("aluno", aluno.getId());
+        return consulta.list();
     }
 
     @Override
-    public List<Emprestimo> pesquisarPorTurmaMes(Turma turma, Integer mes, Integer ano, Session sessao) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Emprestimo> pesquisarPorTurmaMes(Turma turma, String mes, String ano, Session sessao) throws HibernateException {
+        String anoMes = ano + "-" + mes;
+        Query consulta = sessao.createQuery("from Emprestimo e where e.aluno.turma.id = :turma and DATE_FORMAT(e.dataRetirada, '%Y-%m') = :anoMes");
+        consulta.setParameter("turma", turma.getId());
+        consulta.setParameter("anoMes", anoMes);
+        return consulta.list();
     }
 
     @Override
-    public List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, Integer mes, Integer ano, Session sessao) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, String mes, String ano, Session sessao) throws HibernateException {
+        String anoMes = ano + mes;
+        Query consulta = sessao.createQuery("from Emprestimo e where e.aluno.id = :aluno and DATE_FORMAT(e.dataRetirada, '%Y%m') = :anoMes");
+        consulta.setParameter("aluno", aluno.getId());
+        consulta.setParameter("anoMes", anoMes);
+        return consulta.list();
     }
 
     @Override
     public List<Emprestimo> listarTodosEmAberto(Session sessao) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query consulta = sessao.createQuery("from Emprestimo where dataDevolucao = null");
+        return consulta.list();
+    }
+
+    @Override
+    public List<Emprestimo> listarAtrasados(Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery("from Emprestimo where dataPrevista < :data and dataDevolucao = null");
+        consulta.setParameter("data", new Date());
+        return consulta.list();
     }
 
 }
