@@ -5,19 +5,46 @@
  */
 package br.com.view.funcionario;
 
+import br.com.dao.AlunoDaoImpl;
+import br.com.dao.HibernateUtil;
+import br.com.model.Aluno;
+import br.com.model.Emprestimo;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
+
 /**
  *
  * @author Felip
  */
 public class PnRankingLeitura extends javax.swing.JPanel {
-
+    private DefaultTableModel tabelaModelo;
+    private Session sessao;
     /**
      * Creates new form PnRankingLeitura
      */
     public PnRankingLeitura() {
         initComponents();
+        popularTabela();
     }
 
+    private void popularTabela(){
+        AlunoDaoImpl alunoDao = new AlunoDaoImpl();
+        
+        sessao = HibernateUtil.abrirConexao();
+        List<Object[]> objetoAlunos = alunoDao.listarRankingMes(new Date(), sessao);
+        sessao.close();
+        tabelaModelo = (DefaultTableModel) tbRanking.getModel();
+        tabelaModelo.setNumRows(0);
+
+        for(Object[] obj : objetoAlunos) {
+            Aluno aluno = (Aluno)obj[0];
+            Emprestimo emprestimo = (Emprestimo)obj[1];
+           tabelaModelo.addRow(new Object[]{aluno.getNome(), aluno.getTurma().getNome(), aluno.getTurma().getCurso().getNome(), aluno.getEmprestimos().size()});
+        }        
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

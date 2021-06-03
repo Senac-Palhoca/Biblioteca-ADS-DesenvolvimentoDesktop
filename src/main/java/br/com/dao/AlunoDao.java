@@ -23,7 +23,7 @@ public interface AlunoDao extends BaseDao<Aluno, Long>{
     
     List<Aluno> pesquisarPorTurma(Turma turma, Session sessao) throws HibernateException;
     
-    List<Aluno> listarRankingMes(Date data, Session sessao) throws HibernateException;
+    List<Object[]> listarRankingMes(Date data, Session sessao) throws HibernateException;
     
     List<Aluno> listarTodos(Session sessao) throws HibernateException;
     
