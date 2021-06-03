@@ -81,11 +81,6 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         jLabel7.setText("ISBN");
 
         btExcluir.setText("Excluir");
-        btExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btExcluirActionPerformed(evt);
-            }
-        });
 
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -201,8 +196,12 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
             try {
 
                 if (livro == null) {
-                    livro = new Livro(tfTitulo.getText(), tfAutor.getText(),
-                            tfEdicao.getText(), tfEditora.getText(), tfIsbn.getText());
+                    livro = new Livro(
+                            tfTitulo.getText(),
+                            tfAutor.getText(),
+                            tfEdicao.getText(),
+                            tfEditora.getText(),
+                            tfIsbn.getText());
                     exemplar = new Exemplar(tfCodigo.getText());
                     exemplar.setLivro(livro);
                 } else {
@@ -222,23 +221,16 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
             } finally {
                 sessao.close();
             }
-        }
-
-//        Principal.pnPrincipal.AbrirPanel(new PnLivro());
+//            Principal.pnPrincipal.AbrirPanel(new PnLivro());
     }//GEN-LAST:event_btSalvarActionPerformed
-
-    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        //fazer o método de excluir aqui
-
-        Principal.pnPrincipal.AbrirPanel(new PnLivro());
-    }//GEN-LAST:event_btExcluirActionPerformed
+    }
 
     private boolean validarCampo() {
         String mensagem = "";
         boolean erro = false;
 
         String tituloLivro = tfTitulo.getText().trim();
-        if (tituloLivro.length() <= 3) {
+        if (tituloLivro.length() <= 2) {
             mensagem += "Valor inválido para o Título!";
             erro = true;
         }
@@ -252,12 +244,6 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         String editoraLivro = tfEditora.getText().trim();
         if (editoraLivro.length() <= 2) {
             mensagem += "\nValor inválido para o Editora!";
-            erro = true;
-        }
-
-        String edicaoLivro = tfEdicao.getText().trim();
-        if (edicaoLivro.length() < 1) {
-            mensagem += "\nValor inválido para Edição!";
             erro = true;
         }
 

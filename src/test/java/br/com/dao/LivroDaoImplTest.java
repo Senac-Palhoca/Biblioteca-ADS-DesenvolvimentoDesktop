@@ -23,7 +23,9 @@ public class LivroDaoImplTest {
 
         @Test
     public void testSalvar() {
-        System.out.println("Teste Salvar");
+        System.out.println("################");
+        System.out.println("# Teste Salvar #");
+        System.out.println("################");        
         livro = new Livro(gerarTitulo(), gerarNome(), gerarNumero(1), gerarEditora(), gerarNumero(13));
         sessao = HibernateUtil.abrirConexao();
         livroDao.salvarOuAlterar(livro, sessao);
@@ -33,8 +35,9 @@ public class LivroDaoImplTest {
 
     @Test
     public void testAlterar() {
-        System.out.println("Teste Alterar");
-        gerarLivroBd();
+        System.out.println("#################");
+        System.out.println("# Teste Alterar #");
+        System.out.println("#################");         gerarLivroBd();
         sessao = HibernateUtil.abrirConexao();
         Livro livroId = livroDao.pesquisarPorId(livro.getId(), sessao);
         sessao.close();
@@ -43,12 +46,15 @@ public class LivroDaoImplTest {
 
     @Test
     public void testExcluir() {
-        System.out.println("Teste Excluir");
-    }
+        System.out.println("#################");
+        System.out.println("# Teste Excluir #");
+        System.out.println("#################");     }
 
     @Test
     public void testPesquisarPorId() {
-        System.out.println("Teste Pesquisar por ID");
+        System.out.println("##########################");
+        System.out.println("# Teste Pesquisar por ID #");
+        System.out.println("##########################");
         gerarLivroBd();
         sessao = HibernateUtil.abrirConexao();
         Livro livroId = livroDao.pesquisarPorId(livro.getId(), sessao);
@@ -58,7 +64,9 @@ public class LivroDaoImplTest {
 
     @Test
     public void testListarTodo() {
-        System.out.println("Teste Pesquisar Todo");
+        System.out.println("#####################");
+        System.out.println("# Teste Listar Todo #");
+        System.out.println("#####################");         
         gerarLivroBd();
         sessao = HibernateUtil.abrirConexao();
         List<Livro> livros = livroDao.listarTodo(sessao);
@@ -69,7 +77,9 @@ public class LivroDaoImplTest {
 
     @Test
     public void pesquisarPorTituloAutor() {
-        System.out.println("Teste Pesquisar por Titulo ou Autor");
+        System.out.println("####################################");
+        System.out.println("# Teste Pesquisar Por Titulo/Autor #");
+        System.out.println("####################################");
         gerarLivroBd();
         sessao = HibernateUtil.abrirConexao();
         List<Livro> livros = livroDao.pesquisarPorTituloAutor("guerra", "marcelo", sessao);

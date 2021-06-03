@@ -53,7 +53,7 @@ public class UtilGerador {
     }
 
     public static String gerarCodigoLivro() {
-        return gerarCaracter(3) + gerarNumero(6);
+        return "Senac-" + gerarNumero(6);
     }
 
     public static String gerarTitulo() {
