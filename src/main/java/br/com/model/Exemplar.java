@@ -37,6 +37,12 @@ public class Exemplar implements Serializable {
         this.codigoLivro = codigoLivro;
     }
 
+    public Exemplar(String codigoLivro, Livro livro) {
+        this.status = true;
+        this.codigoLivro = codigoLivro;
+        this.livro = livro;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -68,7 +74,7 @@ public class Exemplar implements Serializable {
     public void setLivro(Livro livro) {
         this.livro = livro;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

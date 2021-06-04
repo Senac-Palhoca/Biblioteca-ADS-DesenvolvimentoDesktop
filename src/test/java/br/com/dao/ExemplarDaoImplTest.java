@@ -70,7 +70,7 @@ public class ExemplarDaoImplTest {
         System.out.println("################");
         System.out.println("# Teste Salvar #");
         System.out.println("################");
-        exemplar = new Exemplar(gerarCodigoLivro());
+        exemplar = new Exemplar(gerarCodigoLivro(), livro);
         sessao = HibernateUtil.abrirConexao();
         exemplarDao.salvarOuAlterar(exemplar, sessao);
         sessao.close();
