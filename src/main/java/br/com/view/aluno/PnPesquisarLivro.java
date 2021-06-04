@@ -161,8 +161,8 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
     private boolean validarCampo() {
         boolean erro = false;
         String livro = tfTituloAutor.getText().trim();
-        if (livro.length() <= 3) {
-            JOptionPane.showMessageDialog(null, "Informe um título válido!");
+        if (livro.length() <= 2) {
+            JOptionPane.showMessageDialog(null, "Informe um título ou autor válido!");
             erro = true;
         }
         return erro;

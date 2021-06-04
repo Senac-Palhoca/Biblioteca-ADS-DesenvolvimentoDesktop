@@ -37,6 +37,19 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         this.livro = livro;
         this.exemplar = exemplar;
     }
+    
+        public PnCadastrarLivro(Exemplar exemplar) {
+        initComponents();
+        this.exemplar = exemplar;
+        exemplarDao = new ExemplarDaoImpl();
+        tfTitulo.setText(exemplar.getLivro().getTitulo());
+        tfAutor.setText(exemplar.getLivro().getAutor());
+        tfEditora.setText(exemplar.getLivro().getEditora());
+        tfEdicao.setText(exemplar.getLivro().getEdicao());
+        tfIsbn.setText(exemplar.getLivro().getIsbn());
+        tfCodigoLivro.setText(exemplar.getCodigoLivro());
+        btSalvar.setText("Alterar");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -211,9 +224,9 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 sessao = HibernateUtil.abrirConexao();
                 livroDao.salvarOuAlterar(livro, sessao);
                 exemplarDao.salvarOuAlterar(exemplar, sessao);
-                JOptionPane.showMessageDialog(null, "Usuário salvo com sucesso!");
+                JOptionPane.showMessageDialog(null, "Livro salvo com sucesso!");
             } catch (HibernateException he) {
-                System.out.println("Erro a salvar usuário - Causa: " + he.getCause());
+                System.out.println("Erro a salvar livro - Causa: " + he.getCause());
             } finally {
                 sessao.close();
             }
