@@ -22,7 +22,6 @@ public class ExemplarDaoImplTest {
     private Exemplar exemplar;
     private ExemplarDao exemplarDao;
     private Session sessao;
-    private Livro livro;
 
     public ExemplarDaoImplTest() {
         exemplarDao = new ExemplarDaoImpl();
@@ -70,7 +69,9 @@ public class ExemplarDaoImplTest {
         System.out.println("################");
         System.out.println("# Teste Salvar #");
         System.out.println("################");
-        exemplar = new Exemplar(gerarCodigoLivro(), livro);
+        LivroDaoImplTest  livroteste = new LivroDaoImplTest();
+        
+        exemplar = new Exemplar(gerarCodigoLivro(), livroteste.gerarLivroBd());
         sessao = HibernateUtil.abrirConexao();
         exemplarDao.salvarOuAlterar(exemplar, sessao);
         sessao.close();

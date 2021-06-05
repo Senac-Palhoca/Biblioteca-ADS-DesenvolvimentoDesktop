@@ -29,7 +29,7 @@ public class EmprestimoDaoImplTest {
         emprestimoDao = new EmprestimoDaoImpl();
     }
 
-//    @Test
+    @Test
     public void testSalvar() {
 
         emprestimo = new Emprestimo(null, new Date(), new Date(), null);

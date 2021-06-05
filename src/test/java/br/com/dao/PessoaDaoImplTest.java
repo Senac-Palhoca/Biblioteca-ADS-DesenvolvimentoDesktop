@@ -36,25 +36,6 @@ public class PessoaDaoImplTest {
         buscarPessoaBd();
         sessao = HibernateUtil.abrirConexao();
         pessoa = pessoaDao.login(pessoa.getEmail(), pessoa.getSenha(), sessao);
-        
-        if (pessoa instanceof Aluno) {
-            System.out.println("Aluno");
-            aluno = (Aluno) pessoa;
-            System.out.println(aluno.getTurma().getCurso().getNome());
-        } else {
-            System.out.println("Funcionário");
-            Funcionario funcionario = (Funcionario) pessoa;
-            System.out.println(funcionario.getPerfil().getFuncao());
-        }
-//        if (pessoa.getPerfil().getFuncao().equals("Aluno")) {
-//            System.out.println("Aluno");
-//            aluno = (Aluno) pessoa;
-//            System.out.println(aluno.getTurma().getCurso().getNome());
-//        } else {
-//            System.out.println("Funcionário");
-//            Funcionario funcionario = (Funcionario) pessoa;
-//            System.out.println(funcionario.getPerfil().getFuncao());
-//        }
         sessao.close();
         assertNotNull(pessoa);
     }

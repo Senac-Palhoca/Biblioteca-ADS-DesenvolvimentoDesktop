@@ -54,13 +54,13 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
 
     @Override
     public List<Emprestimo> listarTodosEmAberto(Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Emprestimo where dataDevolucao = null");
+        Query consulta = sessao.createQuery("from Emprestimo where dataDevolucao is null");
         return consulta.list();
     }
 
     @Override
     public List<Emprestimo> listarAtrasados(Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Emprestimo where dataPrevista < :data and dataDevolucao = null");
+        Query consulta = sessao.createQuery("from Emprestimo where dataPrevista < :data and dataDevolucao is null");
         consulta.setParameter("data", new Date());
         return consulta.list();
     }
