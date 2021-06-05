@@ -19,7 +19,7 @@ import org.hibernate.Transaction;
  */
 public class PopulaPerfis {
 
-    public static void main(String[] args) {
+    public static void Popular() {
         Perfil perfil;
         Session session = HibernateUtil.abrirConexao();
         try {
@@ -32,7 +32,7 @@ public class PopulaPerfis {
             perfil = new Perfil(null, "Aluno", "Tem acesso aos seus emprestimos pessoais");
             salvar(perfil, session);
         } catch (HibernateException e) {
-            System.err.println("Erro ao popular perfil: " + e.getMessage());
+            throw e;
         } finally {
             session.close();
         }

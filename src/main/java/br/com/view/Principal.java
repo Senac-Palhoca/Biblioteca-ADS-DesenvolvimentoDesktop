@@ -9,6 +9,7 @@ import br.com.dao.HibernateUtil;
 import br.com.dao.*;
 import br.com.model.*;
 import br.com.util.GeradorTabela;
+import br.com.util.PopulaPerfis;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
@@ -88,7 +89,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             SplashScreen splash = new SplashScreen();
             splash.setVisible(true);
-            validarPerfil();
+            popularPerfil();
 //            for (int i = 0; i < 100; i++) {
 //                Thread.sleep(1);
 //            }
@@ -107,22 +108,9 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-    private static void validarPerfil() {
+    private static void popularPerfil() {
         try {
-            Session sessao = HibernateUtil.abrirConexao();
-            PerfilDao impl = new PerfilDaoImpl();
-            List<Perfil> perfil = impl.pesquisarPerfil(sessao);
-
-            if (perfil.isEmpty()) {
-                Perfil perfAux = new Perfil(null, "aluno", "");
-                Perfil perfAux2 = new Perfil(null, "bibliotecario", "");
-                Perfil perfAux3 = new Perfil(null, "coordenador", "");
-                impl.salvarOuAlterar(perfAux, sessao);
-                impl.salvarOuAlterar(perfAux2, sessao);
-                impl.salvarOuAlterar(perfAux3, sessao);
-            }
-
-            sessao.close();
+            PopulaPerfis.Popular();
         } catch (Exception e) {
              criarBd();
         }
@@ -131,7 +119,7 @@ public class Principal extends javax.swing.JFrame {
     private static void criarBd() {
         try {
             GeradorTabela.main(null);
-            validarPerfil();
+            popularPerfil();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(principal, "Erro ao gerar o banco de dados! Verifique se existe o banco de dados 'biblioteca' e se o usuário e senha do mysql está correto." + e.getMessage());
         }
