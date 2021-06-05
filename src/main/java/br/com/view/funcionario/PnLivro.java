@@ -32,6 +32,7 @@ public class PnLivro extends javax.swing.JPanel {
     public PnLivro() {
         initComponents();
         exemplarDao = new ExemplarDaoImpl();
+        getLivros();
     }
 
     /**
@@ -207,16 +208,7 @@ public class PnLivro extends javax.swing.JPanel {
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         if (!validarCampo()) {
             try {
-                sessao = HibernateUtil.abrirConexao();
-                exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
-                if (exemplares.isEmpty()) {
-                    if (tabelaModelo != null) {
-                        tabelaModelo.setNumRows(0);
-                    }
-                    JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
-                } else {
-                    popularTabela();
-                }
+                getLivros();
             } catch (HibernateException e) {
                 System.err.println("Erro ao pesquisar " + e.getMessage());
             } finally {
@@ -224,6 +216,19 @@ public class PnLivro extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void getLivros() {
+        sessao = HibernateUtil.abrirConexao();
+        exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
+        if (exemplares.isEmpty()) {
+            if (tabelaModelo != null) {
+                tabelaModelo.setNumRows(0);
+            }
+            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
+        } else {
+            popularTabela();
+        }
+    }
 
     private void popularTabela() {
         ExemplarDaoImpl exemplarDao = new ExemplarDaoImpl();
@@ -252,7 +257,7 @@ public class PnLivro extends javax.swing.JPanel {
         }
         return erro;
     }
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterarLivroSelecionado;
     private javax.swing.JButton btBuscar;
