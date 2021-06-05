@@ -50,10 +50,11 @@ public class AlunoDaoImpl extends BaseDaoImpl<Aluno, Long> implements AlunoDao{
     }
 
     @Override
-    public List<Object[]> listarRankingMes(Date data, Session sessao) throws HibernateException {
+    public List<Object[]> listarRankingMes(Date data, long idTurma, Session sessao) throws HibernateException {
         //SELECT * , count(*) as count FROM biblioteca.aluno as a INNER JOIN biblioteca.pessoa p ON p.id = a.idPessoa INNER JOIN biblioteca.emprestimo as e ON e.idAluno = p.id where dataRetirada like '2021-06%' GROUP BY p.id order by count DESC;
-        Query consulta = sessao.createQuery("from Aluno aluno JOIN aluno.emprestimos AS emprestimo where year(emprestimo.dataRetirada)=year(:data) and month(emprestimo.dataRetirada)=month(:data) group by aluno.id order by count(aluno.id) DESC");
+        Query consulta = sessao.createQuery("from Aluno aluno JOIN aluno.emprestimos AS emprestimo where aluno.turma.id = :idTurma and year(emprestimo.dataRetirada)=year(:data) and month(emprestimo.dataRetirada)=month(:data) group by aluno.id order by count(aluno.id) DESC");
         consulta.setParameter("data", data);
+        consulta.setParameter("idTurma", idTurma);
         //consulta.setResultTransformer(Transformers.aliasToBean(Aluno.class));        
         return consulta.list();
     }

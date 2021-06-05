@@ -119,7 +119,7 @@ public class AlunoDaoImplTest {
         sessao = HibernateUtil.abrirConexao();
         Date data = aluno.getEmprestimos().get(0).getDataRetirada();
  
-        List<Object[]> objAlunos = alunoDao.listarRankingMes(data, sessao);
+        List<Object[]> objAlunos = alunoDao.listarRankingMes(data, aluno.getTurma().getId(), sessao);
         sessao.close();
         //assertNotNull(data);
         assertFalse(objAlunos.isEmpty());
