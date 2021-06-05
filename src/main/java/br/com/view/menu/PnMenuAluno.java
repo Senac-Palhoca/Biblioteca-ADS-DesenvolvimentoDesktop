@@ -5,6 +5,7 @@
  */
 package br.com.view.menu;
 
+import br.com.model.Aluno;
 import br.com.view.Principal;
 import br.com.view.aluno.*;
 

@@ -5,6 +5,8 @@
  */
 package br.com.view;
 
+import br.com.model.Aluno;
+import br.com.model.Pessoa;
 import br.com.view.admin.PnCursoTurma;
 import br.com.view.aluno.PnMeuEmprestimo;
 import br.com.view.funcionario.PnEmprestimo;
@@ -184,7 +186,9 @@ public class PnLogin extends javax.swing.JPanel {
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
         String perfilUsuario = txUsuario.getText();
-        
+        //o objeto Pessoa que fizer login deve ser setado em Principal.usuario. Ex.:
+        Principal.usuario = new Pessoa();
+        //este switch deve ser alterado para validar o login conforme o objeto ou perfil
         switch(perfilUsuario.toLowerCase()){
             case "admin":
                 abrir("admin", new PnCursoTurma());

@@ -22,6 +22,7 @@ public class Principal extends javax.swing.JFrame {
 
     public static PnPrincipal pnPrincipal;
     public static Principal principal;
+    public static Pessoa usuario;
 
     /**
      * Creates new form Principal
