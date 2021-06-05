@@ -11,8 +11,10 @@ import br.com.dao.HibernateUtil;
 import br.com.model.Aluno;
 import br.com.model.Exemplar;
 import br.com.view.Principal;
+import java.awt.Window;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
 
@@ -27,19 +29,16 @@ public class PnBuscarLivro extends javax.swing.JPanel {
     private ExemplarDao exemplarDao;
     private Session sessao;
     private DefaultTableModel tabelaModelo;
-    private Aluno aluno;
 
     public PnBuscarLivro() {
         initComponents();
         exemplarDao = new ExemplarDaoImpl();
-    }
-    
-    public PnBuscarLivro(Aluno aluno) {
-        initComponents();
-        exemplarDao = new ExemplarDaoImpl();
-        this.aluno = aluno;
+        listarExemplar();
     }
 
+    public Exemplar getExemplar(){
+        return exemplar;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,6 +151,10 @@ public class PnBuscarLivro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        listarExemplar();
+    }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void listarExemplar(){
         sessao = HibernateUtil.abrirConexao();
         exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
         sessao.close();
@@ -164,13 +167,13 @@ public class PnBuscarLivro extends javax.swing.JPanel {
                 exemplar.getLivro().getEdicao(),
                 exemplar.getCodigoLivro()});
         }
-    }//GEN-LAST:event_btBuscarActionPerformed
-
+    }
     private void btSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarActionPerformed
         int linha = tbLivro.getSelectedRow();
         if (linha >= 0) {
             exemplar = exemplares.get(linha);
-            Principal.pnPrincipal.AbrirPanel(new PnEmprestar(aluno, exemplar));
+            Window w = SwingUtilities.getWindowAncestor(this);
+            w.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um exemplar!");
         }

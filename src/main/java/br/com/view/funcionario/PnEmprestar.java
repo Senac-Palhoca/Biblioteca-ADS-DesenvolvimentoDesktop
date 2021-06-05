@@ -211,11 +211,16 @@ public class PnEmprestar extends javax.swing.JPanel {
 
     private void btBuscarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarAlunoActionPerformed
         JDialog frame = new JDialog(new JFrame("Selecionar aluno"), "Selecionar Aluno", true);
-        PnBuscarAluno pn = new PnBuscarAluno(aluno);
+        PnBuscarAluno pn = new PnBuscarAluno();
         frame.getContentPane().add(pn);
         frame.pack();
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
+        Aluno alunoAux = pn.getAluno();
+        if(alunoAux != null){
+            aluno = alunoAux;
+            txAluno.setText(aluno.getNome());
+        }         
     }//GEN-LAST:event_btBuscarAlunoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
@@ -235,7 +240,7 @@ public class PnEmprestar extends javax.swing.JPanel {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        Principal.pnPrincipal.AbrirPanel(new PnLivro());
+        Principal.pnPrincipal.AbrirPanel(new PnEmprestimo());
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btBuscarExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarExemplarActionPerformed
@@ -243,11 +248,16 @@ public class PnEmprestar extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Selecione um aluno primeiro!");
         } else {
             JDialog frame = new JDialog(new JFrame("Selecionar Exemplar"), "Selecionar Exemplar", true);
-            PnBuscarLivro pn = new PnBuscarLivro(aluno);
+            PnBuscarLivro pn = new PnBuscarLivro();
             frame.getContentPane().add(pn);
             frame.pack();
             frame.setLocationRelativeTo(this);
             frame.setVisible(true);
+            Exemplar exemplarAux = pn.getExemplar();
+            if(exemplarAux != null){
+                exemplar = exemplarAux;
+                txExemplar.setText(exemplar.getLivro().getTitulo());
+            } 
         }
     }//GEN-LAST:event_btBuscarExemplarActionPerformed
 

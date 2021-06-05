@@ -9,10 +9,10 @@ import br.com.dao.AlunoDao;
 import br.com.dao.AlunoDaoImpl;
 import br.com.dao.HibernateUtil;
 import br.com.model.Aluno;
-import br.com.view.Principal;
-import com.sun.java.swing.plaf.windows.resources.windows;
+import java.awt.Window;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
 
@@ -28,12 +28,15 @@ public class PnBuscarAluno extends javax.swing.JPanel {
     private Session sessao;
     private DefaultTableModel tabelaModelo;
 
-    public PnBuscarAluno(Aluno aluno) {
+    public PnBuscarAluno() {
         alunoDao = new AlunoDaoImpl();
-        this.aluno = aluno;
         initComponents();
+        listarAlunos();
     }
 
+    public Aluno getAluno(){
+        return aluno;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -171,7 +174,7 @@ public class PnBuscarAluno extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+    private void listarAlunos(){
         sessao = HibernateUtil.abrirConexao();
         alunos = alunoDao.pesquisarPorNome(txAluno.getText(), sessao);
         sessao.close();
@@ -181,13 +184,17 @@ public class PnBuscarAluno extends javax.swing.JPanel {
         for (Aluno aluno : alunos) {
             tabelaModelo.addRow(new Object[]{aluno.getNome(), aluno.getMatricula(), aluno.getEmail(), aluno.getCpf()});
         }
+    }
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        listarAlunos();
     }//GEN-LAST:event_btBuscarActionPerformed
 
     private void btSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarActionPerformed
         int linha = tbAluno.getSelectedRow();
         if (linha >= 0) {
             aluno = alunos.get(linha);
-            Principal.pnPrincipal.AbrirPanel(new PnEmprestar(aluno));
+            Window w = SwingUtilities.getWindowAncestor(this);
+            w.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um aluno!");
         }
