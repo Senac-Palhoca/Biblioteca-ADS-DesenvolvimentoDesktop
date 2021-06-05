@@ -172,8 +172,12 @@ public class EmprestimoDaoImplTest {
     }
     
     public Emprestimo gerarEmprestimoAlunoBd(Aluno aluno) {
-        emprestimo = new Emprestimo(null, new Date(), new Date(), new Date());
+        emprestimo = new Emprestimo(null, new Date(), new Date(), null);
         emprestimo.setAluno(aluno);
+
+        ExemplarDaoImplTest exemplarDao = new ExemplarDaoImplTest();
+        emprestimo.setExemplar(exemplarDao.gerarExemplarBd());
+
         sessao = HibernateUtil.abrirConexao();
         emprestimoDao.salvarOuAlterar(emprestimo, sessao);
         sessao.close();

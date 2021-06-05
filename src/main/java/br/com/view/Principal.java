@@ -8,6 +8,7 @@ package br.com.view;
 import br.com.dao.HibernateUtil;
 import br.com.dao.*;
 import br.com.model.*;
+import br.com.util.GeradorTabela;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
@@ -17,9 +18,10 @@ import org.hibernate.Session;
  * @author Felip
  */
 public class Principal extends javax.swing.JFrame {
-    
+
     public static PnPrincipal pnPrincipal;
     public static Principal principal;
+
     /**
      * Creates new form Principal
      */
@@ -82,7 +84,7 @@ public class Principal extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-       
+
         try {
             SplashScreen splash = new SplashScreen();
             splash.setVisible(true);
@@ -102,32 +104,39 @@ public class Principal extends javax.swing.JFrame {
                 principal.setVisible(true);
             }
         });
-          
+
     }
-    
-    private static void validarPerfil(){
+
+    private static void validarPerfil() {
         try {
             Session sessao = HibernateUtil.abrirConexao();
-        PerfilDao impl = new PerfilDaoImpl();
-        List<Perfil> perfil = impl.pesquisarPerfil(sessao);
-        
-        
-        if(perfil.isEmpty()){
-            Perfil perfAux = new Perfil(null, "aluno", "");
-            Perfil perfAux2 = new Perfil(null, "bibliotecario", "");
-            Perfil perfAux3 = new Perfil(null, "coordenador", "");
-            impl.salvarOuAlterar(perfAux, sessao);
-            impl.salvarOuAlterar(perfAux2, sessao);
-            impl.salvarOuAlterar(perfAux3, sessao);
-        }
-        
-        sessao.close();
+            PerfilDao impl = new PerfilDaoImpl();
+            List<Perfil> perfil = impl.pesquisarPerfil(sessao);
+
+            if (perfil.isEmpty()) {
+                Perfil perfAux = new Perfil(null, "aluno", "");
+                Perfil perfAux2 = new Perfil(null, "bibliotecario", "");
+                Perfil perfAux3 = new Perfil(null, "coordenador", "");
+                impl.salvarOuAlterar(perfAux, sessao);
+                impl.salvarOuAlterar(perfAux2, sessao);
+                impl.salvarOuAlterar(perfAux3, sessao);
+            }
+
+            sessao.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(principal, "Erro no cadastro dos perfis, verifique a conexão com o seu banco de dados! " + e.getMessage());
+             criarBd();
         }
-        
-        
     }
+    
+    private static void criarBd() {
+        try {
+            GeradorTabela.main(null);
+            validarPerfil();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(principal, "Erro ao gerar o banco de dados! Verifique se existe o banco de dados 'biblioteca' e se o usuário e senha do mysql está correto." + e.getMessage());
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
