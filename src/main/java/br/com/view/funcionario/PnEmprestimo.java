@@ -5,23 +5,57 @@
  */
 package br.com.view.funcionario;
 
+import br.com.dao.EmprestimoDao;
+import br.com.dao.EmprestimoDaoImpl;
+import br.com.dao.HibernateUtil;
 import br.com.model.Emprestimo;
 import br.com.view.*;
+import java.util.List;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
 
 /**
  *
  * @author Felip
  */
 public class PnEmprestimo extends javax.swing.JPanel {
-
+    private Session sessao;
+    private EmprestimoDao emprestimoDao;
+    private List<Emprestimo> emprestimosAberto;
+    private DefaultTableModel tabelaModelo;
     /**
      * Creates new form PnEmprestimo
      */
     public PnEmprestimo() {
         initComponents();
+        emprestimoDao = new EmprestimoDaoImpl();
+        listarAtrasados();
+        listarAbertos();
     }
 
+    private void listarAtrasados(){
+        sessao = HibernateUtil.abrirConexao();
+        List<Emprestimo> emprestimos = emprestimoDao.listarAtrasados(sessao);
+        if (emprestimos.isEmpty()) {
+            lbAtraso.setText("Não há livros atrasados.");
+        } else {
+            lbAtraso.setText("Há " + emprestimos.size() + " livro(s) atrasado(s).");
+        }
+        sessao.close();
+    }
+    
+    private void listarAbertos(){
+        sessao = HibernateUtil.abrirConexao();
+        emprestimosAberto = emprestimoDao.listarTodosEmAberto(sessao);
+        sessao.close();
+        
+        tabelaModelo = (DefaultTableModel) tbLivro.getModel();
+        tabelaModelo.setNumRows(0);
+        for (Emprestimo emprestimo : emprestimosAberto) {
+            tabelaModelo.addRow(new Object[]{emprestimo.getAluno().getNome(), emprestimo.getExemplar().getLivro().getTitulo(), emprestimo.getExemplar().getLivro().getAutor(), emprestimo.getExemplar().getLivro().getIsbn(), emprestimo.getDataRetirada(), emprestimo.getDataPrevista()});
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,8 +71,8 @@ public class PnEmprestimo extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLivro = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lbAtraso = new javax.swing.JLabel();
+        txAlunoTitulo = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -79,9 +113,9 @@ public class PnEmprestimo extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(249, 224, 224));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel4.setText("Existem 7 livros em atraso.");
+        lbAtraso.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbAtraso.setForeground(new java.awt.Color(153, 0, 0));
+        lbAtraso.setText("Existem 7 livros em atraso.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -89,15 +123,13 @@ public class PnEmprestimo extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel4)
+                .addComponent(lbAtraso)
                 .addContainerGap(213, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+            .addComponent(lbAtraso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
         );
-
-        jTextField1.setText("jTextField1");
 
         jButton3.setText("Buscar");
 
@@ -188,7 +220,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txAlunoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jButton3)))))
                     .addGroup(layout.createSequentialGroup()
@@ -217,7 +249,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txAlunoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +273,6 @@ public class PnEmprestimo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -251,7 +282,8 @@ public class PnEmprestimo extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbAtraso;
     private javax.swing.JTable tbLivro;
+    private javax.swing.JTextField txAlunoTitulo;
     // End of variables declaration//GEN-END:variables
 }

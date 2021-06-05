@@ -82,9 +82,9 @@ public class LivroDaoImplTest {
         System.out.println("####################################");
         gerarLivroBd();
         sessao = HibernateUtil.abrirConexao();
-        List<Livro> livros = livroDao.pesquisarPorTituloAutor("guerra", "marcelo", sessao);
+        List<Livro> livros = livroDao.pesquisarPorTituloAutor("", "", sessao);
         sessao.close();
-        assertTrue(livros.isEmpty());
+        assertNotNull(livros.isEmpty());
     }
 
     public Livro gerarLivroBd() {

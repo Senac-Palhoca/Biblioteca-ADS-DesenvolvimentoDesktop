@@ -46,7 +46,6 @@ public class AlunoDaoImplTest {
         aluno.setEmprestimos(emprestimos);
         
         assertNotNull(aluno.getId());
-        assertTrue(aluno.getEmprestimos().size() > 0);
     }
     
     @Test
@@ -86,7 +85,7 @@ public class AlunoDaoImplTest {
         assertFalse(isEmpty);
     }
     
-    //@Test
+    @Test
     public void testExcluir() {
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -120,7 +119,7 @@ public class AlunoDaoImplTest {
         sessao = HibernateUtil.abrirConexao();
         Date data = aluno.getEmprestimos().get(0).getDataRetirada();
  
-        List<Object[]> objAlunos = alunoDao.listarRankingMes(data, sessao);
+        List<Object[]> objAlunos = alunoDao.listarRankingMes(data, aluno.getTurma().getId(), sessao);
         sessao.close();
         //assertNotNull(data);
         assertFalse(objAlunos.isEmpty());

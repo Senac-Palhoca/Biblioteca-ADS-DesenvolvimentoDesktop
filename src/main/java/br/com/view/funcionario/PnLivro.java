@@ -7,12 +7,15 @@ package br.com.view.funcionario;
 
 import br.com.dao.ExemplarDao;
 import br.com.dao.ExemplarDaoImpl;
-import br.com.dao.LivroDao;
-import br.com.dao.LivroDaoImpl;
+import br.com.dao.HibernateUtil;
 import br.com.model.Exemplar;
 import br.com.model.Livro;
 import br.com.view.Principal;
-import org.hibernate.Session;
+import java.awt.HeadlessException;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.*;
 
 /**
  *
@@ -20,11 +23,16 @@ import org.hibernate.Session;
  */
 public class PnLivro extends javax.swing.JPanel {
 
-
+    private Session sessao;
+    private DefaultTableModel tabelaModelo;
+    private Exemplar exemplar;
+    private ExemplarDao exemplarDao;
+    private List<Exemplar> exemplares;
 
     public PnLivro() {
         initComponents();
-
+        exemplarDao = new ExemplarDaoImpl();
+        getLivros();
     }
 
     /**
@@ -44,7 +52,8 @@ public class PnLivro extends javax.swing.JPanel {
         btBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btNovoLivro = new javax.swing.JButton();
-        btEditarLivroSelecionado = new javax.swing.JButton();
+        btAlterarLivroSelecionado = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -53,13 +62,13 @@ public class PnLivro extends javax.swing.JPanel {
 
         tbLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Título", "Autor", "Editora", "Edição", "Código", "Status"
+                "Título", "Autor", "Editora", "Edição", "ISBN", "Código", "Status"
             }
         ));
         jScrollPane1.setViewportView(tbLivro);
@@ -67,6 +76,11 @@ public class PnLivro extends javax.swing.JPanel {
         tfTituloAutor.setToolTipText("Digite o titulo do liro ou o autor que deseja pesquisar");
 
         btBuscar.setText("Buscar");
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Buscar Título/Autor");
 
@@ -77,10 +91,17 @@ public class PnLivro extends javax.swing.JPanel {
             }
         });
 
-        btEditarLivroSelecionado.setText("Editar Livro Selecionado");
-        btEditarLivroSelecionado.addActionListener(new java.awt.event.ActionListener() {
+        btAlterarLivroSelecionado.setText("Alterar Livro Selecionado");
+        btAlterarLivroSelecionado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btEditarLivroSelecionadoActionPerformed(evt);
+                btAlterarLivroSelecionadoActionPerformed(evt);
+            }
+        });
+
+        btExcluir.setText("Excluir Livro Selecionado");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
             }
         });
 
@@ -96,30 +117,35 @@ public class PnLivro extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btNovoLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 217, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btEditarLivroSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(tfTituloAutor)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(tfTituloAutor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btNovoLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btAlterarLivroSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btNovoLivro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -129,10 +155,13 @@ public class PnLivro extends javax.swing.JPanel {
                     .addComponent(tfTituloAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btEditarLivroSelecionado)
-                .addGap(21, 21, 21))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btNovoLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btAlterarLivroSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -140,14 +169,99 @@ public class PnLivro extends javax.swing.JPanel {
         Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(new Livro()));
     }//GEN-LAST:event_btNovoLivroActionPerformed
 
-    private void btEditarLivroSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarLivroSelecionadoActionPerformed
-        Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(new Livro()));
-    }//GEN-LAST:event_btEditarLivroSelecionadoActionPerformed
+    private void btAlterarLivroSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarLivroSelecionadoActionPerformed
+        int linhaSelecionada = tbLivro.getSelectedRow();
 
+        if (linhaSelecionada >= 0) {
+            Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
+            new PnCadastrarLivro(exemplarSelecionado).setVisible(true);
+//            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhuma linha selecionada!");
+        }
+    }//GEN-LAST:event_btAlterarLivroSelecionadoActionPerformed
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        int linhaSelecionada = tbLivro.getSelectedRow();
+
+        if (linhaSelecionada >= 0) {
+            int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o exemplar selecionado?");
+            if (opcao == 0) {
+                try {
+                    sessao = HibernateUtil.abrirConexao();
+                    Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
+                    exemplarDao.excluir(exemplarSelecionado, sessao);
+                    JOptionPane.showMessageDialog(null, "Exemplar excluído com sucesso!");
+                    tabelaModelo.setNumRows(0);
+                    tfTituloAutor.setText("");
+                } catch (HeadlessException | HibernateException e) {
+                    System.out.println("Erro ao excluir " + e.getMessage());
+                } finally {
+                    sessao.close();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi selecionada nenhuma linha!");
+        }
+    }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        if (!validarCampo()) {
+            try {
+                getLivros();
+            } catch (HibernateException e) {
+                System.err.println("Erro ao pesquisar " + e.getMessage());
+            } finally {
+                sessao.close();
+            }
+        }
+    }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void getLivros() {
+        sessao = HibernateUtil.abrirConexao();
+        exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
+        if (exemplares.isEmpty()) {
+            if (tabelaModelo != null) {
+                tabelaModelo.setNumRows(0);
+            }
+            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
+        } else {
+            popularTabela();
+        }
+    }
+
+    private void popularTabela() {
+        ExemplarDaoImpl exemplarDao = new ExemplarDaoImpl();
+        sessao = HibernateUtil.abrirConexao();
+
+        List<Exemplar> exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
+        sessao.close();
+
+        tabelaModelo = (DefaultTableModel) tbLivro.getModel();
+        tabelaModelo.setNumRows(0);
+
+        for (Exemplar exemplar : exemplares) {
+
+            tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
+                exemplar.getLivro().getEditora(), exemplar.getLivro().getEdicao(), exemplar.getLivro().getIsbn(),
+                exemplar.getCodigoLivro(), exemplar.getStatus()});
+        }
+    }
+
+    private boolean validarCampo() {
+        boolean erro = false;
+        String livro = tfTituloAutor.getText().trim();
+        if (livro.length() <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe um título ou autor válido!");
+            erro = true;
+        }
+        return erro;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAlterarLivroSelecionado;
     private javax.swing.JButton btBuscar;
-    private javax.swing.JButton btEditarLivroSelecionado;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovoLivro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

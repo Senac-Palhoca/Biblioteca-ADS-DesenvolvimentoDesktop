@@ -5,17 +5,26 @@
  */
 package br.com.view.funcionario;
 
+import br.com.dao.AlunoDaoImpl;
+import br.com.dao.HibernateUtil;
+import br.com.model.Aluno;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
+
 /**
  *
  * @author Felip
  */
 public class PnAlunos extends javax.swing.JPanel {
-
+    private Session sessao;
+    private DefaultTableModel tabelaModelo;
     /**
      * Creates new form PnAlunos
      */
     public PnAlunos() {
         initComponents();
+        listarAlunos();
     }
 
     /**
@@ -30,10 +39,10 @@ public class PnAlunos extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txBuscarLivro = new javax.swing.JTextField();
+        txNome = new javax.swing.JTextField();
         btBuscarLivro = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbLivro = new javax.swing.JTable();
+        tbAluno = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -43,8 +52,13 @@ public class PnAlunos extends javax.swing.JPanel {
         jLabel2.setText("Buscar Aluno");
 
         btBuscarLivro.setText("Buscar");
+        btBuscarLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarLivroActionPerformed(evt);
+            }
+        });
 
-        tbLivro.setModel(new javax.swing.table.DefaultTableModel(
+        tbAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -55,7 +69,7 @@ public class PnAlunos extends javax.swing.JPanel {
                 "Nome", "Curso", "Fase", "Ano", "Matrícula", "Livros Emprestados/Mês"
             }
         ));
-        jScrollPane1.setViewportView(tbLivro);
+        jScrollPane1.setViewportView(tbAluno);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -74,7 +88,7 @@ public class PnAlunos extends javax.swing.JPanel {
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txBuscarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btBuscarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel2)
@@ -94,7 +108,7 @@ public class PnAlunos extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txBuscarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
@@ -102,6 +116,24 @@ public class PnAlunos extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btBuscarLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarLivroActionPerformed
+        listarAlunos();
+    }//GEN-LAST:event_btBuscarLivroActionPerformed
+
+    private void listarAlunos(){
+        AlunoDaoImpl alunoDao = new AlunoDaoImpl();
+
+        sessao = HibernateUtil.abrirConexao();
+        List<Aluno> alunos = alunoDao.pesquisarPorNome(txNome.getText(), sessao);
+        sessao.close();
+        
+        tabelaModelo = (DefaultTableModel) tbAluno.getModel();
+        tabelaModelo.setNumRows(0);
+
+        for (Aluno aluno : alunos) {
+            tabelaModelo.addRow(new Object[]{aluno.getNome(), aluno.getTurma().getCurso().getNome(), aluno.getTurma().getFase(), aluno.getTurma().getAno(), aluno.getMatricula(), aluno.getEmprestimos().size()});
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscarLivro;
@@ -109,7 +141,7 @@ public class PnAlunos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable tbLivro;
-    private javax.swing.JTextField txBuscarLivro;
+    private javax.swing.JTable tbAluno;
+    private javax.swing.JTextField txNome;
     // End of variables declaration//GEN-END:variables
 }

@@ -42,13 +42,13 @@ public class ExemplarDaoImplTest {
     }
 
     @Test
-    public void pesquisarPorTituloLivro() {
+    public void pesquisarPorTituloAutor() {
         System.out.println("##############################");
         System.out.println("# Pesquisar Por Titulo Livro #");
         System.out.println("##############################");
         gerarExemplarBd();
         sessao = HibernateUtil.abrirConexao();
-        List<Exemplar> exemplars = exemplarDao.pesquisarPorTituloLivro("java", sessao);
+        List<Exemplar> exemplars = exemplarDao.pesquisarPorTituloAutor("", "", sessao);
         sessao.close();
         assertNotNull(exemplars.isEmpty());
     }
@@ -70,7 +70,7 @@ public class ExemplarDaoImplTest {
         System.out.println("################");
         System.out.println("# Teste Salvar #");
         System.out.println("################");
-        exemplar = new Exemplar(gerarCodigoLivro());
+        exemplar = new Exemplar(gerarCodigoLivro(), livro);
         sessao = HibernateUtil.abrirConexao();
         exemplarDao.salvarOuAlterar(exemplar, sessao);
         sessao.close();
