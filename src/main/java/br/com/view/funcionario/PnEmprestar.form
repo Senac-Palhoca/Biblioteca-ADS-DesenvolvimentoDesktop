@@ -37,12 +37,12 @@
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jTextField1" max="32767" attributes="0"/>
+                              <Component id="txAluno" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="btBuscarAluno" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jTextField2" max="32767" attributes="0"/>
+                              <Component id="txExemplar" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="btBuscarExemplar" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -56,12 +56,12 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextField1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txDataEmprestimo" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextField2" max="32767" attributes="0"/>
+                                  <Component id="txDataDevolucao" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -88,14 +88,14 @@
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextField1" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="txAluno" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="btBuscarAluno" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextField2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="txExemplar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="btBuscarExemplar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -103,12 +103,12 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jFormattedTextField1" min="-2" max="-2" attributes="0"/>
+                      <Component id="txDataEmprestimo" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jFormattedTextField2" min="-2" max="-2" attributes="0"/>
+                      <Component id="txDataDevolucao" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -132,10 +132,7 @@
         <Property name="text" type="java.lang.String" value="Emprestar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="txAluno">
     </Component>
     <Component class="javax.swing.JButton" name="btBuscarAluno">
       <Properties>
@@ -155,10 +152,7 @@
         <Property name="text" type="java.lang.String" value="Exemplar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="txExemplar">
     </Component>
     <Component class="javax.swing.JButton" name="btBuscarExemplar">
       <Properties>
@@ -168,9 +162,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btBuscarExemplarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+    <Component class="javax.swing.JFormattedTextField" name="txDataEmprestimo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jFormattedTextField1"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -178,9 +172,9 @@
         <Property name="text" type="java.lang.String" value="Data Empr&#xe9;stimo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField2">
+    <Component class="javax.swing.JFormattedTextField" name="txDataDevolucao">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jFormattedTextField1"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">

@@ -5,22 +5,35 @@
  */
 package br.com.view.funcionario;
 
+import br.com.dao.AlunoDao;
+import br.com.dao.AlunoDaoImpl;
+import br.com.dao.HibernateUtil;
+import br.com.model.Aluno;
+import br.com.view.Principal;
+import com.sun.java.swing.plaf.windows.resources.windows;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
+
 /**
  *
  * @author Felip
  */
 public class PnBuscarAluno extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PnBuscarAluno
-     */
-    public PnBuscarAluno() {
+    private Aluno aluno;
+    private List<Aluno> alunos;
+    private AlunoDao alunoDao;
+    private Session sessao;
+    private DefaultTableModel tabelaModelo;
+
+    public PnBuscarAluno(Aluno aluno) {
+        alunoDao = new AlunoDaoImpl();
+        this.aluno = aluno;
         initComponents();
     }
 
-    public String alunoSelecionado(){
-        return txAluno.getText();
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,10 +45,10 @@ public class PnBuscarAluno extends javax.swing.JPanel {
 
         txAluno = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        tbAluno = new javax.swing.JTable();
+        btSelecionar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -45,26 +58,31 @@ public class PnBuscarAluno extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
 
-        txAluno.setText("jTextField1");
-
         jLabel1.setText("Nome Aluno");
 
-        jButton1.setText("Buscar");
+        btBuscar.setText("Buscar");
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "Matrícula", "E-mail", "CPF"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbAluno);
 
-        jButton2.setText("Selecionar");
+        btSelecionar.setText("Selecionar");
+        btSelecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSelecionarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome:");
 
@@ -109,12 +127,12 @@ public class PnBuscarAluno extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btBuscar)
                         .addGap(4, 4, 4))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -124,7 +142,7 @@ public class PnBuscarAluno extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(btBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(txAluno))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,15 +166,37 @@ public class PnBuscarAluno extends javax.swing.JPanel {
                             .addComponent(jLabel7)
                             .addComponent(jLabel8))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btSelecionar)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        sessao = HibernateUtil.abrirConexao();
+        alunos = alunoDao.pesquisarPorNome(txAluno.getText(), sessao);
+        sessao.close();
+
+        tabelaModelo = (DefaultTableModel) tbAluno.getModel();
+        tabelaModelo.setNumRows(0);
+        for (Aluno aluno : alunos) {
+            tabelaModelo.addRow(new Object[]{aluno.getNome(), aluno.getMatricula(), aluno.getEmail(), aluno.getCpf()});
+        }
+    }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void btSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarActionPerformed
+        int linha = tbAluno.getSelectedRow();
+        if (linha >= 0) {
+            aluno = alunos.get(linha);
+            Principal.pnPrincipal.AbrirPanel(new PnEmprestar(aluno));
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um aluno!");
+        }
+    }//GEN-LAST:event_btSelecionarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btBuscar;
+    private javax.swing.JButton btSelecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -167,7 +207,7 @@ public class PnBuscarAluno extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbAluno;
     private javax.swing.JTextField txAluno;
     // End of variables declaration//GEN-END:variables
 }

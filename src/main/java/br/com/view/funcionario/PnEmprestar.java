@@ -5,23 +5,57 @@
  */
 package br.com.view.funcionario;
 
+import br.com.dao.EmprestimoDao;
+import br.com.dao.EmprestimoDaoImpl;
+import br.com.dao.HibernateUtil;
+import br.com.model.Aluno;
 import br.com.model.Emprestimo;
+import br.com.model.Exemplar;
 import br.com.view.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import org.hibernate.Session;
 
 /**
  *
  * @author Felip
  */
 public class PnEmprestar extends javax.swing.JPanel {
+
     private Emprestimo emprestimo;
-    /**
-     * Creates new form PnEmprestar
-     */
-    public PnEmprestar(Emprestimo emprestimo) {
+    private EmprestimoDao emprestimoDao;
+    private Aluno aluno;
+    private Exemplar exemplar;
+    private Session sessao;
+    private Date dataRetirada = new Date();
+    private Date dataDevolucao;
+
+    public PnEmprestar() {
         initComponents();
-        this.emprestimo = emprestimo;
+        emprestimoDao = new EmprestimoDaoImpl();
+        carregarDatas();
+    }
+
+    public PnEmprestar(Aluno aluno) {
+        initComponents();
+        this.aluno = aluno;
+        txAluno.setText(aluno.getNome());
+        emprestimoDao = new EmprestimoDaoImpl();
+        carregarDatas();
+    }
+
+    public PnEmprestar(Aluno aluno, Exemplar exemplar) {
+        initComponents();
+        this.aluno = aluno;
+        this.exemplar = exemplar;
+        txAluno.setText(aluno.getNome());
+        txExemplar.setText(exemplar.getLivro().getTitulo());
+        emprestimoDao = new EmprestimoDaoImpl();
+        carregarDatas();
     }
 
     /**
@@ -35,15 +69,15 @@ public class PnEmprestar extends javax.swing.JPanel {
 
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txAluno = new javax.swing.JTextField();
         btBuscarAluno = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txExemplar = new javax.swing.JTextField();
         btBuscarExemplar = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txDataEmprestimo = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        txDataDevolucao = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         btSalvar = new javax.swing.JButton();
         btCancelar = new javax.swing.JButton();
@@ -52,8 +86,6 @@ public class PnEmprestar extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
         jLabel1.setText("Emprestar");
-
-        jTextField1.setText("jTextField1");
 
         btBuscarAluno.setText("Buscar");
         btBuscarAluno.addActionListener(new java.awt.event.ActionListener() {
@@ -66,8 +98,6 @@ public class PnEmprestar extends javax.swing.JPanel {
 
         jLabel3.setText("Exemplar");
 
-        jTextField2.setText("jTextField1");
-
         btBuscarExemplar.setText("Buscar");
         btBuscarExemplar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,11 +105,11 @@ public class PnEmprestar extends javax.swing.JPanel {
             }
         });
 
-        jFormattedTextField1.setText("jFormattedTextField1");
+        txDataEmprestimo.setEditable(false);
 
         jLabel4.setText("Data Empréstimo");
 
-        jFormattedTextField2.setText("jFormattedTextField1");
+        txDataDevolucao.setEditable(false);
 
         jLabel5.setText("Data Devolução");
 
@@ -115,11 +145,11 @@ public class PnEmprestar extends javax.swing.JPanel {
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1)
+                                .addComponent(txAluno)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btBuscarAluno))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField2)
+                                .addComponent(txExemplar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btBuscarExemplar))
                             .addGroup(layout.createSequentialGroup()
@@ -130,11 +160,11 @@ public class PnEmprestar extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addComponent(jFormattedTextField1))
+                                    .addComponent(txDataEmprestimo))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
-                                    .addComponent(jFormattedTextField2)))))
+                                    .addComponent(txDataDevolucao)))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,24 +183,24 @@ public class PnEmprestar extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscarAluno))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txExemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscarExemplar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSalvar)
@@ -181,18 +211,27 @@ public class PnEmprestar extends javax.swing.JPanel {
 
     private void btBuscarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarAlunoActionPerformed
         JDialog frame = new JDialog(new JFrame("Selecionar aluno"), "Selecionar Aluno", true);
-        PnBuscarAluno pn = new PnBuscarAluno();
+        PnBuscarAluno pn = new PnBuscarAluno(aluno);
         frame.getContentPane().add(pn);
         frame.pack();
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
-        //jTextField1.setText(pn.alunoSelecionado());
     }//GEN-LAST:event_btBuscarAlunoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        //fazer o método de salvar aqui
-        
-        Principal.pnPrincipal.AbrirPanel(new PnEmprestimo());
+        sessao = HibernateUtil.abrirConexao();
+        if (aluno != null && exemplar != null) {
+            emprestimo = new Emprestimo();
+            emprestimo.setAluno(aluno);
+            emprestimo.setExemplar(exemplar);
+            emprestimo.setDataRetirada(dataRetirada);
+            emprestimo.setDataPrevista(dataDevolucao);
+            emprestimoDao.salvarOuAlterar(emprestimo, sessao);
+            Principal.pnPrincipal.AbrirPanel(new PnEmprestimo());
+        } else {
+            JOptionPane.showMessageDialog(null, "Você precisa selecionar um Aluno e um Exemplar!");
+        }
+        sessao.close();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
@@ -200,30 +239,42 @@ public class PnEmprestar extends javax.swing.JPanel {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btBuscarExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarExemplarActionPerformed
-        JDialog frame = new JDialog(new JFrame("Selecionar Exemplar"), "Selecionar Exemplar", true);
-        PnBuscarLivro pn = new PnBuscarLivro();
-        frame.getContentPane().add(pn);
-        frame.pack();
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);
-        //jTextField1.setText(pn.alunoSelecionado());
+        if (aluno == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um aluno primeiro!");
+        } else {
+            JDialog frame = new JDialog(new JFrame("Selecionar Exemplar"), "Selecionar Exemplar", true);
+            PnBuscarLivro pn = new PnBuscarLivro(aluno);
+            frame.getContentPane().add(pn);
+            frame.pack();
+            frame.setLocationRelativeTo(this);
+            frame.setVisible(true);
+        }
     }//GEN-LAST:event_btBuscarExemplarActionPerformed
 
+    private void carregarDatas() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataRetirada);
+        cal.add(Calendar.DATE, 15);
+        dataDevolucao = cal.getTime();
+        txDataDevolucao.setText(dateFormat.format(dataDevolucao));
+        txDataEmprestimo.setText(dateFormat.format(dataRetirada));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscarAluno;
     private javax.swing.JButton btBuscarExemplar;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSalvar;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txAluno;
+    private javax.swing.JFormattedTextField txDataDevolucao;
+    private javax.swing.JFormattedTextField txDataEmprestimo;
+    private javax.swing.JTextField txExemplar;
     // End of variables declaration//GEN-END:variables
 }

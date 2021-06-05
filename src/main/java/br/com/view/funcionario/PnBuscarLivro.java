@@ -5,17 +5,39 @@
  */
 package br.com.view.funcionario;
 
+import br.com.dao.ExemplarDao;
+import br.com.dao.ExemplarDaoImpl;
+import br.com.dao.HibernateUtil;
+import br.com.model.Aluno;
+import br.com.model.Exemplar;
+import br.com.view.Principal;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
+
 /**
  *
- * @author Felip
+ * @author Felipe
  */
 public class PnBuscarLivro extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PnBuscarLivro
-     */
+    private Exemplar exemplar;
+    private List<Exemplar> exemplares;
+    private ExemplarDao exemplarDao;
+    private Session sessao;
+    private DefaultTableModel tabelaModelo;
+    private Aluno aluno;
+
     public PnBuscarLivro() {
         initComponents();
+        exemplarDao = new ExemplarDaoImpl();
+    }
+    
+    public PnBuscarLivro(Aluno aluno) {
+        initComponents();
+        exemplarDao = new ExemplarDaoImpl();
+        this.aluno = aluno;
     }
 
     /**
@@ -36,23 +58,25 @@ public class PnBuscarLivro extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btSelecionar = new javax.swing.JButton();
 
         jLabel1.setText("Titulo/Autor");
 
         tfTituloAutor.setToolTipText("Digite o titulo do liro ou o autor que deseja pesquisar");
 
         btBuscar.setText("Buscar");
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
 
         tbLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Título", "Autor", "Edição", "Código"
             }
         ));
         jScrollPane1.setViewportView(tbLivro);
@@ -65,7 +89,12 @@ public class PnBuscarLivro extends javax.swing.JPanel {
 
         jLabel3.setText("Usando a Cabeça Java");
 
-        jButton2.setText("Selecionar");
+        btSelecionar.setText("Selecionar");
+        btSelecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSelecionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -82,7 +111,7 @@ public class PnBuscarLivro extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -117,15 +146,40 @@ public class PnBuscarLivro extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(jLabel4))
                 .addGap(8, 8, 8)
-                .addComponent(jButton2)
+                .addComponent(btSelecionar)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        sessao = HibernateUtil.abrirConexao();
+        exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
+        sessao.close();
+
+        tabelaModelo = (DefaultTableModel) tbLivro.getModel();
+        tabelaModelo.setNumRows(0);
+        for (Exemplar exemplar : exemplares) {
+            tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(),
+                exemplar.getLivro().getAutor(),
+                exemplar.getLivro().getEdicao(),
+                exemplar.getCodigoLivro()});
+        }
+    }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void btSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarActionPerformed
+        int linha = tbLivro.getSelectedRow();
+        if (linha >= 0) {
+            exemplar = exemplares.get(linha);
+            Principal.pnPrincipal.AbrirPanel(new PnEmprestar(aluno, exemplar));
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um exemplar!");
+        }
+    }//GEN-LAST:event_btSelecionarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btSelecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

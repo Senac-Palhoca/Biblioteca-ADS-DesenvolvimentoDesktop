@@ -10,8 +10,8 @@ import br.com.dao.EmprestimoDaoImpl;
 import br.com.dao.HibernateUtil;
 import br.com.model.Emprestimo;
 import br.com.view.*;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
 
@@ -20,10 +20,13 @@ import org.hibernate.Session;
  * @author Felip
  */
 public class PnEmprestimo extends javax.swing.JPanel {
+
     private Session sessao;
     private EmprestimoDao emprestimoDao;
     private List<Emprestimo> emprestimosAberto;
     private DefaultTableModel tabelaModelo;
+    private SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/YYYY");
+
     /**
      * Creates new form PnEmprestimo
      */
@@ -34,7 +37,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
         listarAbertos();
     }
 
-    private void listarAtrasados(){
+    private void listarAtrasados() {
         sessao = HibernateUtil.abrirConexao();
         List<Emprestimo> emprestimos = emprestimoDao.listarAtrasados(sessao);
         if (emprestimos.isEmpty()) {
@@ -44,18 +47,24 @@ public class PnEmprestimo extends javax.swing.JPanel {
         }
         sessao.close();
     }
-    
-    private void listarAbertos(){
+
+    private void listarAbertos() {
         sessao = HibernateUtil.abrirConexao();
         emprestimosAberto = emprestimoDao.listarTodosEmAberto(sessao);
         sessao.close();
-        
+
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
         for (Emprestimo emprestimo : emprestimosAberto) {
-            tabelaModelo.addRow(new Object[]{emprestimo.getAluno().getNome(), emprestimo.getExemplar().getLivro().getTitulo(), emprestimo.getExemplar().getLivro().getAutor(), emprestimo.getExemplar().getLivro().getIsbn(), emprestimo.getDataRetirada(), emprestimo.getDataPrevista()});
+            tabelaModelo.addRow(new Object[]{emprestimo.getAluno().getNome(),
+                emprestimo.getExemplar().getLivro().getTitulo(),
+                emprestimo.getExemplar().getLivro().getAutor(),
+                emprestimo.getExemplar().getLivro().getIsbn(),
+                dataFormatada.format(emprestimo.getDataRetirada()),
+                dataFormatada.format(emprestimo.getDataPrevista())});
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -260,7 +269,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoEmprestimoActionPerformed
-        Principal.pnPrincipal.AbrirPanel(new PnEmprestar(new Emprestimo()));
+        Principal.pnPrincipal.AbrirPanel(new PnEmprestar());
     }//GEN-LAST:event_btNovoEmprestimoActionPerformed
 
 
