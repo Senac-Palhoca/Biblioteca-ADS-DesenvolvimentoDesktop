@@ -224,7 +224,7 @@ public class PnLivro extends javax.swing.JPanel {
             if (tabelaModelo != null) {
                 tabelaModelo.setNumRows(0);
             }
-            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
+            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum Livro com esse Título ou Autor!");
         } else {
             popularTabela();
         }

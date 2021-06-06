@@ -31,7 +31,6 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
     public PnPesquisarLivro() {
         initComponents();
         livroDao = new LivroDaoImpl();
-        getLivros();
     }
 
     /**
@@ -47,7 +46,7 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLivro = new javax.swing.JTable();
-        txTituloAutor = new javax.swing.JTextField();
+        tfTituloAutor = new javax.swing.JTextField();
         lbTituloAutor = new javax.swing.JLabel();
         btBuscar = new javax.swing.JButton();
 
@@ -69,7 +68,7 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbLivro);
 
-        txTituloAutor.setToolTipText("Digite o titulo do liro ou o autor que deseja pesquisar");
+        tfTituloAutor.setToolTipText("Digite o titulo do liro ou o autor que deseja pesquisar");
 
         lbTituloAutor.setText("Título/Autor:");
 
@@ -104,7 +103,7 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(txTituloAutor)
+                                                .addComponent(tfTituloAutor)
                                                 .addGap(10, 10, 10)
                                                 .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(26, 26, 26)))))))
@@ -121,7 +120,7 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
                 .addComponent(lbTituloAutor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txTituloAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfTituloAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
@@ -132,26 +131,22 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         if (!validarCampo()) {
             try {
-               getLivros();
+                sessao = HibernateUtil.abrirConexao();
+                livros = livroDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
+                if (livros.isEmpty()) {
+                    if (tabelaModelo != null) {
+                        tabelaModelo.setNumRows(0);
+                    }
+                    JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
+                } else {
+                    popularTabela();
+                }
             } catch (HibernateException e) {
                 System.err.println("Erro ao pesquisar " + e.getMessage());
             } finally {
                 sessao.close();
             }
     }//GEN-LAST:event_btBuscarActionPerformed
-    }
-
-    private void getLivros() {
-        sessao = HibernateUtil.abrirConexao();
-        livros = livroDao.pesquisarPorTituloAutor(txTituloAutor.getText().trim(), txTituloAutor.getText().trim(), sessao);
-        if (livros.isEmpty()) {
-            if (tabelaModelo != null) {
-                tabelaModelo.setNumRows(0);
-            }
-            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
-        } else {
-            popularTabela();
-        }
     }
 
     private void popularTabela() {
@@ -165,8 +160,8 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
 
     private boolean validarCampo() {
         boolean erro = false;
-        String livro = txTituloAutor.getText().trim();
-        if (livro.length() <= 2) {
+        String livro = tfTituloAutor.getText().trim();
+        if (livro.length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um título ou autor válido!");
             erro = true;
         }
@@ -180,6 +175,6 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbTituloAutor;
     private javax.swing.JTable tbLivro;
-    private javax.swing.JTextField txTituloAutor;
+    private javax.swing.JTextField tfTituloAutor;
     // End of variables declaration//GEN-END:variables
 }
