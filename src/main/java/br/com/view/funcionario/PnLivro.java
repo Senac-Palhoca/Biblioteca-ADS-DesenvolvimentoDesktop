@@ -174,8 +174,8 @@ public class PnLivro extends javax.swing.JPanel {
 
         if (linhaSelecionada >= 0) {
             Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
-            new PnCadastrarLivro(exemplarSelecionado).setVisible(true);
-//            this.dispose();
+            Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(exemplarSelecionado));
+
         } else {
             JOptionPane.showMessageDialog(null, "Nenhuma linha selecionada!");
         }

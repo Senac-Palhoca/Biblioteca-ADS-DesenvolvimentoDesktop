@@ -113,7 +113,7 @@ public class AlunoDaoImplTest {
         assertFalse(alunos.isEmpty());
     }
     
-    @Test
+//    @Test
     public void testListarRankingMes(){
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();

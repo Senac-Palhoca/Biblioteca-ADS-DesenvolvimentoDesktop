@@ -5,13 +5,8 @@
  */
 package br.com.view.funcionario;
 
-import br.com.dao.ExemplarDao;
-import br.com.dao.ExemplarDaoImpl;
-import br.com.dao.HibernateUtil;
-import br.com.dao.LivroDao;
-import br.com.dao.LivroDaoImpl;
-import br.com.model.Exemplar;
-import br.com.model.Livro;
+import br.com.dao.*;
+import br.com.model.*;
 import br.com.view.Principal;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
@@ -20,7 +15,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Felip
+ * @author Marcelo
  */
 public class PnCadastrarLivro extends javax.swing.JPanel {
 
@@ -29,16 +24,18 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     private Exemplar exemplar;
     private LivroDao livroDao;
     private ExemplarDao exemplarDao;
+    private Livro livroAlterar;
+    private Exemplar exemplarAlterar;
 
     public PnCadastrarLivro(Livro livro) {
         initComponents();
         livroDao = new LivroDaoImpl();
         exemplarDao = new ExemplarDaoImpl();
-        this.livro = livro;
-        this.exemplar = exemplar;
+//        this.livro = livro;
+//        this.exemplar = exemplar;
     }
-    
-        public PnCadastrarLivro(Exemplar exemplar) {
+
+    public PnCadastrarLivro(Exemplar exemplar) {
         initComponents();
         this.exemplar = exemplar;
         exemplarDao = new ExemplarDaoImpl();
@@ -217,54 +214,56 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if (!validarCampo()) {
-            carregarLivro();
+
+        exemplar = new Exemplar();
+        livro = new Livro();
+        sessao = HibernateUtil.abrirConexao();
+        ExemplarDao exemplarImpl = new ExemplarDaoImpl();
+        LivroDao livroImpl = new LivroDaoImpl();
+
+        if (btSalvar.getText() == "Alterar") {
+            livroAlterar.setTitulo(tfTitulo.getText());;
+            livroAlterar.setAutor(tfAutor.getText());
+            livroAlterar.setEditora(tfEditora.getText());
+            livroAlterar.setEdicao(tfEdicao.getText());
+            livroAlterar.setIsbn(tfIsbn.getText());
+            exemplarAlterar.setCodigoLivro(tfCodigoLivro.getText());
+            exemplarAlterar.setLivro(livro);
+            livroImpl.salvarOuAlterar(livroAlterar, sessao);
+            exemplarImpl.salvarOuAlterar(exemplarAlterar, sessao);
+            sessao.close();
+            JOptionPane.showMessageDialog(null, "Livro alterado com sucesso!");
+            limpar();
+            btSalvar.setText("Salvar");
+        } else {
+            livro = new Livro();
+            livro.setTitulo(tfTitulo.getText());;
+            livro.setAutor(tfAutor.getText());
+            livro.setEditora(tfEditora.getText());
+            livro.setEdicao(tfEdicao.getText());
+            livro.setIsbn(tfIsbn.getText());
+            exemplar = new Exemplar();
+            exemplar.setCodigoLivro(tfCodigoLivro.getText());
+            exemplar.setStatus(true);
+            exemplar.setLivro(livro);
 
             try {
-                sessao = HibernateUtil.abrirConexao();
                 livroDao.salvarOuAlterar(livro, sessao);
                 exemplarDao.salvarOuAlterar(exemplar, sessao);
                 JOptionPane.showMessageDialog(null, "Livro salvo com sucesso!");
             } catch (HibernateException he) {
-                System.out.println("Erro a salvar livro - Causa: " + he.getCause());
+                System.out.println("Erro a salvar Livro - Causa: " + he.getCause());
             } finally {
                 sessao.close();
             }
 
             limpar();
-
         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         Principal.pnPrincipal.AbrirPanel(new PnLivro());
     }//GEN-LAST:event_btVoltarActionPerformed
-
-    private void carregarLivro() {
-        if (livro == null && exemplar == null) {
-            livro = new Livro();
-            livro.setTitulo("Use a Cabeça - Java");;
-            livro.setAutor("Silvio - Xuxu");
-            livro.setEditora("Senac");
-            livro.setEdicao("1ª");
-            livro.setIsbn("0000000000000");
-            exemplar = new Exemplar();
-            exemplar.setCodigoLivro("Senac-000001");
-            exemplar.setStatus(true);
-            exemplar.setLivro(livro);
-        }
-
-        livro = new Livro();
-        livro.setTitulo(tfTitulo.getText());;
-        livro.setAutor(tfAutor.getText());
-        livro.setEditora(tfEditora.getText());
-        livro.setEdicao(tfEdicao.getText());
-        livro.setIsbn(tfIsbn.getText());
-        exemplar = new Exemplar();
-        exemplar.setCodigoLivro(tfCodigoLivro.getText());
-        exemplar.setStatus(true);
-        exemplar.setLivro(livro);
-    }
 
     private boolean validarCampo() {
         String mensagem = "";
