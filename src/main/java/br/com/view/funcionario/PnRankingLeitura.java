@@ -39,7 +39,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     public PnRankingLeitura() {
         Date data = new Date();
         initComponents();
-        cbMes.setSelectedIndex(data.getMonth() -1);
+        cbMes.setSelectedIndex(data.getMonth());
         txAno.setText("2021");
         popularListaTurma();
         popularTabela(data, 1);
@@ -213,7 +213,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
         try {
             Integer ano = Integer.parseInt(txAno.getText());
-            Date data =  new GregorianCalendar(ano, cbMes.getSelectedIndex() + 1, 1).getTime();
+            Date data =  new GregorianCalendar(ano, cbMes.getSelectedIndex(), 1).getTime();
             popularTabela(data, turmas.get(cbTurma.getSelectedIndex()).getId());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ano inválido!");
