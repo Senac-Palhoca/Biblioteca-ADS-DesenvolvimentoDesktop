@@ -29,16 +29,13 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         initComponents();
         this.livro = livro;
         livroDao = new LivroDaoImpl();
-        tfTitulo.setText(livro.getTitulo());
-        tfAutor.setText(livro.getAutor());
-        tfEditora.setText(livro.getEditora());
-        tfEdicao.setText(livro.getEdicao());
-        tfIsbn.setText(livro.getIsbn());
+        this.exemplar = exemplar;
+        exemplarDao = new ExemplarDaoImpl();
     }
 
     public PnCadastrarLivro(Exemplar exemplar) {
         initComponents();
-        
+
         this.livro = livro;
         livroDao = new LivroDaoImpl();
         tfTitulo.setText(exemplar.getLivro().getTitulo());
@@ -46,11 +43,11 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         tfEditora.setText(exemplar.getLivro().getEditora());
         tfEdicao.setText(exemplar.getLivro().getEdicao());
         tfIsbn.setText(exemplar.getLivro().getIsbn());
-        
+
         this.exemplar = exemplar;
         exemplarDao = new ExemplarDaoImpl();
         tfCodigoLivro.setText(exemplar.getCodigoLivro());
-        
+
         btSalvar.setText("Alterar");
     }
 
@@ -224,15 +221,17 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         try {
             if (btSalvar.getText() == "Alterar") {
                 sessao = HibernateUtil.abrirConexao();
-                
+
                 exemplar.getLivro().setTitulo(tfTitulo.getText());;
                 exemplar.getLivro().setAutor(tfAutor.getText());
                 exemplar.getLivro().setEditora(tfEditora.getText());
                 exemplar.getLivro().setEdicao(tfEdicao.getText());
                 exemplar.getLivro().setIsbn(tfIsbn.getText());
                 exemplar.setCodigoLivro(tfCodigoLivro.getText());
+//                exemplar.setLivro(livro);                
 
                 exemplarDao.salvarOuAlterar(exemplar, sessao);
+
                 JOptionPane.showMessageDialog(null, "Livro alterado com sucesso!");
             } else {
                 sessao = HibernateUtil.abrirConexao();
@@ -254,10 +253,10 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             System.out.println("Erro a salvar Livro - Causa: " + e);
+            JOptionPane.showMessageDialog(null, "Erro ao salvar livro, comunique o administrador do sistema!\n\n\n Informe sobre o erro: " + e);
         } finally {
             sessao.close();
         }
-
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed

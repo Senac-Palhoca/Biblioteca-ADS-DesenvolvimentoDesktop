@@ -6,13 +6,12 @@
 package br.com.dao;
 
 import br.com.model.Exemplar;
-import br.com.model.Livro;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
- * @param <Livro>
+ * 
  * @author Silvio
  */
 public interface ExemplarDao extends BaseDao<Exemplar, Long>{
