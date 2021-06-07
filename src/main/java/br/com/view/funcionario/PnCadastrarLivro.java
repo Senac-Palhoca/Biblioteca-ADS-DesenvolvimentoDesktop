@@ -8,9 +8,7 @@ package br.com.view.funcionario;
 import br.com.dao.*;
 import br.com.model.*;
 import br.com.view.Principal;
-import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
@@ -29,7 +27,6 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         initComponents();
         this.livro = livro;
         livroDao = new LivroDaoImpl();
-        this.exemplar = exemplar;
         exemplarDao = new ExemplarDaoImpl();
     }
 
@@ -221,17 +218,18 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         try {
             if (btSalvar.getText() == "Alterar") {
                 sessao = HibernateUtil.abrirConexao();
-
-                exemplar.getLivro().setTitulo(tfTitulo.getText());;
-                exemplar.getLivro().setAutor(tfAutor.getText());
-                exemplar.getLivro().setEditora(tfEditora.getText());
-                exemplar.getLivro().setEdicao(tfEdicao.getText());
-                exemplar.getLivro().setIsbn(tfIsbn.getText());
+                livro = exemplar.getLivro();
+                livro.setTitulo(tfTitulo.getText());;
+                livro.setAutor(tfAutor.getText());
+                livro.setEditora(tfEditora.getText());
+                livro.setEdicao(tfEdicao.getText());
+                livro.setIsbn(tfIsbn.getText());
                 exemplar.setCodigoLivro(tfCodigoLivro.getText());
-//                exemplar.setLivro(livro);                
+                exemplar.setLivro(livro);                
 
+                livroDao.salvarOuAlterar(livro, sessao);
                 exemplarDao.salvarOuAlterar(exemplar, sessao);
-
+                
                 JOptionPane.showMessageDialog(null, "Livro alterado com sucesso!");
             } else {
                 sessao = HibernateUtil.abrirConexao();
