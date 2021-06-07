@@ -98,7 +98,7 @@ public class LivroDaoImplTest {
         if (livros.isEmpty()) {
             testSalvar();
         } else {
-            livro = livros.get(0);
+            livro = livros.get(criarNumeroEntre2Valores(-1, livros.size()));
         }
         return livro;
     }

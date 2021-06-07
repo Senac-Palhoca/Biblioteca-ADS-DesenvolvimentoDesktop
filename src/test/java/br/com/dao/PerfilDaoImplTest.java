@@ -6,10 +6,13 @@
 package br.com.dao;
 
 import br.com.model.Perfil;
+import br.com.util.UtilGerador;
 import static br.com.util.UtilGerador.gerarNome;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -26,17 +29,43 @@ public class PerfilDaoImplTest {
     public PerfilDaoImplTest() {
         perfilDao = new PerfilDaoImpl();
     }
-    
-    @Test
-    public void testSalvar() {
-        perfil = new Perfil(null, "Função " + gerarNome(), "Descrição " + gerarNome());
-        sessao = HibernateUtil.abrirConexao();
-        perfilDao.salvarOuAlterar(perfil, sessao);
-        sessao.close();
-        assertNotNull(perfil.getId());
-    }
 
 //    @Test
+//    public void testSalvar() {
+//        perfil = new Perfil(null, "Função " + gerarNome(), "Descrição " + gerarNome());
+//        sessao = HibernateUtil.abrirConexao();
+//        perfilDao.salvarOuAlterar(perfil, sessao);
+//        sessao.close();
+//        assertNotNull(perfil.getId());
+//    }
+
+    @Test
+    public void testSalvar() {
+        testPesquisarPerfil();
+        
+        if (perfis.isEmpty()) {
+            Session session = HibernateUtil.abrirConexao();
+            perfil = new Perfil(null, "Administrador", "Gerencia bibliotecários, alunos, cursos e turmas");
+            salvar(perfil, session);
+            perfil = new Perfil(null, "Coordenador", "Ranking de turmas e alunos");
+            salvar(perfil, session);
+            perfil = new Perfil(null, "Bibliotecário", "Gerencia livros e acesso ao ranking mensal");
+            salvar(perfil, session);
+            perfil = new Perfil(null, "Aluno", "Tem acesso aos seus emprestimos pessoais");
+            salvar(perfil, session);
+            session.close();
+        }
+        assertTrue(!perfis.isEmpty());
+    }
+
+    private void salvar(Perfil perfil, Session sessao) throws HibernateException {
+        Transaction transacao;
+        transacao = sessao.beginTransaction();
+        sessao.saveOrUpdate(perfil);
+        transacao.commit();
+    }
+
+    @Test
     public void testPesquisarPerfil() {
         System.out.println("pesquisarPerfil");
         sessao = HibernateUtil.abrirConexao();
@@ -44,16 +73,16 @@ public class PerfilDaoImplTest {
         sessao.close();
         assertTrue(!perfis.isEmpty());
     }
-    
+
     public Perfil gerarPerfilBd() {
         sessao = HibernateUtil.abrirConexao();
         Query consulta = sessao.createQuery("from Perfil");
         List<Perfil> perfils = consulta.list();
         sessao.close();
-        if(perfils.isEmpty()){
+        if (perfils.isEmpty()) {
             testSalvar();
-        }else{
-           perfil = perfils.get(0);
+        } else {
+            perfil = perfils.get(UtilGerador.criarNumeroEntre2Valores(-1, perfils.size()));
         }
         return perfil;
     }

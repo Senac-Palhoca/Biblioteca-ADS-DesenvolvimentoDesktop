@@ -32,13 +32,14 @@ public class PnBuscarLivro extends javax.swing.JPanel {
 
     public PnBuscarLivro() {
         initComponents();
-        exemplarDao = new ExemplarDaoImpl() {};
+        exemplarDao = new ExemplarDaoImpl();
         listarExemplar();
     }
 
-    public Exemplar getExemplar(){
+    public Exemplar getExemplar() {
         return exemplar;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,13 +155,14 @@ public class PnBuscarLivro extends javax.swing.JPanel {
         listarExemplar();
     }//GEN-LAST:event_btBuscarActionPerformed
 
-    private void listarExemplar(){
+    private void listarExemplar() {
         sessao = HibernateUtil.abrirConexao();
         exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
         sessao.close();
-
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
+
+        exemplares.removeIf(exemplar -> exemplar.getStatus() == false);
         for (Exemplar exemplar : exemplares) {
             tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(),
                 exemplar.getLivro().getAutor(),

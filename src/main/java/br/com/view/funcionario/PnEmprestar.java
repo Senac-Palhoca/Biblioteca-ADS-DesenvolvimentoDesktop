@@ -7,6 +7,8 @@ package br.com.view.funcionario;
 
 import br.com.dao.EmprestimoDao;
 import br.com.dao.EmprestimoDaoImpl;
+import br.com.dao.ExemplarDao;
+import br.com.dao.ExemplarDaoImpl;
 import br.com.dao.HibernateUtil;
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
@@ -30,6 +32,7 @@ public class PnEmprestar extends javax.swing.JPanel {
     private EmprestimoDao emprestimoDao;
     private Aluno aluno;
     private Exemplar exemplar;
+    private ExemplarDao exemplarDao;
     private Session sessao;
     private Date dataRetirada = new Date();
     private Date dataDevolucao;
@@ -37,24 +40,7 @@ public class PnEmprestar extends javax.swing.JPanel {
     public PnEmprestar() {
         initComponents();
         emprestimoDao = new EmprestimoDaoImpl();
-        carregarDatas();
-    }
-
-    public PnEmprestar(Aluno aluno) {
-        initComponents();
-        this.aluno = aluno;
-        txAluno.setText(aluno.getNome());
-        emprestimoDao = new EmprestimoDaoImpl();
-        carregarDatas();
-    }
-
-    public PnEmprestar(Aluno aluno, Exemplar exemplar) {
-        initComponents();
-        this.aluno = aluno;
-        this.exemplar = exemplar;
-        txAluno.setText(aluno.getNome());
-        txExemplar.setText(exemplar.getLivro().getTitulo());
-        emprestimoDao = new EmprestimoDaoImpl();
+        exemplarDao = new ExemplarDaoImpl();
         carregarDatas();
     }
 
@@ -217,10 +203,10 @@ public class PnEmprestar extends javax.swing.JPanel {
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         Aluno alunoAux = pn.getAluno();
-        if(alunoAux != null){
+        if (alunoAux != null) {
             aluno = alunoAux;
             txAluno.setText(aluno.getNome());
-        }         
+        }
     }//GEN-LAST:event_btBuscarAlunoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
@@ -228,6 +214,8 @@ public class PnEmprestar extends javax.swing.JPanel {
         if (aluno != null && exemplar != null) {
             emprestimo = new Emprestimo();
             emprestimo.setAluno(aluno);
+            exemplar.setStatus(false);
+            exemplarDao.salvarOuAlterar(exemplar, sessao);
             emprestimo.setExemplar(exemplar);
             emprestimo.setDataRetirada(dataRetirada);
             emprestimo.setDataPrevista(dataDevolucao);
@@ -244,20 +232,16 @@ public class PnEmprestar extends javax.swing.JPanel {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btBuscarExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarExemplarActionPerformed
-        if (aluno == null) {
-            JOptionPane.showMessageDialog(null, "Selecione um aluno primeiro!");
-        } else {
-            JDialog frame = new JDialog(new JFrame("Selecionar Exemplar"), "Selecionar Exemplar", true);
-            PnBuscarLivro pn = new PnBuscarLivro();
-            frame.getContentPane().add(pn);
-            frame.pack();
-            frame.setLocationRelativeTo(this);
-            frame.setVisible(true);
-            Exemplar exemplarAux = pn.getExemplar();
-            if(exemplarAux != null){
-                exemplar = exemplarAux;
-                txExemplar.setText(exemplar.getLivro().getTitulo());
-            } 
+        JDialog frame = new JDialog(new JFrame("Selecionar Exemplar"), "Selecionar Exemplar", true);
+        PnBuscarLivro pn = new PnBuscarLivro();
+        frame.getContentPane().add(pn);
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        Exemplar exemplarAux = pn.getExemplar();
+        if (exemplarAux != null) {
+            exemplar = exemplarAux;
+            txExemplar.setText(exemplar.getLivro().getTitulo());
         }
     }//GEN-LAST:event_btBuscarExemplarActionPerformed
 
