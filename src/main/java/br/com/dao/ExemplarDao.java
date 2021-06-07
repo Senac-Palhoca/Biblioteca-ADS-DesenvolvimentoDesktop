@@ -12,13 +12,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
- *
+ * @param <Livro>
  * @author Silvio
  */
 public interface ExemplarDao extends BaseDao<Exemplar, Long>{
     
     List<Exemplar> pesquisarPorTituloAutor(String titulo, String autor, Session sessao) throws HibernateException;
-    
+        
     List<Exemplar> listarTodos(Session sessao) throws HibernateException;
     
 }

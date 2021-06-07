@@ -6,7 +6,6 @@
 package br.com.dao;
 
 import br.com.model.Exemplar;
-import br.com.model.Livro;
 import static br.com.util.UtilGerador.*;
 import java.util.*;
 import org.junit.Test;

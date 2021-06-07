@@ -5,13 +5,10 @@
  */
 package br.com.view.funcionario;
 
-import br.com.dao.ExemplarDao;
-import br.com.dao.ExemplarDaoImpl;
-import br.com.dao.HibernateUtil;
-import br.com.model.Exemplar;
-import br.com.model.Livro;
+import br.com.dao.*;
+import br.com.model.*;
 import br.com.view.Principal;
-import java.awt.HeadlessException;
+import java.awt.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -32,7 +29,6 @@ public class PnLivro extends javax.swing.JPanel {
     public PnLivro() {
         initComponents();
         exemplarDao = new ExemplarDaoImpl();
-        getLivros();
     }
 
     /**
@@ -206,9 +202,18 @@ public class PnLivro extends javax.swing.JPanel {
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        if (!validarCampo()) {
+if (!validarCampo()) {
             try {
-                getLivros();
+                sessao = HibernateUtil.abrirConexao();
+                exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
+                if (exemplares.isEmpty()) {
+                    if (tabelaModelo != null) {
+                        tabelaModelo.setNumRows(0);
+                    }
+                    JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
+                } else {
+                    popularTabela();
+                }
             } catch (HibernateException e) {
                 System.err.println("Erro ao pesquisar " + e.getMessage());
             } finally {
@@ -216,19 +221,6 @@ public class PnLivro extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btBuscarActionPerformed
-
-    private void getLivros() {
-        sessao = HibernateUtil.abrirConexao();
-        exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
-        if (exemplares.isEmpty()) {
-            if (tabelaModelo != null) {
-                tabelaModelo.setNumRows(0);
-            }
-            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum Livro com esse Título ou Autor!");
-        } else {
-            popularTabela();
-        }
-    }
 
     private void popularTabela() {
         ExemplarDaoImpl exemplarDao = new ExemplarDaoImpl();

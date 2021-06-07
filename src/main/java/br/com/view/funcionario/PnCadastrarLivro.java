@@ -24,27 +24,33 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     private Exemplar exemplar;
     private LivroDao livroDao;
     private ExemplarDao exemplarDao;
-    private Livro livroAlterar;
-    private Exemplar exemplarAlterar;
 
     public PnCadastrarLivro(Livro livro) {
         initComponents();
+        this.livro = livro;
         livroDao = new LivroDaoImpl();
-        exemplarDao = new ExemplarDaoImpl();
-//        this.livro = livro;
-//        this.exemplar = exemplar;
+        tfTitulo.setText(livro.getTitulo());
+        tfAutor.setText(livro.getAutor());
+        tfEditora.setText(livro.getEditora());
+        tfEdicao.setText(livro.getEdicao());
+        tfIsbn.setText(livro.getIsbn());
     }
 
     public PnCadastrarLivro(Exemplar exemplar) {
         initComponents();
-        this.exemplar = exemplar;
-        exemplarDao = new ExemplarDaoImpl();
+        
+        this.livro = livro;
+        livroDao = new LivroDaoImpl();
         tfTitulo.setText(exemplar.getLivro().getTitulo());
         tfAutor.setText(exemplar.getLivro().getAutor());
         tfEditora.setText(exemplar.getLivro().getEditora());
         tfEdicao.setText(exemplar.getLivro().getEdicao());
         tfIsbn.setText(exemplar.getLivro().getIsbn());
+        
+        this.exemplar = exemplar;
+        exemplarDao = new ExemplarDaoImpl();
         tfCodigoLivro.setText(exemplar.getCodigoLivro());
+        
         btSalvar.setText("Alterar");
     }
 
@@ -130,11 +136,11 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(97, 97, 97)
-                        .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(91, 91, 91)
-                        .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,10 +208,10 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                             .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSalvar)
-                    .addComponent(btCancelar)
-                    .addComponent(btVoltar))
-                .addContainerGap(79, Short.MAX_VALUE))
+                    .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -215,50 +221,43 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
-        exemplar = new Exemplar();
-        livro = new Livro();
-        sessao = HibernateUtil.abrirConexao();
-        ExemplarDao exemplarImpl = new ExemplarDaoImpl();
-        LivroDao livroImpl = new LivroDaoImpl();
+        try {
+            if (btSalvar.getText() == "Alterar") {
+                sessao = HibernateUtil.abrirConexao();
+                
+                exemplar.getLivro().setTitulo(tfTitulo.getText());;
+                exemplar.getLivro().setAutor(tfAutor.getText());
+                exemplar.getLivro().setEditora(tfEditora.getText());
+                exemplar.getLivro().setEdicao(tfEdicao.getText());
+                exemplar.getLivro().setIsbn(tfIsbn.getText());
+                exemplar.setCodigoLivro(tfCodigoLivro.getText());
 
-        if (btSalvar.getText() == "Alterar") {
-            livroAlterar.setTitulo(tfTitulo.getText());;
-            livroAlterar.setAutor(tfAutor.getText());
-            livroAlterar.setEditora(tfEditora.getText());
-            livroAlterar.setEdicao(tfEdicao.getText());
-            livroAlterar.setIsbn(tfIsbn.getText());
-            exemplarAlterar.setCodigoLivro(tfCodigoLivro.getText());
-            exemplarAlterar.setLivro(livro);
-            livroImpl.salvarOuAlterar(livroAlterar, sessao);
-            exemplarImpl.salvarOuAlterar(exemplarAlterar, sessao);
-            sessao.close();
-            JOptionPane.showMessageDialog(null, "Livro alterado com sucesso!");
-            limpar();
-            btSalvar.setText("Salvar");
-        } else {
-            livro = new Livro();
-            livro.setTitulo(tfTitulo.getText());;
-            livro.setAutor(tfAutor.getText());
-            livro.setEditora(tfEditora.getText());
-            livro.setEdicao(tfEdicao.getText());
-            livro.setIsbn(tfIsbn.getText());
-            exemplar = new Exemplar();
-            exemplar.setCodigoLivro(tfCodigoLivro.getText());
-            exemplar.setStatus(true);
-            exemplar.setLivro(livro);
-
-            try {
+                exemplarDao.salvarOuAlterar(exemplar, sessao);
+                JOptionPane.showMessageDialog(null, "Livro alterado com sucesso!");
+            } else {
+                sessao = HibernateUtil.abrirConexao();
+                ExemplarDao exemplarImpl = new ExemplarDaoImpl();
+                LivroDao livroImpl = new LivroDaoImpl();
+                livro = new Livro();
+                livro.setTitulo(tfTitulo.getText());;
+                livro.setAutor(tfAutor.getText());
+                livro.setEditora(tfEditora.getText());
+                livro.setEdicao(tfEdicao.getText());
+                livro.setIsbn(tfIsbn.getText());
+                exemplar = new Exemplar();
+                exemplar.setCodigoLivro(tfCodigoLivro.getText());
+                exemplar.setStatus(true);
+                exemplar.setLivro(livro);
                 livroDao.salvarOuAlterar(livro, sessao);
                 exemplarDao.salvarOuAlterar(exemplar, sessao);
                 JOptionPane.showMessageDialog(null, "Livro salvo com sucesso!");
-            } catch (HibernateException he) {
-                System.out.println("Erro a salvar Livro - Causa: " + he.getCause());
-            } finally {
-                sessao.close();
             }
-
-            limpar();
+        } catch (Exception e) {
+            System.out.println("Erro a salvar Livro - Causa: " + e);
+        } finally {
+            sessao.close();
         }
+
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed

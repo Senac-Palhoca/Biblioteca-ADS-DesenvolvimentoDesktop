@@ -22,7 +22,7 @@ public class Exemplar implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private boolean status;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String codigoLivro;
 
     @ManyToOne

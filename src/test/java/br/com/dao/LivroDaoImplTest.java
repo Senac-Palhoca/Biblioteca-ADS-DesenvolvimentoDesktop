@@ -37,8 +37,11 @@ public class LivroDaoImplTest {
     public void testAlterar() {
         System.out.println("#################");
         System.out.println("# Teste Alterar #");
-        System.out.println("#################");         gerarLivroBd();
+        System.out.println("#################");         
+        gerarLivroBd();
         sessao = HibernateUtil.abrirConexao();
+        livro.setTitulo("Use a cabeça - Java");
+        livroDao.salvarOuAlterar(livro, sessao);
         Livro livroId = livroDao.pesquisarPorId(livro.getId(), sessao);
         sessao.close();
         assertNotNull(livroId);
