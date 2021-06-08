@@ -237,6 +237,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 livro = new Livro();
                 listarLivro();
                 exemplar = new Exemplar();
+                exemplar.setStatus(true);
                 exemplar.setCodigoLivro(tfCodigoLivro.getText());
                 exemplar.setLivro(livro);
                 livroDao.salvarOuAlterar(livro, sessao);
@@ -247,6 +248,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 sessao = HibernateUtil.abrirConexao();
                 ExemplarDao exemplarImpl = new ExemplarDaoImpl();
                 exemplar = new Exemplar();
+                exemplar.setStatus(true);
                 exemplar.setCodigoLivro(tfCodigoLivro.getText());
                 exemplar.setLivro(livro);
                 exemplarDao.salvarOuAlterar(exemplar, sessao);
