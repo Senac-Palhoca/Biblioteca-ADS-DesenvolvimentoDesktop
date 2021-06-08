@@ -43,10 +43,14 @@ public class PnCursoTurma extends javax.swing.JPanel {
         cursosCombo = impl.listarTodos(sessao);
         sessao.close();
 
+        carregaComboCursos();
+
+    }
+
+    private void carregaComboCursos() {
         for (Curso curso1 : cursosCombo) {
             cbCurso.addItem(curso1.getNome());
         }
-
     }
 
     private void listarCurso() {
@@ -439,6 +443,7 @@ public class PnCursoTurma extends javax.swing.JPanel {
             txCurso.setText("");
             JOptionPane.showMessageDialog(null, "Curso cadastrado com sucesso.");
         }
+        carregaComboCursos();
     }//GEN-LAST:event_btAddCursoActionPerformed
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
