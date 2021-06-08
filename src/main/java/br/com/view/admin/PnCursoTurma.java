@@ -462,6 +462,7 @@ public class PnCursoTurma extends javax.swing.JPanel {
             txCursoSelecionado.setEditable(false);
             JOptionPane.showMessageDialog(null, "Curso alterado com sucesso.");
         }
+        carregaComboCursos();
     }//GEN-LAST:event_btAlterarActionPerformed
 
     private void tbTurmaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTurmaMouseClicked
