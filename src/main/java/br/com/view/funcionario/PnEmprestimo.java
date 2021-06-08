@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
@@ -49,6 +50,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
         alunoDao = new AlunoDaoImpl();
         listarAtrasados();
         listarAbertos();
+        tiraInformacoes();
     }
 
     private void listarAtrasados() {
@@ -98,18 +100,17 @@ public class PnEmprestimo extends javax.swing.JPanel {
         tbLivro = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lbAtraso = new javax.swing.JLabel();
-        txAlunoTitulo = new javax.swing.JTextField();
+        txBuscarAluno = new javax.swing.JTextField();
         btBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        txAluno = new javax.swing.JLabel();
         jLabelAluno = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        txTitulo = new javax.swing.JLabel();
         jLabelTitulo = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        jLabelDevolucao = new javax.swing.JLabel();
+        txData = new javax.swing.JLabel();
         jLabelData = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabelAtraso = new javax.swing.JLabel();
         btDevolucao = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -174,21 +175,21 @@ public class PnEmprestimo extends javax.swing.JPanel {
 
         jLabel2.setText("Buscar Aluno");
 
-        jLabel3.setText("Aluno:");
+        txAluno.setText("Aluno:");
 
-        jLabelAluno.setText("Aluno Um");
+        jLabelAluno.setText("Aluno");
 
-        jLabel5.setText("Título:");
+        txTitulo.setText("Título:");
 
-        jLabelTitulo.setText("Usando a Cabeça JAVA");
+        jLabelTitulo.setText("Título");
 
-        jLabel10.setText("Atraso de:");
+        jLabelDevolucao.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelDevolucao.setForeground(new java.awt.Color(200, 0, 0));
+        jLabelDevolucao.setText("Devolução Registrada!");
 
-        jLabelData.setText("Data Empréstimo:");
+        txData.setText("Data Devolução:");
 
-        jLabel9.setText("11/08/1989");
-
-        jLabelAtraso.setText("31 anos");
+        jLabelData.setText("00/00/0000");
 
         btDevolucao.setText("Registrar Devolução");
         btDevolucao.addActionListener(new java.awt.event.ActionListener() {
@@ -205,22 +206,21 @@ public class PnEmprestimo extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelAluno)
-                            .addComponent(jLabelTitulo))
-                        .addGap(65, 65, 65)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabelData))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabelAtraso))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                            .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelData, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelDevolucao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 53, Short.MAX_VALUE))
                     .addComponent(btDevolucao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -229,16 +229,15 @@ public class PnEmprestimo extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(txAluno)
                     .addComponent(jLabelAluno)
-                    .addComponent(jLabelData)
-                    .addComponent(jLabel9))
+                    .addComponent(txData)
+                    .addComponent(jLabelData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(txTitulo)
                     .addComponent(jLabelTitulo)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabelAtraso))
+                    .addComponent(jLabelDevolucao))
                 .addGap(18, 18, 18)
                 .addComponent(btDevolucao)
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -264,7 +263,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(txAlunoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txBuscarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btBuscar)))))
                     .addGroup(layout.createSequentialGroup()
@@ -293,13 +292,13 @@ public class PnEmprestimo extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txAlunoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txBuscarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -310,15 +309,20 @@ public class PnEmprestimo extends javax.swing.JPanel {
     private void btDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDevolucaoActionPerformed
         int linhaSelecionada = tbLivro.getSelectedRow();
         if (linhaSelecionada >= 0) {
+            sessao = HibernateUtil.abrirConexao();
             emprestimo = emprestimosAberto.get(linhaSelecionada);
             emprestimo.setDataDevolucao(new Date());
             exemplar = emprestimo.getExemplar();
             exemplar.setStatus(true);
-
-            sessao = HibernateUtil.abrirConexao();
-            exemplarDao.salvarOuAlterar(exemplar, sessao);
-            emprestimoDao.salvarOuAlterar(emprestimo, sessao);
-            sessao.close();
+            try {
+                exemplarDao.salvarOuAlterar(exemplar, sessao);
+                emprestimoDao.salvarOuAlterar(emprestimo, sessao);
+                devolucao();
+            } catch (HibernateException h) {
+                System.out.println("Erro ao salvar devolução!\nTente novamente." + h.getMessage());
+            } finally {
+                sessao.close();
+            }
             listarAbertos();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
@@ -328,31 +332,54 @@ public class PnEmprestimo extends javax.swing.JPanel {
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         emprestimosAberto = new ArrayList<>();
         sessao = HibernateUtil.abrirConexao();
-        List<Aluno> alunos = alunoDao.pesquisarPorNome(txAlunoTitulo.getText().trim(), sessao);
+        List<Aluno> alunos = alunoDao.pesquisarPorNome(txBuscarAluno.getText().trim(), sessao);
         sessao.close();
-        for (Aluno aluno : alunos) {
-            for (Emprestimo emp : aluno.getEmprestimos()) {
-                if (emp.getDataDevolucao() == null) {
-                    emprestimosAberto.add(emp);
+        if (!alunos.isEmpty()) {
+            for (Aluno aluno : alunos) {
+                for (Emprestimo emp : aluno.getEmprestimos()) {
+                    if (emp.getDataDevolucao() == null) {
+                        emprestimosAberto.add(emp);
+                    }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum Aluno encontrado!");
         }
         carregaTabela();
+        tiraInformacoes();
     }//GEN-LAST:event_btBuscarActionPerformed
 
+    private void tiraInformacoes(){
+        txAluno.setVisible(false);
+        jLabelAluno.setVisible(false);
+        txData.setVisible(false);
+        jLabelData.setVisible(false);
+        txTitulo.setVisible(false);
+        jLabelTitulo.setVisible(false);
+        jLabelDevolucao.setVisible(false);
+    }
+    
+    private void devolucao(){
+        txAluno.setVisible(true);
+        txData.setVisible(true);
+        txTitulo.setVisible(true);
+        jLabelAluno.setText(emprestimo.getAluno().getNome());
+        jLabelAluno.setVisible(true);
+        jLabelTitulo.setText(emprestimo.getExemplar().getLivro().getTitulo());
+        jLabelTitulo.setVisible(true);
+        jLabelData.setText(dataFormatada.format(new Date()));
+        jLabelData.setVisible(true);
+        jLabelDevolucao.setVisible(true);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
     private javax.swing.JButton btDevolucao;
     private javax.swing.JButton btNovoEmprestimo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAluno;
-    private javax.swing.JLabel jLabelAtraso;
     private javax.swing.JLabel jLabelData;
+    private javax.swing.JLabel jLabelDevolucao;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -360,6 +387,9 @@ public class PnEmprestimo extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbAtraso;
     private javax.swing.JTable tbLivro;
-    private javax.swing.JTextField txAlunoTitulo;
+    private javax.swing.JLabel txAluno;
+    private javax.swing.JTextField txBuscarAluno;
+    private javax.swing.JLabel txData;
+    private javax.swing.JLabel txTitulo;
     // End of variables declaration//GEN-END:variables
 }

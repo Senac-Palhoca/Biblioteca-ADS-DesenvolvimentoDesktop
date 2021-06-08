@@ -8,9 +8,7 @@ package br.com.view.funcionario;
 import br.com.dao.ExemplarDao;
 import br.com.dao.ExemplarDaoImpl;
 import br.com.dao.HibernateUtil;
-import br.com.model.Aluno;
 import br.com.model.Exemplar;
-import br.com.view.Principal;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -19,7 +17,6 @@ import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
 
 /**
- *
  * @author Felipe
  */
 public class PnBuscarLivro extends javax.swing.JPanel {
