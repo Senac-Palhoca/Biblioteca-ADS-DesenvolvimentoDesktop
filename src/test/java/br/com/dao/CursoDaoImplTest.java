@@ -20,7 +20,7 @@ public class CursoDaoImplTest {
         cursoDao = new CursoDaoImpl();
     }
     
-//    @Test
+   @Test
     public void testSalvar() {
         curso = new Curso(null, "Curso " + UtilGerador.gerarNome());
         sessao = HibernateUtil.abrirConexao();
@@ -29,7 +29,7 @@ public class CursoDaoImplTest {
         assertNotNull(curso.getId());
     }
     
-   //@Test
+   @Test
     public void testAlterar() {
         buscarCursoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -42,7 +42,7 @@ public class CursoDaoImplTest {
         assertEquals(curso.getNome(), cursoPesquisado.getNome());
     }
     
-    //@Test
+   @Test
     public void testPesquisarPorId() {
         buscarCursoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -51,7 +51,7 @@ public class CursoDaoImplTest {
         assertNotNull(cursoId);
     }
     
-    //@Test
+    @Test
     public void testPesquisarPorNome() {
         buscarCursoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -60,7 +60,7 @@ public class CursoDaoImplTest {
         assertFalse(cursos.isEmpty());
     }
     
-    //@Test
+    @Test
     public void testListarTodos() {
         buscarCursoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -70,7 +70,7 @@ public class CursoDaoImplTest {
         assertFalse(isEmpty);
     }
     
-    // @Test
+    @Test
     public void testExcluir() {
         System.out.println("Teste Excluir não deve ser executado");
     }
