@@ -21,11 +21,11 @@ public class LivroDaoImplTest {
         livroDao = new LivroDaoImpl();
     }
 
-        @Test
+    @Test
     public void testSalvar() {
         System.out.println("################");
         System.out.println("# Teste Salvar #");
-        System.out.println("################");        
+        System.out.println("################");
         livro = new Livro(gerarTitulo(), gerarNome(), gerarNumero(1), gerarEditora(), gerarNumero(13));
         sessao = HibernateUtil.abrirConexao();
         livroDao.salvarOuAlterar(livro, sessao);
@@ -37,7 +37,7 @@ public class LivroDaoImplTest {
     public void testAlterar() {
         System.out.println("#################");
         System.out.println("# Teste Alterar #");
-        System.out.println("#################");         
+        System.out.println("#################");
         gerarLivroBd();
         sessao = HibernateUtil.abrirConexao();
         livro.setTitulo("Use a cabeça - Java");
@@ -51,7 +51,8 @@ public class LivroDaoImplTest {
     public void testExcluir() {
         System.out.println("#################");
         System.out.println("# Teste Excluir #");
-        System.out.println("#################");     }
+        System.out.println("#################");
+    }
 
     @Test
     public void testPesquisarPorId() {
@@ -69,7 +70,7 @@ public class LivroDaoImplTest {
     public void testListarTodo() {
         System.out.println("#####################");
         System.out.println("# Teste Listar Todo #");
-        System.out.println("#####################");         
+        System.out.println("#####################");
         gerarLivroBd();
         sessao = HibernateUtil.abrirConexao();
         List<Livro> livros = livroDao.listarTodo(sessao);
