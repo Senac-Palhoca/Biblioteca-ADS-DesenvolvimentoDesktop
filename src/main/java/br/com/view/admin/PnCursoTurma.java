@@ -38,19 +38,18 @@ public class PnCursoTurma extends javax.swing.JPanel {
 //        listarCurso();
         pnCursoTurma.setVisible(true);
 
-        sessao = HibernateUtil.abrirConexao();
-        CursoDao impl = new CursoDaoImpl();
-        cursosCombo = impl.listarTodos(sessao);
-        sessao.close();
-
         carregaComboCursos();
 
     }
 
     private void carregaComboCursos() {
-        for (Curso curso1 : cursosCombo) {
+        sessao = HibernateUtil.abrirConexao();
+        CursoDao impl = new CursoDaoImpl();
+        cursosCombo = impl.listarTodos(sessao);
+        sessao.close();
+        cursosCombo.forEach(curso1 -> {
             cbCurso.addItem(curso1.getNome());
-        }
+        });
     }
 
     private void listarCurso() {
@@ -183,6 +182,7 @@ public class PnCursoTurma extends javax.swing.JPanel {
         });
 
         cbCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
+        cbCurso.setSelectedItem(cbCurso);
 
         jLabel9.setText("Curso:");
 
@@ -482,10 +482,10 @@ public class PnCursoTurma extends javax.swing.JPanel {
 
     private void btSalvarTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarTurmaActionPerformed
         if (cbAno.getSelectedIndex() != 0
-                || cbCurso.getSelectedIndex() != 0
-                || cbPeriodo.getSelectedIndex() != 0
-                || !txNomeTurma.getText().isEmpty()
-                || !txFaseTurma.getText().isEmpty()) {
+                && cbCurso.getSelectedIndex() != 0
+                && cbPeriodo.getSelectedIndex() != 0
+                && !txNomeTurma.getText().isEmpty()
+                && !txFaseTurma.getText().isEmpty()) {
             turma = new Turma();
 
             sessao = HibernateUtil.abrirConexao();
