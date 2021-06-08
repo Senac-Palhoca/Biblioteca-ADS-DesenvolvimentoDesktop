@@ -188,6 +188,7 @@ public class PnLogin extends javax.swing.JPanel {
         String perfilUsuario = txUsuario.getText();
         //o objeto Pessoa que fizer login deve ser setado em Principal.usuario. Ex.:
         Principal.usuario = new Pessoa();
+        
         //este switch deve ser alterado para validar o login conforme o objeto ou perfil
         switch(perfilUsuario.toLowerCase()){
             case "admin":

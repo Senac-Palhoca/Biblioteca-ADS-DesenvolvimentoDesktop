@@ -27,7 +27,7 @@ public class FuncionarioDaoImplTest {
         funcionarioDao = new FuncionarioDaoImpl();
     }
 
-//    @Test
+    @Test
     public void testSalvar() {
         System.out.println("salvar");
         funcionario = new Funcionario();
@@ -47,7 +47,7 @@ public class FuncionarioDaoImplTest {
         assertNotNull(funcionario.getId());
     }
 
-//    @Test
+    @Test
     public void testAlterar() {
         System.out.println("Alterar");
         buscarFuncionarioBd();
@@ -65,7 +65,7 @@ public class FuncionarioDaoImplTest {
         assertEquals(funcionario.getNome(), funcionarioAlt.getNome());
     }
 
-//    @Test
+    @Test
     public void testPesquisarPorId() {
         System.out.println("pesquisarPorId");
         funcionario = buscarFuncionarioBd();

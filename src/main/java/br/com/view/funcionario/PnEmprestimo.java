@@ -319,7 +319,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
                 emprestimoDao.salvarOuAlterar(emprestimo, sessao);
                 devolucao();
             } catch (HibernateException h) {
-                System.out.println("Erro ao salvar devolução!\nTente novamente." + h.getMessage());
+                System.out.println("Erro ao salvar devolução!" + h.getMessage());
             } finally {
                 sessao.close();
             }

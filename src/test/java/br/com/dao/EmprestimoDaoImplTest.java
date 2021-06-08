@@ -7,9 +7,6 @@ package br.com.dao;
 
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
-import br.com.model.Exemplar;
-import br.com.model.Turma;
-import br.com.util.UtilGerador;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -71,7 +68,7 @@ public class EmprestimoDaoImplTest {
 //        sessao.close();
 //        assertFalse(emprestimos.isEmpty());
 //    }
-    //@Test
+    @Test
     public void testListarTodos() {
         gerarEmprestimoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -104,7 +101,7 @@ public class EmprestimoDaoImplTest {
         return emprestimo;
     }
 
-//    @Test
+    @Test
     public void testPesquisarPorAlunoAberto() {
         System.out.println("pesquisarPorAlunoAberto");
         AlunoDaoImplTest alunoDao = new AlunoDaoImplTest();
@@ -117,7 +114,7 @@ public class EmprestimoDaoImplTest {
         assertTrue(!emprestimos.isEmpty());
     }
 
-//    @Test
+    @Test
     public void testPesquisarPorTurmaMes() {
         System.out.println("pesquisarPorTurmaMes");
         TurmaDaoImplTest turma = new TurmaDaoImplTest();
@@ -125,19 +122,10 @@ public class EmprestimoDaoImplTest {
         sessao = HibernateUtil.abrirConexao();
         emprestimos = emprestimoDao.pesquisarPorTurmaMes(turma.buscarTurmaBd(), "06", "2021", sessao);
         sessao.close();
-
-//        for (Emprestimo emp : emprestimos) {
-//            System.out.println("Emprestimos");
-//            System.out.println(emp.getDataPrevista());
-//            System.out.println(emp.getDataRetirada());
-//            System.out.println(emp.getAluno().getNome());
-//            System.out.println(emp.getExemplar().getLivro().getTitulo());
-//            System.out.println("");
-//        }
         assertTrue(!emprestimos.isEmpty());
     }
 
-//    @Test
+    @Test
     public void testPesquisarPorAlunoMes() {
         System.out.println("pesquisarPorAlunoMes");
         AlunoDaoImplTest aluno = new AlunoDaoImplTest();
@@ -149,7 +137,7 @@ public class EmprestimoDaoImplTest {
         assertTrue(!emprestimos.isEmpty());
     }
 
-//    @Test
+    @Test
     public void testListarTodosEmAberto() {
         System.out.println("listarTodosEmAberto");
 
@@ -160,7 +148,7 @@ public class EmprestimoDaoImplTest {
         assertTrue(!emprestimos.isEmpty());
     }
     
-//    @Test
+    @Test
     public void testlistarAtrasados(){
         System.out.println("listarAtrasados");
         
