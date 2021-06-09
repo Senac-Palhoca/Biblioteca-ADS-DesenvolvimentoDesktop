@@ -8,6 +8,7 @@ package br.com.dao;
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.model.Exemplar;
+import br.com.util.UtilGerador;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -34,19 +35,18 @@ public class EmprestimoDaoImplTest {
         emprestimo = new Emprestimo(null, new Date(), new Date(), null);
         AlunoDaoImplTest alunoDao = new AlunoDaoImplTest();
         emprestimo.setAluno(alunoDao.gerarAlunoBd());
-
+        LivroDaoImplTest livroDaoImplTest = new LivroDaoImplTest();
         ExemplarDaoImplTest exemplarDaoTest = new ExemplarDaoImplTest();
         
         exemplar = exemplarDaoTest.gerarExemplarBd();
         
-        sessao = HibernateUtil.abrirConexao();
         if (!exemplar.getStatus()) {
-            
-            exemplar.setId(null);
+            exemplar = new Exemplar(UtilGerador.gerarNumero(5), livroDaoImplTest.gerarLivroBd());
         }
         exemplar.setStatus(false);
         emprestimo.setExemplar(exemplar);
         
+        sessao = HibernateUtil.abrirConexao();
         exemplarDao.salvarOuAlterar(exemplar, sessao);
         emprestimoDao.salvarOuAlterar(emprestimo, sessao);
         
@@ -80,7 +80,7 @@ public class EmprestimoDaoImplTest {
 //        sessao.close();
 //        assertFalse(emprestimos.isEmpty());
 //    }
-//    @Test
+    @Test
     public void testListarTodos() {
         gerarEmprestimoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -147,7 +147,7 @@ public class EmprestimoDaoImplTest {
         assertTrue(!emprestimos.isEmpty());
     }
 
-//    @Test
+    @Test
     public void testListarTodosEmAberto() {
         System.out.println("listarTodosEmAberto");
 
