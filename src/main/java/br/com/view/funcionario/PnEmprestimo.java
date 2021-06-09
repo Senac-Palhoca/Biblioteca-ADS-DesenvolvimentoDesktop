@@ -127,10 +127,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
 
         tbLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Aluno", "Título", "Autor", "ISNB", "Data Emprestimo", "Data Prev. Dev."
@@ -295,15 +292,16 @@ public class PnEmprestimo extends javax.swing.JPanel {
                     .addComponent(txBuscarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoEmprestimoActionPerformed
         Principal.pnPrincipal.AbrirPanel(new PnEmprestar());
+        listarAbertos();
     }//GEN-LAST:event_btNovoEmprestimoActionPerformed
 
     private void btDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDevolucaoActionPerformed
@@ -331,13 +329,13 @@ public class PnEmprestimo extends javax.swing.JPanel {
     }//GEN-LAST:event_btDevolucaoActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        emprestimosAberto = new ArrayList<>();
         sessao = HibernateUtil.abrirConexao();
-        emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(txBuscarAluno.getText().trim(), sessao);
-        sessao.close();
-        if (emprestimosAberto.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum aluno com esse nome encontrado");
+        try {
+            emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(txBuscarAluno.getText().trim(), sessao);
+        } catch (HibernateException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar alunos!");
         }
+        sessao.close();
         carregaTabela();
         apagaInformacoes();
     }//GEN-LAST:event_btBuscarActionPerformed

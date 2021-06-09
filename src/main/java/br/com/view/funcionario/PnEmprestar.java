@@ -215,8 +215,8 @@ public class PnEmprestar extends javax.swing.JPanel {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         TurmaDao turmaDao = new TurmaDaoImpl();
         Turma turma;
-        sessao = HibernateUtil.abrirConexao();
         if (aluno != null && exemplar != null) {
+            sessao = HibernateUtil.abrirConexao();
             emprestimo = new Emprestimo();
             emprestimo.setAluno(aluno);
             exemplar.setStatus(false);
@@ -225,14 +225,14 @@ public class PnEmprestar extends javax.swing.JPanel {
             emprestimo.setDataRetirada(dataRetirada);
             emprestimo.setDataPrevista(dataDevolucao);
             turma = turmaDao.pesquisarPorId(aluno.getTurma().getId(), sessao);
-            turma.setQuantidadeEmprestimo(turma.getQuantidadeEmprestimo()+ 1);
+            turma.setQuantidadeEmprestimo(turma.getQuantidadeEmprestimo() + 1);
             turmaDao.salvarOuAlterar(turma, sessao);
             emprestimoDao.salvarOuAlterar(emprestimo, sessao);
+            sessao.close();
             Principal.pnPrincipal.AbrirPanel(new PnEmprestimo());
         } else {
             JOptionPane.showMessageDialog(null, "Você precisa selecionar um Aluno e um Exemplar!");
         }
-        sessao.close();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
