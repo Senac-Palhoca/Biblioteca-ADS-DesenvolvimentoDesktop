@@ -16,9 +16,6 @@ import org.hibernate.Transaction;
 
 /**
  * @author Felipe
- *
- * Tem algum erro que não para de executar, mas podemos usar enquanto tiver em
- * desenvolvimento. Executar uma única vez, para não duplicar!
  */
 public class PopulaPerfis {
 
@@ -30,13 +27,13 @@ public class PopulaPerfis {
             List<Perfil> perfis = perfilDao.pesquisarPerfil(session);
 
             if (perfis.isEmpty()) {
-                perfil = new Perfil(null, "Administrador", "Gerencia bibliotecários, alunos, cursos e turmas");
+                perfil = new Perfil(null, "Administrador", "Gerência funcionários, alunos, cursos e turmas");
                 salvar(perfil, session);
-                perfil = new Perfil(null, "Coordenador", "Ranking de turmas e alunos");
+                perfil = new Perfil(null, "Coordenador", "Gerencia livros, empréstimos e acesso ao ranking");
                 salvar(perfil, session);
-                perfil = new Perfil(null, "Bibliotecário", "Gerencia livros e acesso ao ranking mensal");
+                perfil = new Perfil(null, "Bibliotecário", "Gerencia livros, empréstimos e acesso ao ranking");
                 salvar(perfil, session);
-                perfil = new Perfil(null, "Aluno", "Tem acesso aos seus emprestimos pessoais");
+                perfil = new Perfil(null, "Aluno", "Tem acesso aos seus empréstimos pessoais");
                 salvar(perfil, session);
             }
         } catch (HibernateException e) {

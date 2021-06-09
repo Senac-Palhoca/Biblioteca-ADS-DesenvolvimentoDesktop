@@ -50,7 +50,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
         alunoDao = new AlunoDaoImpl();
         listarAtrasados();
         listarAbertos();
-        tiraInformacoes();
+        apagaInformacoes();
     }
 
     private void listarAtrasados() {
@@ -74,13 +74,13 @@ public class PnEmprestimo extends javax.swing.JPanel {
     private void carregaTabela() {
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
-        for (Emprestimo emprestimo : emprestimosAberto) {
-            tabelaModelo.addRow(new Object[]{emprestimo.getAluno().getNome(),
-                emprestimo.getExemplar().getLivro().getTitulo(),
-                emprestimo.getExemplar().getLivro().getAutor(),
-                emprestimo.getExemplar().getLivro().getIsbn(),
-                dataFormatada.format(emprestimo.getDataRetirada()),
-                dataFormatada.format(emprestimo.getDataPrevista())});
+        for (Emprestimo emp : emprestimosAberto) {
+            tabelaModelo.addRow(new Object[]{emp.getAluno().getNome(),
+                emp.getExemplar().getLivro().getTitulo(),
+                emp.getExemplar().getLivro().getAutor(),
+                emp.getExemplar().getLivro().getIsbn(),
+                dataFormatada.format(emp.getDataRetirada()),
+                dataFormatada.format(emp.getDataPrevista())});
         }
     }
 
@@ -317,13 +317,14 @@ public class PnEmprestimo extends javax.swing.JPanel {
             try {
                 exemplarDao.salvarOuAlterar(exemplar, sessao);
                 emprestimoDao.salvarOuAlterar(emprestimo, sessao);
+                emprestimosAberto.remove(linhaSelecionada);
                 devolucao();
             } catch (HibernateException h) {
-                System.out.println("Erro ao salvar devolução!\nTente novamente." + h.getMessage());
+                System.out.println("Erro ao salvar devolução!" + h.getMessage());
             } finally {
                 sessao.close();
+                carregaTabela();
             }
-            listarAbertos();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         }
@@ -332,24 +333,16 @@ public class PnEmprestimo extends javax.swing.JPanel {
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         emprestimosAberto = new ArrayList<>();
         sessao = HibernateUtil.abrirConexao();
-        List<Aluno> alunos = alunoDao.pesquisarPorNome(txBuscarAluno.getText().trim(), sessao);
+        emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(txBuscarAluno.getText().trim(), sessao);
         sessao.close();
-        if (!alunos.isEmpty()) {
-            for (Aluno aluno : alunos) {
-                for (Emprestimo emp : aluno.getEmprestimos()) {
-                    if (emp.getDataDevolucao() == null) {
-                        emprestimosAberto.add(emp);
-                    }
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Nenhum Aluno encontrado!");
+        if (emprestimosAberto.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum aluno com esse nome encontrado");
         }
         carregaTabela();
-        tiraInformacoes();
+        apagaInformacoes();
     }//GEN-LAST:event_btBuscarActionPerformed
 
-    private void tiraInformacoes(){
+    private void apagaInformacoes() {
         txAluno.setVisible(false);
         jLabelAluno.setVisible(false);
         txData.setVisible(false);
@@ -358,8 +351,8 @@ public class PnEmprestimo extends javax.swing.JPanel {
         jLabelTitulo.setVisible(false);
         jLabelDevolucao.setVisible(false);
     }
-    
-    private void devolucao(){
+
+    private void devolucao() {
         txAluno.setVisible(true);
         txData.setVisible(true);
         txTitulo.setVisible(true);

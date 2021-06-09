@@ -7,9 +7,6 @@ package br.com.dao;
 
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
-import br.com.model.Exemplar;
-import br.com.model.Turma;
-import br.com.util.UtilGerador;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -29,7 +26,7 @@ public class EmprestimoDaoImplTest {
         emprestimoDao = new EmprestimoDaoImpl();
     }
 
-    @Test
+//    @Test
     public void testSalvar() {
 
         emprestimo = new Emprestimo(null, new Date(), new Date(), null);
@@ -71,7 +68,7 @@ public class EmprestimoDaoImplTest {
 //        sessao.close();
 //        assertFalse(emprestimos.isEmpty());
 //    }
-    //@Test
+//    @Test
     public void testListarTodos() {
         gerarEmprestimoBd();
         sessao = HibernateUtil.abrirConexao();
@@ -104,14 +101,14 @@ public class EmprestimoDaoImplTest {
         return emprestimo;
     }
 
-//    @Test
+    @Test
     public void testPesquisarPorAlunoAberto() {
         System.out.println("pesquisarPorAlunoAberto");
         AlunoDaoImplTest alunoDao = new AlunoDaoImplTest();
         Aluno aluno = alunoDao.gerarAlunoBd();
-
+        
         sessao = HibernateUtil.abrirConexao();
-        emprestimos = emprestimoDao.pesquisarPorAlunoAberto(aluno, sessao);
+        emprestimos = emprestimoDao.pesquisarPorAlunoAberto(" ", sessao);
         sessao.close();
 
         assertTrue(!emprestimos.isEmpty());
@@ -125,15 +122,6 @@ public class EmprestimoDaoImplTest {
         sessao = HibernateUtil.abrirConexao();
         emprestimos = emprestimoDao.pesquisarPorTurmaMes(turma.buscarTurmaBd(), "06", "2021", sessao);
         sessao.close();
-
-//        for (Emprestimo emp : emprestimos) {
-//            System.out.println("Emprestimos");
-//            System.out.println(emp.getDataPrevista());
-//            System.out.println(emp.getDataRetirada());
-//            System.out.println(emp.getAluno().getNome());
-//            System.out.println(emp.getExemplar().getLivro().getTitulo());
-//            System.out.println("");
-//        }
         assertTrue(!emprestimos.isEmpty());
     }
 

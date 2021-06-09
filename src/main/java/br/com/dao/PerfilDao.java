@@ -13,7 +13,7 @@ import org.hibernate.Session;
 /**
  * @author Felipe
  */
-public interface PerfilDao extends BaseDao<Perfil, Long>{
+public interface PerfilDao {
 
     List<Perfil> pesquisarPerfil(Session session) throws HibernateException;
 }
