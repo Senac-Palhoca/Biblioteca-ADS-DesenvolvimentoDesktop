@@ -50,7 +50,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
         alunoDao = new AlunoDaoImpl();
         listarAtrasados();
         listarAbertos();
-        tiraInformacoes();
+        apagaInformacoes();
     }
 
     private void listarAtrasados() {
@@ -317,12 +317,15 @@ public class PnEmprestimo extends javax.swing.JPanel {
             try {
                 exemplarDao.salvarOuAlterar(exemplar, sessao);
                 emprestimoDao.salvarOuAlterar(emprestimo, sessao);
+                emprestimosAberto.remove(linhaSelecionada);
                 devolucao();
             } catch (HibernateException h) {
                 System.out.println("Erro ao salvar devolução!" + h.getMessage());
             } finally {
+                emprestimo = null;
+                exemplar = null;
                 sessao.close();
-                listarAbertos();
+                carregaTabela();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
@@ -330,19 +333,18 @@ public class PnEmprestimo extends javax.swing.JPanel {
     }//GEN-LAST:event_btDevolucaoActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        emprestimosAberto = new ArrayList<>();
+        emprestimosAberto = null;
         sessao = HibernateUtil.abrirConexao();
         emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(txBuscarAluno.getText().trim(), sessao);
         sessao.close();
-        if (emprestimosAberto.size() > 0) {
-            JOptionPane.showMessageDialog(null, "Nenhum aluno encontrado");
+        if (emprestimosAberto.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum aluno com esse nome encontrado");
         }
-        listarAbertos();
-//        carregaTabela();
-        tiraInformacoes();
+        carregaTabela();
+        apagaInformacoes();
     }//GEN-LAST:event_btBuscarActionPerformed
 
-    private void tiraInformacoes() {
+    private void apagaInformacoes() {
         txAluno.setVisible(false);
         jLabelAluno.setVisible(false);
         txData.setVisible(false);

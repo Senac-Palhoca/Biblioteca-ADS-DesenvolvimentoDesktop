@@ -8,7 +8,6 @@ package br.com.dao;
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.util.UtilGerador;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -30,14 +29,14 @@ public class AlunoDaoImplTest {
     
     @Test
     public void testSalvar() {
-        PerfilDaoImplTest perfilTest = new PerfilDaoImplTest();
+        PerfilDao perfilDao = new PerfilDaoImpl();
         TurmaDaoImplTest turmaTest = new TurmaDaoImplTest();
         EmprestimoDaoImplTest emprestimoTest = new EmprestimoDaoImplTest();
         List<Emprestimo> emprestimos = new ArrayList<>();     
  
         aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarCPF(), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
         sessao = HibernateUtil.abrirConexao();
-        aluno.setPerfil(perfilTest.gerarPerfilBd());
+        aluno.setPerfil(perfilDao.pesquisarPorId(4L, sessao));
         aluno.setTurma(turmaTest.buscarTurmaBd());
         alunoDao.salvarOuAlterar(aluno, sessao);
         sessao.close();
