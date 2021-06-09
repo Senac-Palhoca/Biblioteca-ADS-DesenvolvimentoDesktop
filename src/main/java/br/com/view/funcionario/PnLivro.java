@@ -10,6 +10,7 @@ import br.com.model.*;
 import br.com.view.Principal;
 import java.awt.*;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.*;
@@ -25,15 +26,16 @@ public class PnLivro extends javax.swing.JPanel {
     private DefaultTableModel tabelaModelo;
     private Exemplar exemplar;
     private ExemplarDao exemplarDao;
+    private Livro livro;
+    private LivroDao livroDao;
+    private List<Livro> livros;
     private List<Exemplar> exemplares;
+    private int contarDisponivel;
 
     public PnLivro() {
         initComponents();
-        exemplarDao = new ExemplarDaoImpl();
+        livroDao = new LivroDaoImpl();
     }
-
-    int contarDisponivel;
-    int numeracao = 1;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -58,16 +60,7 @@ public class PnLivro extends javax.swing.JPanel {
 
         tbLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Título", "Autor", "Editora", "Edição", "ISBN", "Código", "Status"
@@ -97,7 +90,6 @@ public class PnLivro extends javax.swing.JPanel {
             tbLivro.getColumnModel().getColumn(5).setPreferredWidth(100);
             tbLivro.getColumnModel().getColumn(6).setResizable(false);
             tbLivro.getColumnModel().getColumn(6).setPreferredWidth(100);
-            tbLivro.getColumnModel().getColumn(6).setCellEditor(null);
         }
 
         tfTituloAutor.setToolTipText("Digite o titulo do Livro ou Autor que deseja pesquisar");
@@ -219,9 +211,8 @@ public class PnLivro extends javax.swing.JPanel {
         int linhaSelecionada = tbLivro.getSelectedRow();
 
         if (linhaSelecionada >= 0) {
-            Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
-            Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(exemplarSelecionado));
-
+            Livro livroSelecionado = livros.get(linhaSelecionada -1);
+            Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(livroSelecionado));
         } else {
             JOptionPane.showMessageDialog(null, "Nenhuma linha selecionada, selecione uma linhe e clique em Alterar Livro Selecionado");
         }
@@ -242,9 +233,6 @@ public class PnLivro extends javax.swing.JPanel {
                     tfTituloAutor.setText("");
                 } catch (HeadlessException | HibernateException e) {
                     System.err.println("Erro ao excluir " + e.getMessage());
-                    JOptionPane.showMessageDialog(null, "Erro ao excluir livro, "
-                            + "comunique o administrador do sistema!\n\n\n Informe sobre o erro: "
-                            + e.getMessage(), "Erro ao excluir livro", JOptionPane.ERROR_MESSAGE);
                 } finally {
                     sessao.close();
                 }
@@ -258,8 +246,8 @@ public class PnLivro extends javax.swing.JPanel {
         if (btBuscar.isEnabled()) {
             try {
                 sessao = HibernateUtil.abrirConexao();
-                exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
-                if (exemplares.isEmpty()) {
+                livros = livroDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
+                if (livros.isEmpty()) {
                     if (tabelaModelo != null) {
                         tabelaModelo.setNumRows(0);
                     }
@@ -268,15 +256,11 @@ public class PnLivro extends javax.swing.JPanel {
                     popularTabela();
                     lbQuantidade.setText("Possuímos " + Integer.toString(contarDisponivel) + " livros disponíveis para empréstimo");
                     contarDisponivel = 0;
-                    numeracao = 1;
                 }
+                sessao.close();
             } catch (HibernateException e) {
                 System.err.println("Erro ao pesquisar " + e.getMessage());
-                JOptionPane.showMessageDialog(null, "Erro ao pesquisar livro, "
-                        + "comunique o administrador do sistema!\n\n\n Informe sobre o erro: "
-                        + e.getMessage(), "Erro ao pesquisar livro", JOptionPane.ERROR_MESSAGE);
             } finally {
-                sessao.close();
             }
         }
     }//GEN-LAST:event_btBuscarActionPerformed
@@ -297,17 +281,16 @@ public class PnLivro extends javax.swing.JPanel {
 
         for (Exemplar exemplar : exemplares) {
 
-            tabelaModelo.addRow(new Object[]{numeracao + ") " + exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
+            tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
                 exemplar.getLivro().getEditora(), exemplar.getLivro().getEdicao(), exemplar.getLivro().getIsbn(),
                 exemplar.getCodigoLivro(), exemplar.getStatus() ? "Disponível" : "Emprestado"});
 
             if (exemplar.getStatus() == true) {
                 contarDisponivel++;
             }
-            numeracao++;
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterarLivroSelecionado;
     private javax.swing.JButton btBuscar;
