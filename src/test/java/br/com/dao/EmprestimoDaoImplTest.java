@@ -7,6 +7,7 @@ package br.com.dao;
 
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
+import br.com.model.Exemplar;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -26,18 +27,29 @@ public class EmprestimoDaoImplTest {
         emprestimoDao = new EmprestimoDaoImpl();
     }
 
-//    @Test
+    @Test
     public void testSalvar() {
-
+        ExemplarDao exemplarDao = new ExemplarDaoImpl();
+        Exemplar exemplar;
         emprestimo = new Emprestimo(null, new Date(), new Date(), null);
         AlunoDaoImplTest alunoDao = new AlunoDaoImplTest();
         emprestimo.setAluno(alunoDao.gerarAlunoBd());
 
-        ExemplarDaoImplTest exemplarDao = new ExemplarDaoImplTest();
-        emprestimo.setExemplar(exemplarDao.gerarExemplarBd());
-
+        ExemplarDaoImplTest exemplarDaoTest = new ExemplarDaoImplTest();
+        
+        exemplar = exemplarDaoTest.gerarExemplarBd();
+        
         sessao = HibernateUtil.abrirConexao();
+        if (!exemplar.getStatus()) {
+            
+            exemplar.setId(null);
+        }
+        exemplar.setStatus(false);
+        emprestimo.setExemplar(exemplar);
+        
+        exemplarDao.salvarOuAlterar(exemplar, sessao);
         emprestimoDao.salvarOuAlterar(emprestimo, sessao);
+        
         sessao.close();
         assertNotNull(emprestimo.getId());
     }
@@ -104,11 +116,9 @@ public class EmprestimoDaoImplTest {
     @Test
     public void testPesquisarPorAlunoAberto() {
         System.out.println("pesquisarPorAlunoAberto");
-        AlunoDaoImplTest alunoDao = new AlunoDaoImplTest();
-        Aluno aluno = alunoDao.gerarAlunoBd();
         
         sessao = HibernateUtil.abrirConexao();
-        emprestimos = emprestimoDao.pesquisarPorAlunoAberto(" ", sessao);
+        emprestimos = emprestimoDao.pesquisarPorAlunoAberto("", sessao);
         sessao.close();
 
         assertTrue(!emprestimos.isEmpty());
@@ -159,17 +169,4 @@ public class EmprestimoDaoImplTest {
         assertTrue(!emprestimos.isEmpty());
     }
     
-    public Emprestimo gerarEmprestimoAlunoBd(Aluno aluno) {
-        emprestimo = new Emprestimo(null, new Date(), new Date(), null);
-        emprestimo.setAluno(aluno);
-
-        ExemplarDaoImplTest exemplarDao = new ExemplarDaoImplTest();
-        emprestimo.setExemplar(exemplarDao.gerarExemplarBd());
-
-        sessao = HibernateUtil.abrirConexao();
-        emprestimoDao.salvarOuAlterar(emprestimo, sessao);
-        sessao.close();
- 
-        return emprestimo;
-    }
 }

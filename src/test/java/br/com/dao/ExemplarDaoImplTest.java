@@ -6,6 +6,7 @@
 package br.com.dao;
 
 import br.com.model.Exemplar;
+import br.com.util.UtilGerador;
 import static br.com.util.UtilGerador.*;
 import java.util.*;
 import org.junit.Test;
@@ -107,10 +108,10 @@ public class ExemplarDaoImplTest {
         Query consulta = sessao.createQuery("from Exemplar");
         List<Exemplar> exemplars = consulta.list();
         sessao.close();
-        if (exemplars.isEmpty()) {
+        if (exemplars.isEmpty()){
             testSalvar();
         } else {
-            exemplar = exemplars.get(0);
+            exemplar = exemplars.get(UtilGerador.criarNumeroEntre2Valores(-1, exemplars.size()));
         }
         return exemplar;
     }

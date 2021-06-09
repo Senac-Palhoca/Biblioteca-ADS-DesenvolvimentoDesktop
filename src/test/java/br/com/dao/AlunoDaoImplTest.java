@@ -40,9 +40,6 @@ public class AlunoDaoImplTest {
         alunoDao.salvarOuAlterar(aluno, sessao);
         sessao.close();
         
-        emprestimos.add(emprestimoTest.gerarEmprestimoAlunoBd(aluno));
-        aluno.setEmprestimos(emprestimos);
-        
         assertNotNull(aluno.getId());
     }
     
