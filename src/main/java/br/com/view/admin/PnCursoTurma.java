@@ -16,7 +16,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author TitioneAmorim
+ * @author Felip
  */
 public class PnCursoTurma extends javax.swing.JPanel {
 
@@ -37,12 +37,12 @@ public class PnCursoTurma extends javax.swing.JPanel {
         initComponents();
 //        listarCurso();
         pnCursoTurma.setVisible(true);
+
         carregaComboCursos();
+
     }
 
     private void carregaComboCursos() {
-        cbCurso.removeAllItems();
-        cbCurso.addItem("Selecione");
         sessao = HibernateUtil.abrirConexao();
         CursoDao impl = new CursoDaoImpl();
         cursosCombo = impl.listarTodos(sessao);
@@ -116,7 +116,6 @@ public class PnCursoTurma extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
         jLabel1.setText("Cursos / Turmas");
 
-        lsCurso.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lsCurso.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 lsCursoMousePressed(evt);
@@ -448,8 +447,6 @@ public class PnCursoTurma extends javax.swing.JPanel {
     }//GEN-LAST:event_btAddCursoActionPerformed
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
-        lsCurso.setEnabled(false);
-        cursos = new ArrayList<>(); 
         if (btAlterar.getText() == "Alterar") {
             txCursoSelecionado.setEditable(true);
             btAlterar.setText("Salvar");
@@ -464,10 +461,8 @@ public class PnCursoTurma extends javax.swing.JPanel {
             btAlterar.setText("Alterar");
             txCursoSelecionado.setEditable(false);
             JOptionPane.showMessageDialog(null, "Curso alterado com sucesso.");
-            lsCurso.setEnabled(true);
-            carregaComboCursos();
         }
-        
+        carregaComboCursos();
     }//GEN-LAST:event_btAlterarActionPerformed
 
     private void tbTurmaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTurmaMouseClicked
@@ -536,7 +531,14 @@ public class PnCursoTurma extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btSalvarTurmaActionPerformed
 
-
+    private void limparCamposTurma() {
+        txNomeTurma.setText("");
+        txFaseTurma.setText("");
+        cbCurso.setSelectedIndex(0);
+        cbPeriodo.setSelectedIndex(0);
+        cbAno.setSelectedIndex(0);
+        ckAbertoTurma.setSelected(false);
+    }
 
     private void btDeletarTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarTurmaActionPerformed
         int indiceTurma = tbTurma.getSelectedRow();
@@ -619,15 +621,6 @@ public class PnCursoTurma extends javax.swing.JPanel {
         limparCamposTurma();
     }//GEN-LAST:event_btLimparActionPerformed
 
-        private void limparCamposTurma() {
-        txNomeTurma.setText("");
-        txFaseTurma.setText("");
-        cbCurso.setSelectedIndex(0);
-        cbPeriodo.setSelectedIndex(0);
-        cbAno.setSelectedIndex(0);
-        ckAbertoTurma.setSelected(false);
-    }
-    
     private void populaTabela() {
         DefaultListModel lista = new DefaultListModel();
 
