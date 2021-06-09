@@ -322,8 +322,6 @@ public class PnEmprestimo extends javax.swing.JPanel {
             } catch (HibernateException h) {
                 System.out.println("Erro ao salvar devolução!" + h.getMessage());
             } finally {
-                emprestimo = null;
-                exemplar = null;
                 sessao.close();
                 carregaTabela();
             }
@@ -333,7 +331,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
     }//GEN-LAST:event_btDevolucaoActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        emprestimosAberto = null;
+        emprestimosAberto = new ArrayList<>();
         sessao = HibernateUtil.abrirConexao();
         emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(txBuscarAluno.getText().trim(), sessao);
         sessao.close();
