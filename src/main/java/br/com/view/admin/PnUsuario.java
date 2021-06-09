@@ -19,7 +19,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Felip
+ * @author TitioneAmorim
  */
 public class PnUsuario extends javax.swing.JPanel {
     private List<Aluno> alunos;
