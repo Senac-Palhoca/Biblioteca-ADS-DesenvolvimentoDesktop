@@ -186,9 +186,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="btAlterar" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btDeletar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btSalvar" min="-2" pref="71" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -243,7 +241,6 @@
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btDeletar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -309,11 +306,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSalvarActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btDeletar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Deletar"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbPerfil">
           <Properties>
