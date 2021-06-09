@@ -14,7 +14,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author Felipe
  */
 public class FuncionarioDaoImplTest {
@@ -32,8 +31,8 @@ public class FuncionarioDaoImplTest {
         System.out.println("salvar");
         funcionario = new Funcionario();
         PerfilDao perfilDao = new PerfilDaoImpl();
-        sessao = HibernateUtil.abrirConexao();
 
+        sessao = HibernateUtil.abrirConexao();
         funcionario.setCpf(UtilGerador.gerarCPF());
         funcionario.setEmail(UtilGerador.gerarEmail());
         funcionario.setMatricula(UtilGerador.gerarNumero(5));
@@ -68,7 +67,7 @@ public class FuncionarioDaoImplTest {
     @Test
     public void testPesquisarPorId() {
         System.out.println("pesquisarPorId");
-        funcionario = buscarFuncionarioBd();
+        buscarFuncionarioBd();
 
         sessao = HibernateUtil.abrirConexao();
         Funcionario func = funcionarioDao.pesquisarPorId(funcionario.getId(), sessao);

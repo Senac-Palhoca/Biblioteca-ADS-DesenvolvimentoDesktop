@@ -14,8 +14,7 @@ import static org.junit.Assert.*;
 import org.hibernate.*;
 
 /**
- *
- * @author Felip
+ * @author Felipe
  */
 public class AlunoDaoImplTest {
     
@@ -36,7 +35,7 @@ public class AlunoDaoImplTest {
  
         aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarCPF(), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
         sessao = HibernateUtil.abrirConexao();
-        aluno.setPerfil(perfilDao.pesquisarPorId(4L, sessao));
+        aluno.setPerfil(perfilDao.pesquisarPerfil(sessao).get(3));
         aluno.setTurma(turmaTest.buscarTurmaBd());
         alunoDao.salvarOuAlterar(aluno, sessao);
         sessao.close();

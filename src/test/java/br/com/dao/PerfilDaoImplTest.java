@@ -7,7 +7,6 @@ package br.com.dao;
 
 import br.com.model.Perfil;
 import br.com.util.UtilGerador;
-import static br.com.util.UtilGerador.gerarNome;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -29,15 +28,6 @@ public class PerfilDaoImplTest {
     public PerfilDaoImplTest() {
         perfilDao = new PerfilDaoImpl();
     }
-
-//    @Test
-//    public void testSalvar() {
-//        perfil = new Perfil(null, "Função " + gerarNome(), "Descrição " + gerarNome());
-//        sessao = HibernateUtil.abrirConexao();
-//        perfilDao.salvarOuAlterar(perfil, sessao);
-//        sessao.close();
-//        assertNotNull(perfil.getId());
-//    }
 
     @Test
     public void testSalvar() {
@@ -70,6 +60,9 @@ public class PerfilDaoImplTest {
         System.out.println("pesquisarPerfil");
         sessao = HibernateUtil.abrirConexao();
         perfis = perfilDao.pesquisarPerfil(sessao);
+        if (perfis.isEmpty()) {
+            testSalvar();
+        }
         sessao.close();
         assertTrue(!perfis.isEmpty());
     }
