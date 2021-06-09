@@ -16,7 +16,7 @@ import org.hibernate.*;
  */
 public interface EmprestimoDao extends BaseDao<Emprestimo, Long> {
 
-    List<Emprestimo> pesquisarPorAlunoAberto(Aluno aluno, Session sessao) throws HibernateException;
+    List<Emprestimo> pesquisarPorAlunoAberto(String nome, Session sessao) throws HibernateException;
 
     List<Emprestimo> pesquisarPorTurmaMes(Turma turma, String mes, String ano, Session sessao) throws HibernateException;
 

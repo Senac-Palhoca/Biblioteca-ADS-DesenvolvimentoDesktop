@@ -49,7 +49,7 @@ public class PnMeuEmprestimo extends javax.swing.JPanel {
 
     private void listarLivrosAbertos(){
         sessao = HibernateUtil.abrirConexao();
-        emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(aluno, sessao);
+        emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(aluno.getNome(), sessao);
         sessao.close();
     }
     
