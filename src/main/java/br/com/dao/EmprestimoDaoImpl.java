@@ -40,8 +40,6 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
         }
         Query consulta = sessao.createQuery(sql.toString());
         consulta.setParameter("nome", "%" + nome + "%");
-
-//        Query consulta = sessao.createQuery("from Emprestimo e where dataDevolucao is null and e.aluno.nome like :nome order by e.aluno.nome");
         return consulta.list();
     }
 
