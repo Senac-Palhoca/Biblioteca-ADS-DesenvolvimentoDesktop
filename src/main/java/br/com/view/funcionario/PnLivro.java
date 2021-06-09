@@ -35,6 +35,7 @@ public class PnLivro extends javax.swing.JPanel {
     public PnLivro() {
         initComponents();
         livroDao = new LivroDaoImpl();
+        exemplarDao = new ExemplarDaoImpl();
     }
 
     @SuppressWarnings("unchecked")
@@ -204,15 +205,15 @@ public class PnLivro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoLivroActionPerformed
-        Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(new Livro()));
+        Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro());
     }//GEN-LAST:event_btNovoLivroActionPerformed
 
     private void btAlterarLivroSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarLivroSelecionadoActionPerformed
         int linhaSelecionada = tbLivro.getSelectedRow();
 
         if (linhaSelecionada >= 0) {
-            Livro livroSelecionado = livros.get(linhaSelecionada -1);
-            Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(livroSelecionado));
+            Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
+            Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(exemplarSelecionado.getLivro()));
         } else {
             JOptionPane.showMessageDialog(null, "Nenhuma linha selecionada, selecione uma linhe e clique em Alterar Livro Selecionado");
         }
@@ -229,8 +230,7 @@ public class PnLivro extends javax.swing.JPanel {
                     Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
                     exemplarDao.excluir(exemplarSelecionado, sessao);
                     JOptionPane.showMessageDialog(null, "Exemplar excluído com sucesso!");
-                    tabelaModelo.setNumRows(0);
-                    tfTituloAutor.setText("");
+                    buscarExemplares();
                 } catch (HeadlessException | HibernateException e) {
                     System.err.println("Erro ao excluir " + e.getMessage());
                 } finally {
@@ -243,44 +243,46 @@ public class PnLivro extends javax.swing.JPanel {
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        if (btBuscar.isEnabled()) {
-            try {
-                sessao = HibernateUtil.abrirConexao();
-                livros = livroDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
-                if (livros.isEmpty()) {
-                    if (tabelaModelo != null) {
-                        tabelaModelo.setNumRows(0);
-                    }
-                    JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum livro com o termo digitado!");
-                } else {
-                    popularTabela();
+
+        buscarExemplares();
+//            try {
+//                sessao = HibernateUtil.abrirConexao();
+//                livros = livroDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
+//                if (livros.isEmpty()) {
+//                    if (tabelaModelo != null) {
+//                        tabelaModelo.setNumRows(0);
+//                    }
+//                    JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum livro com o termo digitado!");
+//                } else {
+//                    popularTabela();
                     lbQuantidade.setText("Possuímos " + Integer.toString(contarDisponivel) + " livros disponíveis para empréstimo");
                     contarDisponivel = 0;
-                }
-                sessao.close();
-            } catch (HibernateException e) {
-                System.err.println("Erro ao pesquisar " + e.getMessage());
-            } finally {
-            }
-        }
+//                }
+//                sessao.close();
+//            } catch (HibernateException e) {
+//                System.err.println("Erro ao pesquisar " + e.getMessage());
+//            } finally {
+//            }
+
     }//GEN-LAST:event_btBuscarActionPerformed
 
     private void tfTituloAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTituloAutorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfTituloAutorActionPerformed
 
-    private void popularTabela() {
-        ExemplarDaoImpl exemplarDao = new ExemplarDaoImpl();
+    private void buscarExemplares() {
         sessao = HibernateUtil.abrirConexao();
 
-        List<Exemplar> exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
+        exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
         sessao.close();
 
+        popularTabela(exemplares);
+    }
+
+    private void popularTabela(List<Exemplar> exemplares1) {
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
-
-        for (Exemplar exemplar : exemplares) {
-
+        for (Exemplar exemplar : exemplares1) {
             tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
                 exemplar.getLivro().getEditora(), exemplar.getLivro().getEdicao(), exemplar.getLivro().getIsbn(),
                 exemplar.getCodigoLivro(), exemplar.getStatus() ? "Disponível" : "Emprestado"});

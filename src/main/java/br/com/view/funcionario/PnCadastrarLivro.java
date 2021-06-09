@@ -29,6 +29,14 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     private DefaultTableModel tabelaModelo;
     private List<Exemplar> exemplares;
 
+    public PnCadastrarLivro() {
+        initComponents();
+        this.livro = new Livro();
+        livroDao = new LivroDaoImpl();
+        exemplarDao = new ExemplarDaoImpl();
+        carregarLivro();
+    }
+
     public PnCadastrarLivro(Livro livro) {
         initComponents();
         this.livro = livro;
