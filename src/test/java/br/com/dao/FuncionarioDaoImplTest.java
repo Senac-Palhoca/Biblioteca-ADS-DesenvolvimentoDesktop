@@ -51,7 +51,7 @@ public class FuncionarioDaoImplTest {
         System.out.println("Alterar");
         buscarFuncionarioBd();
 
-        funcionario.setNome(UtilGerador.gerarNome());
+        funcionario.setEmail(UtilGerador.gerarEmail());
 
         sessao = HibernateUtil.abrirConexao();
         funcionarioDao.salvarOuAlterar(funcionario, sessao);
@@ -61,7 +61,7 @@ public class FuncionarioDaoImplTest {
         Funcionario funcionarioAlt = funcionarioDao.pesquisarPorId(funcionario.getId(), sessao);
         sessao.close();
 
-        assertEquals(funcionario.getNome(), funcionarioAlt.getNome());
+        assertEquals(funcionario.getEmail(), funcionarioAlt.getEmail());
     }
 
     @Test

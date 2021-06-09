@@ -5,6 +5,7 @@
  */
 package br.com.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
@@ -13,6 +14,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "funcionario")
 @PrimaryKeyJoinColumn(name = "idPessoa")
-public class Funcionario extends Pessoa {
+public class Funcionario extends Pessoa implements Serializable{
 
 }

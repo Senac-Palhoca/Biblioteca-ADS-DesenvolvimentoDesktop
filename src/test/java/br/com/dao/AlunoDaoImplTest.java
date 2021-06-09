@@ -49,10 +49,17 @@ public class AlunoDaoImplTest {
     @Test
     public void testAlterar() {
         gerarAlunoBd();
+        aluno.setNome("Alterado");
+        
         sessao = HibernateUtil.abrirConexao();
-        Aluno alunoId = alunoDao.pesquisarPorId(aluno.getId(), sessao);
+        alunoDao.salvarOuAlterar(aluno, sessao);
         sessao.close();
-        assertNotNull(alunoId);
+        
+        sessao = HibernateUtil.abrirConexao();
+        Aluno altAluno = alunoDao.pesquisarPorId(aluno.getId(), sessao);
+        sessao.close();
+        
+        assertEquals(aluno.getNome(), (altAluno.getNome()));
     }
     
     @Test
@@ -131,7 +138,7 @@ public class AlunoDaoImplTest {
         if(alunos.isEmpty()){
             testSalvar();
         }else{
-           aluno = alunos.get(0);
+           aluno = alunos.get(UtilGerador.criarNumeroEntre2Valores(-1, alunos.size()));
         }
         return aluno;
     }

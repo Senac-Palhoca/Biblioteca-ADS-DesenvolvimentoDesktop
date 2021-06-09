@@ -34,16 +34,16 @@ public class PerfilDaoImplTest {
         testPesquisarPerfil();
         
         if (perfis.isEmpty()) {
-            Session session = HibernateUtil.abrirConexao();
+            sessao = HibernateUtil.abrirConexao();
             perfil = new Perfil(null, "Administrador", "Gerencia bibliotecários, alunos, cursos e turmas");
-            salvar(perfil, session);
+            salvar(perfil, sessao);
             perfil = new Perfil(null, "Coordenador", "Ranking de turmas e alunos");
-            salvar(perfil, session);
+            salvar(perfil, sessao);
             perfil = new Perfil(null, "Bibliotecário", "Gerencia livros e acesso ao ranking mensal");
-            salvar(perfil, session);
+            salvar(perfil, sessao);
             perfil = new Perfil(null, "Aluno", "Tem acesso aos seus emprestimos pessoais");
-            salvar(perfil, session);
-            session.close();
+            salvar(perfil, sessao);
+            sessao.close();
         }
         assertTrue(!perfis.isEmpty());
     }
