@@ -6,7 +6,6 @@
 package br.com.dao;
 
 import br.com.model.Aluno;
-import br.com.model.Funcionario;
 import br.com.model.Pessoa;
 import br.com.util.UtilGerador;
 import java.util.List;
@@ -47,7 +46,7 @@ public class PessoaDaoImplTest {
         sessao.close();
         if (pessoas.isEmpty()) {
             FuncionarioDaoImplTest fun = new FuncionarioDaoImplTest();
-            fun.buscarFuncionarioBd();
+            pessoa = fun.buscarFuncionarioBd();
         } else {
             pessoa = pessoas.get(UtilGerador.criarNumeroEntre2Valores(-1, pessoas.size()));
         }

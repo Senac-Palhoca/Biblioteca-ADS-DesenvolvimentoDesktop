@@ -7,7 +7,6 @@ package br.com.dao;
 
 import br.com.model.Perfil;
 import br.com.util.UtilGerador;
-import static br.com.util.UtilGerador.gerarNome;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -30,30 +29,21 @@ public class PerfilDaoImplTest {
         perfilDao = new PerfilDaoImpl();
     }
 
-//    @Test
-//    public void testSalvar() {
-//        perfil = new Perfil(null, "Função " + gerarNome(), "Descrição " + gerarNome());
-//        sessao = HibernateUtil.abrirConexao();
-//        perfilDao.salvarOuAlterar(perfil, sessao);
-//        sessao.close();
-//        assertNotNull(perfil.getId());
-//    }
-
     @Test
     public void testSalvar() {
         testPesquisarPerfil();
         
         if (perfis.isEmpty()) {
-            Session session = HibernateUtil.abrirConexao();
+            sessao = HibernateUtil.abrirConexao();
             perfil = new Perfil(null, "Administrador", "Gerencia bibliotecários, alunos, cursos e turmas");
-            salvar(perfil, session);
+            salvar(perfil, sessao);
             perfil = new Perfil(null, "Coordenador", "Ranking de turmas e alunos");
-            salvar(perfil, session);
+            salvar(perfil, sessao);
             perfil = new Perfil(null, "Bibliotecário", "Gerencia livros e acesso ao ranking mensal");
-            salvar(perfil, session);
+            salvar(perfil, sessao);
             perfil = new Perfil(null, "Aluno", "Tem acesso aos seus emprestimos pessoais");
-            salvar(perfil, session);
-            session.close();
+            salvar(perfil, sessao);
+            sessao.close();
         }
         assertTrue(!perfis.isEmpty());
     }
@@ -70,6 +60,9 @@ public class PerfilDaoImplTest {
         System.out.println("pesquisarPerfil");
         sessao = HibernateUtil.abrirConexao();
         perfis = perfilDao.pesquisarPerfil(sessao);
+        if (perfis.isEmpty()) {
+            testSalvar();
+        }
         sessao.close();
         assertTrue(!perfis.isEmpty());
     }

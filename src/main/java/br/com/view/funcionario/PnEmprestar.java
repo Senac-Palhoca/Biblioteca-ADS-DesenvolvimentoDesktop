@@ -10,9 +10,12 @@ import br.com.dao.EmprestimoDaoImpl;
 import br.com.dao.ExemplarDao;
 import br.com.dao.ExemplarDaoImpl;
 import br.com.dao.HibernateUtil;
+import br.com.dao.TurmaDao;
+import br.com.dao.TurmaDaoImpl;
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.model.Exemplar;
+import br.com.model.Turma;
 import br.com.view.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -210,6 +213,8 @@ public class PnEmprestar extends javax.swing.JPanel {
     }//GEN-LAST:event_btBuscarAlunoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        TurmaDao turmaDao = new TurmaDaoImpl();
+        Turma turma;
         sessao = HibernateUtil.abrirConexao();
         if (aluno != null && exemplar != null) {
             emprestimo = new Emprestimo();
@@ -219,6 +224,9 @@ public class PnEmprestar extends javax.swing.JPanel {
             emprestimo.setExemplar(exemplar);
             emprestimo.setDataRetirada(dataRetirada);
             emprestimo.setDataPrevista(dataDevolucao);
+            turma = turmaDao.pesquisarPorId(aluno.getTurma().getId(), sessao);
+            turma.setQuantidadeEmprestimo(turma.getQuantidadeEmprestimo()+ 1);
+            turmaDao.salvarOuAlterar(turma, sessao);
             emprestimoDao.salvarOuAlterar(emprestimo, sessao);
             Principal.pnPrincipal.AbrirPanel(new PnEmprestimo());
         } else {
