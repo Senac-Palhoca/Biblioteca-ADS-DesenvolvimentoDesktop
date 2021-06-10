@@ -31,7 +31,7 @@ public class PnUsuario extends javax.swing.JPanel {
     private List<Curso> cursos;
     private List<Turma> turmas;
     private List<Turma> turmasCurso;
-    private Pessoa pessoa;
+    private Pessoa pessoa;  
     private Aluno aluno;
     private Funcionario funcionario;
     private Session sessao;
@@ -134,7 +134,6 @@ public class PnUsuario extends javax.swing.JPanel {
         txMatricula = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btSalvar = new javax.swing.JButton();
-        btDeletar = new javax.swing.JButton();
         cbPerfil = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         pnAlunoAtributo = new javax.swing.JPanel();
@@ -198,8 +197,6 @@ public class PnUsuario extends javax.swing.JPanel {
                 btSalvarActionPerformed(evt);
             }
         });
-
-        btDeletar.setText("Deletar");
 
         cbPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         cbPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -305,9 +302,7 @@ public class PnUsuario extends javax.swing.JPanel {
                             .addGroup(pnUsuarioAtualLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btDeletar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(20, 20, 20))))
             .addGroup(pnUsuarioAtualLayout.createSequentialGroup()
@@ -351,7 +346,6 @@ public class PnUsuario extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(pnUsuarioAtualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSalvar)
-                    .addComponent(btDeletar)
                     .addComponent(btAlterar))
                 .addContainerGap())
         );
@@ -432,6 +426,7 @@ public class PnUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_lsFuncionarioMousePressed
 
     private void btAddAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddAlunoActionPerformed
+        limparCampos();
         pnUsuarioAtual.setVisible(true);
         pessoa = new Pessoa();
         aluno = new Aluno();
@@ -703,7 +698,6 @@ public class PnUsuario extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddAluno;
     private javax.swing.JButton btAlterar;
-    private javax.swing.JButton btDeletar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox<String> cbCurso;
     private javax.swing.JComboBox<String> cbPerfil;
