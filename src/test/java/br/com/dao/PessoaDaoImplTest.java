@@ -44,9 +44,16 @@ public class PessoaDaoImplTest {
         Query consulta = sessao.createQuery("from Pessoa");
         List<Pessoa> pessoas = consulta.list();
         sessao.close();
+        int numero = UtilGerador.criarNumeroEntre2Valores(0, 3);
         if (pessoas.isEmpty()) {
-            FuncionarioDaoImplTest fun = new FuncionarioDaoImplTest();
-            pessoa = fun.buscarFuncionarioBd();
+            if (numero == 1) {
+                FuncionarioDaoImplTest fun = new FuncionarioDaoImplTest();
+                pessoa = fun.buscarFuncionarioBd();
+            }
+            if (numero == 2) {
+                AlunoDaoImplTest alu = new AlunoDaoImplTest();
+                pessoa = alu.gerarAlunoBd();
+            }
         } else {
             pessoa = pessoas.get(UtilGerador.criarNumeroEntre2Valores(-1, pessoas.size()));
         }

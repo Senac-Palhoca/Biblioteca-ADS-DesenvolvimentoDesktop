@@ -29,7 +29,7 @@ public class CursoDaoImplTest {
         assertNotNull(curso.getId());
     }
     
-   @Test
+//   @Test
     public void testAlterar() {
         buscarCursoBd();
         sessao = HibernateUtil.abrirConexao();

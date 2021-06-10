@@ -3,7 +3,6 @@ package br.com.dao;
 import br.com.model.Curso;
 import br.com.model.Turma;
 import br.com.util.UtilGerador;
-import static br.com.util.UtilGerador.*;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -41,7 +40,7 @@ public class TurmaDaoImplTest {
         assertNotNull(turma.getId());
     }
 
-@Test
+//@Test
     public void testAlterar() {
         buscarTurmaBd();
         sessao = HibernateUtil.abrirConexao();

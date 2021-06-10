@@ -43,7 +43,7 @@ public class AlunoDaoImplTest {
         assertNotNull(aluno.getId());
     }
     
-    @Test
+//    @Test
     public void testAlterar() {
         gerarAlunoBd();
         aluno.setNome("Alterado");
