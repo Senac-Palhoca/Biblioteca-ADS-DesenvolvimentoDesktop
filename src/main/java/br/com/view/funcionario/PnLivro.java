@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.view.funcionario;
 
 import br.com.dao.*;
@@ -10,7 +5,6 @@ import br.com.model.*;
 import br.com.view.Principal;
 import java.awt.*;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.*;
@@ -24,11 +18,8 @@ public class PnLivro extends javax.swing.JPanel {
 
     private Session sessao;
     private DefaultTableModel tabelaModelo;
-    private Exemplar exemplar;
     private ExemplarDao exemplarDao;
-    private Livro livro;
     private LivroDao livroDao;
-    private List<Livro> livros;
     private List<Exemplar> exemplares;
     private int contarDisponivel;
 
@@ -94,11 +85,6 @@ public class PnLivro extends javax.swing.JPanel {
         }
 
         tfTituloAutor.setToolTipText("Digite o titulo do Livro ou Autor que deseja pesquisar");
-        tfTituloAutor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTituloAutorActionPerformed(evt);
-            }
-        });
 
         btBuscar.setText("Buscar");
         btBuscar.setToolTipText("Clique para Pesquisar");
@@ -215,78 +201,60 @@ public class PnLivro extends javax.swing.JPanel {
             Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
             Principal.pnPrincipal.AbrirPanel(new PnCadastrarLivro(exemplarSelecionado.getLivro()));
         } else {
-            JOptionPane.showMessageDialog(null, "Nenhuma linha selecionada, selecione uma linhe e clique em Alterar Livro Selecionado");
+            JOptionPane.showMessageDialog(null, "Nenhuma linha selecionada, "
+                    + "selecione uma linha e clique em Alterar Livro Selecionado", "Nenhuma linha selecionada", 1);
         }
     }//GEN-LAST:event_btAlterarLivroSelecionadoActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         int linhaSelecionada = tbLivro.getSelectedRow();
-
+        sessao = HibernateUtil.abrirConexao();
+        
         if (linhaSelecionada >= 0) {
-            int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o exemplar selecionado?");
+            int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o exemplar selecionado?","Confirmação de exclusão", 2);
+            
             if (opcao == 0) {
                 try {
-                    sessao = HibernateUtil.abrirConexao();
                     Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
                     exemplarDao.excluir(exemplarSelecionado, sessao);
                     JOptionPane.showMessageDialog(null, "Exemplar excluído com sucesso!");
                     buscarExemplares();
                 } catch (HeadlessException | HibernateException e) {
                     System.err.println("Erro ao excluir " + e.getMessage());
+                    JOptionPane.showMessageDialog(null, "Exemplar com Status EMPRESTADO não pode ser excluído.\n\n"
+                            + "Aguarde sua devolução, para prosseguir com a exclusão.",
+                            "Erro ao excluir exemplar emprestado", 0);
                 } finally {
                     sessao.close();
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi selecionada nenhuma linha!");
+            JOptionPane.showMessageDialog(null, "Não foi selecionada nenhuma linha!", "Selecione uma linha", 1);
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-
         buscarExemplares();
-//            try {
-//                sessao = HibernateUtil.abrirConexao();
-//                livros = livroDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(), tfTituloAutor.getText().trim(), sessao);
-//                if (livros.isEmpty()) {
-//                    if (tabelaModelo != null) {
-//                        tabelaModelo.setNumRows(0);
-//                    }
-//                    JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum livro com o termo digitado!");
-//                } else {
-//                    popularTabela();
-                    lbQuantidade.setText("Possuímos " + Integer.toString(contarDisponivel) + " livros disponíveis para empréstimo");
-                    contarDisponivel = 0;
-//                }
-//                sessao.close();
-//            } catch (HibernateException e) {
-//                System.err.println("Erro ao pesquisar " + e.getMessage());
-//            } finally {
-//            }
-
+        lbQuantidade.setText("Possuímos " + Integer.toString(contarDisponivel) + " livros disponíveis para empréstimo");
+        contarDisponivel = 0;
     }//GEN-LAST:event_btBuscarActionPerformed
-
-    private void tfTituloAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTituloAutorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfTituloAutorActionPerformed
 
     private void buscarExemplares() {
         sessao = HibernateUtil.abrirConexao();
-
         exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
         sessao.close();
-
         popularTabela(exemplares);
     }
 
     private void popularTabela(List<Exemplar> exemplares1) {
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
+        
         for (Exemplar exemplar : exemplares1) {
             tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
                 exemplar.getLivro().getEditora(), exemplar.getLivro().getEdicao(), exemplar.getLivro().getIsbn(),
                 exemplar.getCodigoLivro(), exemplar.getStatus() ? "Disponível" : "Emprestado"});
-
+            
             if (exemplar.getStatus() == true) {
                 contarDisponivel++;
             }

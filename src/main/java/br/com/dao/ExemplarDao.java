@@ -18,6 +18,5 @@ public interface ExemplarDao extends BaseDao<Exemplar, Long>{
     
     List<Exemplar> pesquisarPorTituloAutor(String titulo, String autor, Session sessao) throws HibernateException;
         
-    List<Exemplar> listarTodos(Session sessao) throws HibernateException;
-    
+    List<Exemplar> listarTodos(Session sessao) throws HibernateException;    
 }
