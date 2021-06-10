@@ -443,10 +443,7 @@ public class PnUsuario extends javax.swing.JPanel {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         if (btSalvar.getText().equals("Salvar")) {
-            if (txEmail.getText().contains("@")
-                    || !txNome.getText().isEmpty()
-                    || !txSenha.getText().isEmpty()
-                    || !txCPF.getText().isEmpty()) {
+            if (validaCampos()) {
 
                 sessao = HibernateUtil.abrirConexao();
 
@@ -459,8 +456,14 @@ public class PnUsuario extends javax.swing.JPanel {
                     aluno.setEmail(txEmail.getText());
                     aluno.setMatricula(UtilGerador.gerarNumero(16));
                     aluno.setSenha(txSenha.getText());
-                    aluno.setPerfil(perfils.get(cbPerfil.getSelectedIndex() - 1));
-                    aluno.setTurma(turmas.get(cbTurma.getSelectedIndex() - 1));
+
+                    if (cbCurso.getSelectedIndex() == 0) {
+                        int validaSemCurso = JOptionPane.showConfirmDialog(null, "Confirma aluno não possui curso e turma?");
+                        if (validaSemCurso != JOptionPane.YES_OPTION) {
+                            aluno.setPerfil(perfils.get(cbPerfil.getSelectedIndex() - 1));
+                            aluno.setTurma(turmas.get(cbTurma.getSelectedIndex() - 1));
+                        }
+                    }
                     try {
 
                         AlunoDao implAluno = new AlunoDaoImpl();
@@ -500,7 +503,7 @@ public class PnUsuario extends javax.swing.JPanel {
                         System.out.println(e.getCause());
                         String erro = e.getCause().toString();
                         if (erro.contains("Duplicate")) {
-                            JOptionPane.showMessageDialog(null, "Cpf já cadastrado");
+                            JOptionPane.showMessageDialog(null, "E-mail ou Cpf já cadastrado");
                         }
                     } finally {
                         sessao.close();
@@ -532,7 +535,8 @@ public class PnUsuario extends javax.swing.JPanel {
                 } catch (HibernateException e) {
                     String erro = e.getCause().toString();
                     if (erro.contains("Duplicate")) {
-
+                        JOptionPane.showMessageDialog(null, "E-mail ou Cpf já cadastrado");
+                        limparCampos();
                     }
 
                 } finally {
@@ -558,10 +562,11 @@ public class PnUsuario extends javax.swing.JPanel {
                     System.out.println(e.getCause());
                     String erro = e.getCause().toString();
                     if (erro.contains("Duplicate")) {
-                        sessao.close();
+                        JOptionPane.showMessageDialog(null, "E-mail ou Cpf já cadastrado");
+                        limparCampos();
                     }
                 } finally {
-
+                    sessao.close();
                 }
                 listarFuncionarios();
             }
@@ -573,6 +578,7 @@ public class PnUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void lsAlunoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsAlunoMousePressed
+        
         DefaultListModel aa = (DefaultListModel) this.lsAluno.getModel();
         aluno = (Aluno) aa.get(lsAluno.getSelectedIndex());
         pessoa = aluno;
@@ -581,6 +587,7 @@ public class PnUsuario extends javax.swing.JPanel {
         }
         cbPerfil.setEditable(false);
         preencherCampos();
+        preencherCurso();
         cbPerfil.setSelectedIndex(4);
         cbCurso.setSelectedItem(aluno.getTurma().getCurso().getNome());
         cbTurma.setSelectedItem(aluno.getTurma().getNome());
@@ -625,7 +632,7 @@ public class PnUsuario extends javax.swing.JPanel {
         cbPerfil.setEnabled(false);
         cbTurma.setEnabled(false);
         preencherPerfil();
-        preencherCurso();
+        
 
         txNome.setText(pessoa.getNome());
         txCPF.setText(pessoa.getCpf());
@@ -664,9 +671,12 @@ public class PnUsuario extends javax.swing.JPanel {
     }
 
     private void preencherCurso() {
-        cursos.forEach(pe -> {
-            cbCurso.addItem(pe.getNome());
-        });
+        
+        if (cbCurso.getItemCount() == 1) {
+            cursos.forEach(pe -> {
+                cbCurso.addItem(pe.getNome());
+            });
+        }
     }
 
     private void preencherTurma() {
@@ -693,6 +703,19 @@ public class PnUsuario extends javax.swing.JPanel {
         preencherPerfil();
         preencherTurma();
     }
+
+    private boolean validaCampos() {
+        if (!txEmail.getText().contains("@")
+                || txNome.getText().isEmpty()
+                || txSenha.getText().isEmpty()
+                || txCPF.getText().isEmpty()
+                || cbPerfil.getSelectedIndex() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddAluno;
