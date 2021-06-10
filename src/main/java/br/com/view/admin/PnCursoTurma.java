@@ -16,7 +16,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author TitioneAmorim
+ * @author Titione.Amorim
  */
 public class PnCursoTurma extends javax.swing.JPanel {
 

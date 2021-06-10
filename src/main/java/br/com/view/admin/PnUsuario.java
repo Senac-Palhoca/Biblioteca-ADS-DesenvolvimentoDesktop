@@ -31,7 +31,7 @@ public class PnUsuario extends javax.swing.JPanel {
     private List<Curso> cursos;
     private List<Turma> turmas;
     private List<Turma> turmasCurso;
-    private Pessoa pessoa;
+    private Pessoa pessoa;  
     private Aluno aluno;
     private Funcionario funcionario;
     private Session sessao;
@@ -426,6 +426,7 @@ public class PnUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_lsFuncionarioMousePressed
 
     private void btAddAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddAlunoActionPerformed
+        limparCampos();
         pnUsuarioAtual.setVisible(true);
         pessoa = new Pessoa();
         aluno = new Aluno();
