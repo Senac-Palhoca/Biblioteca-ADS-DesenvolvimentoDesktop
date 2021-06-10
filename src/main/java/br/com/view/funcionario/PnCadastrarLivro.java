@@ -109,10 +109,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
 
         tbCodigoLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Código do Exemplar"

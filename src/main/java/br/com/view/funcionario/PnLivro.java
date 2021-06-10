@@ -217,7 +217,7 @@ public class PnLivro extends javax.swing.JPanel {
                 try {
                     Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
                     exemplarDao.excluir(exemplarSelecionado, sessao);
-                    JOptionPane.showMessageDialog(null, "Exemplar excluído com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Exemplar excluído com sucesso!", "Exemplar Excluído", 1);
                     buscarExemplares();
                 } catch (HeadlessException | HibernateException e) {
                     System.err.println("Erro ao excluir " + e.getMessage());

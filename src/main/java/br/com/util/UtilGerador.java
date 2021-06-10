@@ -22,7 +22,6 @@ public class UtilGerador {
 //
 //        indice = (int) (Math.random() * maiusculas.length);
 //        palavra += maiusculas[indice];
-
         for (int i = 0; i < qtdLetra; i++) {
             indice = (int) (Math.random() * minusculas.length);
             palavra += minusculas[indice];
@@ -60,7 +59,8 @@ public class UtilGerador {
         String sobrenome;
         int indice;
         String[] nomes = {"Use a Cabeça - Java", "Pequenos incêndios por toda parte", "Dom Quixote", "Guerra e Paz", "A Montanha Mágica", "Cem Anos de Solidão",
-            "Em Busca do Tempo Perdido", "A Divina Comédia", "O Homem sem Qualidades", "O Som e a Fúria", "Orgulho e Preconceito", "Os Lusíadas"};
+            "Em Busca do Tempo Perdido", "A Divina Comédia", "O Homem sem Qualidades", "O Som e a Fúria", "Orgulho e Preconceito", "Os Lusíadas", "Java - Como Programar",
+            "A Bíblia JAVA", "Java Para Iniciantes - Crie, Compile e Execute Programas Java Rapidamente", "Programação Funcional Para Desenvolvedores Java"};
         indice = (int) (Math.random() * nomes.length);
         sobrenome = nomes[indice];
         return sobrenome;
@@ -70,10 +70,14 @@ public class UtilGerador {
         String sobrenome;
         int indice;
         String[] nomes = {"Companhia da Letras", "Aleph", "Suma", "Editora Intrínseca", "Grupo Editorial Record", "Editora Rocco",
-            "Globo Livros", "Darkside Books", "Harper Collins"};
+            "Globo Livros", "Darkside Books", "Harper Collins", "NOVATEC", "Bookman", "Alta Books", "Digerati Books", "Campus"};
         indice = (int) (Math.random() * nomes.length);
         sobrenome = nomes[indice];
         return sobrenome;
+    }
+
+    public static String gerarEdicao() {
+        return gerarNumero(1) + "ª Edição";
     }
 
     public static String gerarCidade() {
