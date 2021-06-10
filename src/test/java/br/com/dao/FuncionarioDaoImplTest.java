@@ -38,7 +38,7 @@ public class FuncionarioDaoImplTest {
         funcionario.setMatricula(UtilGerador.gerarNumero(5));
         funcionario.setNome(UtilGerador.gerarNome());
         funcionario.setSenha("1234");
-        funcionario.setPerfil(perfilDao.pesquisarPerfil(sessao).get(UtilGerador.criarNumeroEntre2Valores(0, 3)));
+        funcionario.setPerfil(perfilDao.pesquisarPerfil(sessao).get(UtilGerador.criarNumeroEntre2Valores(-1, 3)));
 
         funcionarioDao.salvarOuAlterar(funcionario, sessao);
         sessao.close();
