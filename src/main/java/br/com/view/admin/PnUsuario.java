@@ -560,9 +560,9 @@ public class PnUsuario extends javax.swing.JPanel {
                     System.out.println(e.getCause());
                     String erro = e.getCause().toString();
                     if (erro.contains("Duplicate")) {
+                    sessao.close();
                     }
                 } finally {
-                    sessao.close();
 
                 }
                 listarFuncionarios();
