@@ -690,6 +690,7 @@ public class PnUsuario extends javax.swing.JPanel {
         txCPF.setText("");
         txEmail.setText("");
         txSenha.setText("");
+        txMatricula.setText("");
         preencherCurso();
         preencherPerfil();
         preencherTurma();
