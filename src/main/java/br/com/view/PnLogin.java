@@ -5,12 +5,18 @@
  */
 package br.com.view;
 
+import br.com.dao.HibernateUtil;
+import br.com.dao.PessoaDao;
+import br.com.dao.PessoaDaoImpl;
 import br.com.model.Aluno;
+import br.com.model.Funcionario;
 import br.com.model.Pessoa;
 import br.com.view.admin.PnCursoTurma;
 import br.com.view.aluno.PnMeuEmprestimo;
 import br.com.view.funcionario.PnEmprestimo;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
+import org.hibernate.Session;
 
 /**
  *
@@ -18,20 +24,25 @@ import javax.swing.JOptionPane;
  */
 public class PnLogin extends javax.swing.JPanel {
 
+    private PessoaDao pessoaDao;
+    private Session sessao;
+
     /**
      * Creates new form PnLogin
      */
     public PnLogin() {
+        pessoaDao = new PessoaDaoImpl();
         initComponents();
     }
 
-    private void abrir(String perfil, javax.swing.JPanel panelInicial){
+    private void abrir(String perfil, javax.swing.JPanel panelInicial) {
         PnPrincipal pnPrincipal = new PnPrincipal(perfil);
         Principal.pnPrincipal = pnPrincipal;
         Principal.pnPrincipal.AbrirPanel(panelInicial);
         Principal.principal.setContentPane(pnPrincipal);
         Principal.principal.setVisible(true);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -185,23 +196,24 @@ public class PnLogin extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        String perfilUsuario = txUsuario.getText();
-        //o objeto Pessoa que fizer login deve ser setado em Principal.usuario. Ex.:
-        Principal.usuario = new Pessoa();
-        
-        //este switch deve ser alterado para validar o login conforme o objeto ou perfil
-        switch(perfilUsuario.toLowerCase()){
-            case "admin":
-                abrir("admin", new PnCursoTurma());
-                break;
-            case "aluno":
+        sessao = HibernateUtil.abrirConexao();
+        Pessoa pessoa = pessoaDao.login(txUsuario.getText(), new String(txSenha.getPassword()), sessao);
+
+        if (pessoa != null) {
+            Principal.usuario = pessoa;
+            if (pessoa instanceof Aluno) {
                 abrir("aluno", new PnMeuEmprestimo());
-                break;
-            case "funcionario":
-                abrir("funcionario", new PnEmprestimo());
-                break;
+            } else if (pessoa instanceof Funcionario) {
+                if (pessoa.getPerfil().getFuncao().toLowerCase().equals("admin") || pessoa.getPerfil().getFuncao().toLowerCase().equals("administrador")) {
+                    abrir("admin", new PnCursoTurma());
+                } else {
+                    abrir("funcionario", new PnEmprestimo());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuário/senha inválido ou inexistente.");
+            txSenha.setText("");
         }
-        
     }//GEN-LAST:event_btLoginActionPerformed
 
     private void lbEsqueciSenhaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbEsqueciSenhaMouseEntered

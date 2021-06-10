@@ -10,7 +10,6 @@ import br.com.dao.*;
 import br.com.model.*;
 import br.com.util.GeradorTabela;
 import br.com.util.PopulaPerfis;
-import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 
@@ -91,12 +90,10 @@ public class Principal extends javax.swing.JFrame {
             SplashScreen splash = new SplashScreen();
             splash.setVisible(true);
             popularPerfil();
-//            for (int i = 0; i < 100; i++) {
-//                Thread.sleep(1);
-//            }
             splash.setVisible(false);
             //splash.dispose();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(principal, "Erro ao Carregar." + e.getMessage());
         }
         principal = new Principal();
         principal.setContentPane(new PnLogin());
@@ -113,16 +110,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             PopulaPerfis.Popular();
         } catch (Exception e) {
-             criarBd();
-        }
-    }
-    
-    private static void criarBd() {
-        try {
-            GeradorTabela.main(null);
-            popularPerfil();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(principal, "Erro ao gerar o banco de dados! Verifique se existe o banco de dados 'biblioteca' e se o usuário e senha do mysql está correto." + e.getMessage());
+            JOptionPane.showMessageDialog(principal, "Erro ao gerar o banco de dados! Verifique se foi gerado o banco de dados 'biblioteca' e se o usuário e senha do mysql está correto." + e.getMessage());
         }
     }
 
