@@ -31,7 +31,6 @@ public class PnBuscarAluno extends javax.swing.JPanel {
     public PnBuscarAluno() {
         alunoDao = new AlunoDaoImpl();
         initComponents();
-        listarAlunos();
     }
 
     public Aluno getAluno(){

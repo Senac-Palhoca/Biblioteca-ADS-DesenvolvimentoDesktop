@@ -30,7 +30,6 @@ public class PnBuscarLivro extends javax.swing.JPanel {
     public PnBuscarLivro() {
         initComponents();
         exemplarDao = new ExemplarDaoImpl();
-        listarExemplar();
     }
 
     public Exemplar getExemplar() {

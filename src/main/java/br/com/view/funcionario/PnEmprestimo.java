@@ -12,12 +12,10 @@ import br.com.dao.EmprestimoDaoImpl;
 import br.com.dao.ExemplarDao;
 import br.com.dao.ExemplarDaoImpl;
 import br.com.dao.HibernateUtil;
-import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.model.Exemplar;
 import br.com.view.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -317,6 +315,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
                 emprestimoDao.salvarOuAlterar(emprestimo, sessao);
                 emprestimosAberto.remove(linhaSelecionada);
                 devolucao();
+                listarAtrasados();
             } catch (HibernateException h) {
                 System.out.println("Erro ao salvar devolução!" + h.getMessage());
             } finally {
@@ -334,8 +333,9 @@ public class PnEmprestimo extends javax.swing.JPanel {
             emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(txBuscarAluno.getText().trim(), sessao);
         } catch (HibernateException e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar alunos!");
+        } finally {
+            sessao.close();
         }
-        sessao.close();
         carregaTabela();
         apagaInformacoes();
     }//GEN-LAST:event_btBuscarActionPerformed
