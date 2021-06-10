@@ -16,6 +16,5 @@ public class GeradorTabela {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("bibliotecaPU");
         emf.close();
-        PopulaPerfis.Popular();
     }
 }
