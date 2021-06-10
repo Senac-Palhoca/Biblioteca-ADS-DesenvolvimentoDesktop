@@ -8,6 +8,7 @@ package br.com.dao;
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.model.Exemplar;
+import br.com.model.Turma;
 import br.com.util.UtilGerador;
 import java.util.*;
 import org.junit.Test;
@@ -35,21 +36,30 @@ public class EmprestimoDaoImplTest {
         emprestimo = new Emprestimo(null, new Date(), new Date(), null);
         AlunoDaoImplTest alunoDao = new AlunoDaoImplTest();
         emprestimo.setAluno(alunoDao.gerarAlunoBd());
+        
+        TurmaDao turmaDao = new TurmaDaoImpl();
+        Turma turma;
+        sessao = HibernateUtil.abrirConexao();
+        turma = turmaDao.pesquisarPorId(emprestimo.getAluno().getTurma().getId(), sessao);
+        sessao.close();
+        turma.setQuantidadeEmprestimo(turma.getQuantidadeEmprestimo() + 1);
+
         LivroDaoImplTest livroDaoImplTest = new LivroDaoImplTest();
         ExemplarDaoImplTest exemplarDaoTest = new ExemplarDaoImplTest();
-        
+
         exemplar = exemplarDaoTest.gerarExemplarBd();
-        
+
         if (!exemplar.getStatus()) {
             exemplar = new Exemplar(UtilGerador.gerarNumero(5), livroDaoImplTest.gerarLivroBd());
         }
         exemplar.setStatus(false);
         emprestimo.setExemplar(exemplar);
-        
+
         sessao = HibernateUtil.abrirConexao();
+        turmaDao.salvarOuAlterar(turma, sessao);
         exemplarDao.salvarOuAlterar(exemplar, sessao);
         emprestimoDao.salvarOuAlterar(emprestimo, sessao);
-        
+
         sessao.close();
         assertNotNull(emprestimo.getId());
     }
@@ -116,7 +126,7 @@ public class EmprestimoDaoImplTest {
     @Test
     public void testPesquisarPorAlunoAberto() {
         System.out.println("pesquisarPorAlunoAberto");
-        
+
         sessao = HibernateUtil.abrirConexao();
         emprestimos = emprestimoDao.pesquisarPorAlunoAberto("", sessao);
         sessao.close();
@@ -139,7 +149,7 @@ public class EmprestimoDaoImplTest {
     public void testPesquisarPorAlunoMes() {
         System.out.println("pesquisarPorAlunoMes");
         AlunoDaoImplTest aluno = new AlunoDaoImplTest();
-        
+
         sessao = HibernateUtil.abrirConexao();
         emprestimos = emprestimoDao.pesquisarPorAlunoMes(aluno.gerarAlunoBd(), "06", "2021", sessao);
         sessao.close();
@@ -157,16 +167,16 @@ public class EmprestimoDaoImplTest {
 
         assertTrue(!emprestimos.isEmpty());
     }
-    
+
 //    @Test
-    public void testlistarAtrasados(){
+    public void testlistarAtrasados() {
         System.out.println("listarAtrasados");
-        
+
         sessao = HibernateUtil.abrirConexao();
         emprestimos = emprestimoDao.listarAtrasados(sessao);
         sessao.close();
 
         assertTrue(!emprestimos.isEmpty());
     }
-    
+
 }

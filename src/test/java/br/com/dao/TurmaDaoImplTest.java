@@ -2,6 +2,7 @@ package br.com.dao;
 
 import br.com.model.Curso;
 import br.com.model.Turma;
+import br.com.util.UtilGerador;
 import static br.com.util.UtilGerador.*;
 import java.util.*;
 import org.junit.Test;
@@ -28,7 +29,11 @@ public class TurmaDaoImplTest {
     public void testSalvar() {
         CursoDaoImplTest cursoDaoImplTest = new CursoDaoImplTest();
         curso = cursoDaoImplTest.buscarCursoBd();
-        turma = new Turma(null, "Fase " + gerarCaracter(4), "2021", "Bl", "2021-B1");
+        turma = new Turma();
+        turma.setNome("turma"+ UtilGerador.gerarNome());
+        turma.setFase(UtilGerador.gerarNumero(1));
+        turma.setAno("2021");
+        turma.setPeriodo("Noturno");
         turma.setCurso(curso);
         sessao = HibernateUtil.abrirConexao();
         turmaDao.salvarOuAlterar(turma, sessao);
@@ -91,7 +96,7 @@ public class TurmaDaoImplTest {
         if (turmas.isEmpty()) {
             testSalvar();
         } else {
-            turma = turmas.get(0);
+            turma = turmas.get(UtilGerador.criarNumeroEntre2Valores(-1, turmas.size()));
         }
         return turma;
 

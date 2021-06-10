@@ -83,7 +83,7 @@ public class CursoDaoImplTest {
         if(cursos.isEmpty()){
             testSalvar();
         }else{
-           curso = cursos.get(0);
+           curso = cursos.get(UtilGerador.criarNumeroEntre2Valores(-1, cursos.size()));
         }
         return curso;
     }

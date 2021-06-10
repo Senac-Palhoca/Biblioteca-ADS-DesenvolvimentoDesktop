@@ -47,6 +47,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
 
     private void popularListaTurma() {
         List<String> strList = new ArrayList<String>();
+        strList.add("Todos");
 
         listarTurma();
         for (Turma tu : turmas) {
@@ -61,8 +62,8 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }
 
     private void listarTurma() {
-        sessao = HibernateUtil.abrirConexao();
         TurmaDao impl = new TurmaDaoImpl();
+        sessao = HibernateUtil.abrirConexao();
         turmas = impl.listarTodos(sessao);
         sessao.close();
     }
@@ -210,22 +211,33 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
-        try {
-            Integer ano = Integer.parseInt(txAno.getText());
-            Date data =  new GregorianCalendar(ano, cbMes.getSelectedIndex(), 1).getTime();
-            popularTabela(data, turmas.get(cbTurma.getSelectedIndex()).getId());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ano inválido!");
+
+        if (cbTurma.getSelectedIndex() == 0) {
+            TurmaDao turmaDao = new TurmaDaoImpl();
+            sessao = HibernateUtil.abrirConexao();
+            List<Turma> turmasRanking = turmaDao.listarRanking(sessao);
+            sessao.close();
+
+            tabelaModelo.setNumRows(0);
+            for (Turma turma : turmasRanking) {
+                tabelaModelo.addRow(new Object[]{"      ------", turma.getNome(), turma.getCurso().getNome(), turma.getQuantidadeEmprestimo()});
+            }
+        } else {
+            try {
+                Integer ano = Integer.parseInt(txAno.getText());
+                Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex(), 1).getTime();
+                popularTabela(data, turmas.get(cbTurma.getSelectedIndex()).getId());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Ano inválido!");
+            }
         }
-        
-        
     }//GEN-LAST:event_btFiltrarActionPerformed
 
     private void txAnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txAnoKeyPressed
         JTextField jtf = (JTextField) evt.getComponent();
         int i = jtf.getText().length();
-        if(i > 3)
-                jtf.setText(jtf.getText().substring(0, --i));
+        if (i > 3)
+            jtf.setText(jtf.getText().substring(0, --i));
     }//GEN-LAST:event_txAnoKeyPressed
 
 
