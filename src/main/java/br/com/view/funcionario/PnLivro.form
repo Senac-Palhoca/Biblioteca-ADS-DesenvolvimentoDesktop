@@ -179,9 +179,6 @@
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Digite o titulo do Livro ou Autor que deseja pesquisar"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfTituloAutorActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btBuscar">
       <Properties>

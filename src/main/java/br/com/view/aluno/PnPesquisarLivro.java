@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.view.aluno;
 
 import br.com.dao.*;
@@ -29,8 +24,6 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
         initComponents();
         livroDao = new LivroDaoImpl();
     }
-
-    int numeracao = 1;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -121,10 +114,12 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         if (btBuscar.isEnabled()) {
+
             try {
                 sessao = HibernateUtil.abrirConexao();
                 livros = livroDao.pesquisarPorTituloAutor(tfTituloAutor.getText().trim(),
                         tfTituloAutor.getText().trim(), sessao);
+
                 if (livros.isEmpty()) {
                     if (tabelaModelo != null) {
                         tabelaModelo.setNumRows(0);
@@ -132,7 +127,6 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum valor!");
                 } else {
                     popularTabela();
-                    numeracao = 1;
                 }
             } catch (HibernateException e) {
                 System.err.println("Erro ao pesquisar " + e.getMessage());
@@ -148,11 +142,10 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
     private void popularTabela() {
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
-        String ativo;
+
         for (Livro livro : livros) {
-            tabelaModelo.addRow(new Object[]{numeracao + ") " + livro.getTitulo(), livro.getAutor(),
+            tabelaModelo.addRow(new Object[]{livro.getTitulo(), livro.getAutor(),
                 livro.getEditora(), livro.getIsbn()});
-            numeracao++;
         }
     }
 
