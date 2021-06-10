@@ -110,6 +110,8 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
         jLabel1.setText("Ranking Leitura");
 
+        cbTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas" }));
+
         jLabel2.setText("Turma:");
 
         cbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
