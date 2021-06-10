@@ -5,7 +5,6 @@
  */
 package br.com.dao;
 
-import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.model.Exemplar;
 import br.com.model.Turma;
@@ -50,7 +49,7 @@ public class EmprestimoDaoImplTest {
         exemplar = exemplarDaoTest.gerarExemplarBd();
 
         if (!exemplar.getStatus()) {
-            exemplar = new Exemplar(UtilGerador.gerarNumero(5), livroDaoImplTest.gerarLivroBd());
+            exemplar = new Exemplar(UtilGerador.gerarCodigoLivro(), livroDaoImplTest.gerarLivroBd());
         }
         exemplar.setStatus(false);
         emprestimo.setExemplar(exemplar);
