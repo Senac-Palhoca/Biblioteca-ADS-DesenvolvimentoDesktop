@@ -24,13 +24,13 @@ public class TurmaDaoImplTest {
         turmaDao = new TurmaDaoImpl();
     }
 
-@Test
+    @Test
     public void testSalvar() {
         CursoDaoImplTest cursoDaoImplTest = new CursoDaoImplTest();
         curso = cursoDaoImplTest.buscarCursoBd();
         turma = new Turma();
-        turma.setNome("turma"+ UtilGerador.gerarNome());
-        turma.setFase(UtilGerador.gerarNumero(1));
+        turma.setNome("turma" + UtilGerador.gerarNome());
+        turma.setFase("" + UtilGerador.criarNumeroEntre2Valores(0, 6));
         turma.setAno("2021");
         turma.setPeriodo("Noturno");
         turma.setCurso(curso);
@@ -47,14 +47,14 @@ public class TurmaDaoImplTest {
         turma.setNome("Turma do Xuxu");
         turmaDao.salvarOuAlterar(turma, sessao);
         sessao.close();
-        
+
         sessao = HibernateUtil.abrirConexao();
         Turma turmaPesquisada = turmaDao.pesquisarPorId(turma.getId(), sessao);
         sessao.close();
         assertEquals(turmaPesquisada.getNome(), turma.getNome());
     }
 
-@Test
+    @Test
     public void testPesquisarPorId() {
         buscarTurmaBd();
         sessao = HibernateUtil.abrirConexao();
@@ -63,7 +63,7 @@ public class TurmaDaoImplTest {
         assertNotNull(turmaId);
     }
 
-@Test
+    @Test
     public void testPesquisarPorNome() {
         buscarTurmaBd();
         sessao = HibernateUtil.abrirConexao();
@@ -72,7 +72,7 @@ public class TurmaDaoImplTest {
         assertFalse(turmas.isEmpty());
     }
 
-@Test
+    @Test
     public void testListarTodos() {
         buscarTurmaBd();
         sessao = HibernateUtil.abrirConexao();
@@ -82,7 +82,7 @@ public class TurmaDaoImplTest {
         assertFalse(isEmpty);
     }
 
-@Test
+    @Test
     public void testExcluir() {
         System.out.println("Test Excluir não deve ser executado");
     }
