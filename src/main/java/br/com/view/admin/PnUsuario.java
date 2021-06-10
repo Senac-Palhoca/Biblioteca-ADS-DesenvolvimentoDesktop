@@ -31,7 +31,7 @@ public class PnUsuario extends javax.swing.JPanel {
     private List<Curso> cursos;
     private List<Turma> turmas;
     private List<Turma> turmasCurso;
-    private Pessoa pessoa;  
+    private Pessoa pessoa;
     private Aluno aluno;
     private Funcionario funcionario;
     private Session sessao;
@@ -513,7 +513,6 @@ public class PnUsuario extends javax.swing.JPanel {
             }
         } else {
             sessao = HibernateUtil.abrirConexao();
-            int indiceCbTurma = cbTurma.getSelectedIndex();
             int indiceListaAluno = lsAluno.getSelectedIndex();
             int indiceListaFunc = lsFuncionario.getSelectedIndex();
             if (indiceListaAluno != -1) {
@@ -525,7 +524,6 @@ public class PnUsuario extends javax.swing.JPanel {
                 aluno.setSenha(txSenha.getText());
                 aluno.setTurma(turmasCurso.get(cbTurma.getSelectedIndex() - 1));
                 try {
-                    sessao = HibernateUtil.abrirConexao();
                     AlunoDao implAluno = new AlunoDaoImpl();
                     implAluno.salvarOuAlterar(aluno, sessao);
                     JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso.");
@@ -560,7 +558,7 @@ public class PnUsuario extends javax.swing.JPanel {
                     System.out.println(e.getCause());
                     String erro = e.getCause().toString();
                     if (erro.contains("Duplicate")) {
-                    sessao.close();
+                        sessao.close();
                     }
                 } finally {
 
