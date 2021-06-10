@@ -102,7 +102,7 @@ public class PnLogin extends javax.swing.JPanel {
         });
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Usuário");
+        jLabel3.setText("Email:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
