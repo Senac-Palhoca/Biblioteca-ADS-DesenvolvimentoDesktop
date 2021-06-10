@@ -127,10 +127,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
 
         tbRanking.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Aluno", "Turma", "Curso", "Qtd. Emprestimos"
