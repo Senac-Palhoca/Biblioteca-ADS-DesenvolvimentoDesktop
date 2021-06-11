@@ -47,7 +47,6 @@ public class PnEmprestimo extends javax.swing.JPanel {
         exemplarDao = new ExemplarDaoImpl();
         alunoDao = new AlunoDaoImpl();
         listarAtrasados();
-        listarAbertos();
         apagaInformacoes();
     }
 
@@ -60,13 +59,6 @@ public class PnEmprestimo extends javax.swing.JPanel {
             lbAtraso.setText("Há " + emprestimos.size() + " livro(s) atrasado(s).");
         }
         sessao.close();
-    }
-
-    private void listarAbertos() {
-        sessao = HibernateUtil.abrirConexao();
-        emprestimosAberto = emprestimoDao.listarTodosEmAberto(sessao);
-        sessao.close();
-        carregaTabela();
     }
 
     private void carregaTabela() {
@@ -299,7 +291,6 @@ public class PnEmprestimo extends javax.swing.JPanel {
 
     private void btNovoEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoEmprestimoActionPerformed
         Principal.pnPrincipal.AbrirPanel(new PnEmprestar());
-        listarAbertos();
     }//GEN-LAST:event_btNovoEmprestimoActionPerformed
 
     private void btDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDevolucaoActionPerformed

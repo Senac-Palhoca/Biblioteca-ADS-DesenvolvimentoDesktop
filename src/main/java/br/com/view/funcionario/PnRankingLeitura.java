@@ -211,7 +211,6 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
-
         if (cbTurma.getSelectedIndex() == 0) {
             TurmaDao turmaDao = new TurmaDaoImpl();
             sessao = HibernateUtil.abrirConexao();
@@ -226,7 +225,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
             try {
                 Integer ano = Integer.parseInt(txAno.getText());
                 Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex(), 1).getTime();
-                popularTabela(data, turmas.get(cbTurma.getSelectedIndex()).getId());
+                popularTabela(data, turmas.get(cbTurma.getSelectedIndex()-1).getId());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Ano inválido!");
             }
