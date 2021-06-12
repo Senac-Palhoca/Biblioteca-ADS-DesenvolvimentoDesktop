@@ -42,6 +42,15 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
         consulta.setParameter("nome", "%" + nome + "%");
         return consulta.list();
     }
+    
+    @Override
+    public List<Emprestimo> pesquisarPorAlunoAbertoId(Long id, Session sessao) throws HibernateException {
+        StringBuilder sql = new StringBuilder("from Emprestimo e where ");
+        sql.append("dataDevolucao is null and e.aluno.id like :id");
+        Query consulta = sessao.createQuery(sql.toString());
+        consulta.setParameter("id", id);
+        return consulta.list();
+    }
 
     @Override
     public List<Emprestimo> pesquisarPorTurmaMes(Turma turma, String mes, String ano, Session sessao) throws HibernateException {

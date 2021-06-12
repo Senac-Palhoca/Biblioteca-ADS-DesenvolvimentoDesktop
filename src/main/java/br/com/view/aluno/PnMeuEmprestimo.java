@@ -49,14 +49,14 @@ public class PnMeuEmprestimo extends javax.swing.JPanel {
 
     private void listarLivrosAbertos(){
         sessao = HibernateUtil.abrirConexao();
-        emprestimosAberto = emprestimoDao.pesquisarPorAlunoAberto(aluno.getNome(), sessao);
+        emprestimosAberto = emprestimoDao.pesquisarPorAlunoAbertoId(aluno.getId(), sessao);
         sessao.close();
     }
     
     private void livrosAtradados(){
         int i = 0;
         for (Emprestimo emprestimo : emprestimosAberto) {
-            if(emprestimo.getDataDevolucao() == null && emprestimo.getDataPrevista().after(new Date())){
+            if(emprestimo.getDataDevolucao() == null && emprestimo.getDataPrevista().before(new Date())){
                 i++;
             }
         }        
@@ -73,7 +73,7 @@ public class PnMeuEmprestimo extends javax.swing.JPanel {
         tabelaModelo = (DefaultTableModel) tbEmprestimo.getModel();
         tabelaModelo.setNumRows(0);
         for (Emprestimo emprestimo : emprestimosAberto) {
-            tabelaModelo.addRow(new Object[]{emprestimo.getAluno().getNome(),
+            tabelaModelo.addRow(new Object[]{
                 emprestimo.getExemplar().getLivro().getTitulo(),
                 emprestimo.getExemplar().getLivro().getAutor(),
                 dataFormatada.format(emprestimo.getDataRetirada()),

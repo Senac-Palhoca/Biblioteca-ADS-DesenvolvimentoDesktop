@@ -26,5 +26,7 @@ public interface EmprestimoDao extends BaseDao<Emprestimo, Long> {
 
     List<Emprestimo> listarTodosEmAberto(Session sessao) throws HibernateException;
     
+    public List<Emprestimo> pesquisarPorAlunoAbertoId(Long id, Session sessao) throws HibernateException;
+    
     List<Emprestimo> listarAtrasados(Session sessao) throws HibernateException;
 }
