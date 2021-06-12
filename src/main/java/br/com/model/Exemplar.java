@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.model;
 
 import java.io.Serializable;
@@ -23,6 +18,7 @@ public class Exemplar implements Serializable {
     private boolean status;
     @Column(nullable = false, unique = true)
     private String codigoLivro;
+    private boolean condicao;
 
     @ManyToOne
     @JoinColumn(name = "id_livro")
@@ -33,11 +29,13 @@ public class Exemplar implements Serializable {
 
     public Exemplar(String codigoLivro) {
         this.status = true;
+        this.condicao = true;
         this.codigoLivro = codigoLivro;
     }
 
     public Exemplar(String codigoLivro, Livro livro) {
         this.status = true;
+        this.condicao = true;
         this.codigoLivro = codigoLivro;
         this.livro = livro;
     }
@@ -72,6 +70,14 @@ public class Exemplar implements Serializable {
 
     public void setLivro(Livro livro) {
         this.livro = livro;
+    }
+
+    public boolean getCondicao() {
+        return condicao;
+    }
+
+    public void setCondicao(boolean condicao) {
+        this.condicao = condicao;
     }
     
     @Override

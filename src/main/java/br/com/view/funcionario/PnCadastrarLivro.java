@@ -267,7 +267,9 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
 
         for (Exemplar exemplar : exemplares) {
             if (exemplar.getLivro().getTitulo().equals(livro.getTitulo())) {
-                exemplaresLivro.add(exemplar);
+                if (exemplar.getCondicao() == true) {
+                    exemplaresLivro.add(exemplar);
+                }
             }
         }
 
@@ -320,11 +322,13 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 sessao = HibernateUtil.abrirConexao();
                 exemplar = new Exemplar();
                 exemplar.setStatus(true);
+                exemplar.setCondicao(true);
                 exemplar.setCodigoLivro(tfCodigoLivro.getText());
                 exemplar.setLivro(livro);
 
                 if (exemplar.getLivro().getId() != null) {
                     exemplarDao.salvarOuAlterar(exemplar, sessao);
+                    popularTabelaExemplar();
 
                     if (btSalvarExemplar.getText().equals("Salvar Exemplar")) {
                         JOptionPane.showMessageDialog(null, "Exemplar salvo com sucesso!", "Exemplar Salvo", 1);

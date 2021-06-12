@@ -77,7 +77,7 @@ public class UtilGerador {
     }
 
     public static String gerarEdicao() {
-        return gerarNumero(1) + "ª Edição";
+        return criarNumeroEntre2Valores(0, 6) + "ª Edição";
     }
 
     public static String gerarCidade() {
