@@ -18,11 +18,10 @@ public class PnLivro extends javax.swing.JPanel {
 
     private Session sessao;
     private DefaultTableModel tabelaModelo;
-    private Exemplar exemplar;
+//    private Exemplar exemplar;
     private ExemplarDao exemplarDao;
     private LivroDao livroDao;
     private List<Exemplar> exemplares;
-    private int contarDisponivel;
 
     public PnLivro() {
         initComponents();
@@ -209,7 +208,6 @@ public class PnLivro extends javax.swing.JPanel {
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         int linhaSelecionada = tbLivro.getSelectedRow();
-        sessao = HibernateUtil.abrirConexao();
 
         if (linhaSelecionada >= 0) {
             int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o exemplar selecionado?", "Confirmação de exclusão", 2);
@@ -218,8 +216,11 @@ public class PnLivro extends javax.swing.JPanel {
                 try {
                     Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
                     if (exemplarSelecionado.getStatus() == true) {
+                        sessao = HibernateUtil.abrirConexao();
                         exemplarSelecionado.setCondicao(false);
+                        exemplarSelecionado.setStatus(false);
                         exemplarDao.salvarOuAlterar(exemplarSelecionado, sessao);
+                        sessao.close();
                         JOptionPane.showMessageDialog(null, "Exemplar excluído com sucesso!", "Exemplar Excluído", 1);
                         buscarExemplares();
                     } else {
@@ -229,11 +230,6 @@ public class PnLivro extends javax.swing.JPanel {
                     }
                 } catch (HeadlessException | HibernateException e) {
                     System.err.println("Erro ao excluir " + e.getMessage());
-//                    JOptionPane.showMessageDialog(null, "Exemplar com Status EMPRESTADO não pode ser excluído.\n\n"
-//                            + "Aguarde sua devolução, para prosseguir com a exclusão.",
-//                            "Erro ao excluir exemplar emprestado", 0);
-                } finally {
-                    sessao.close();
                 }
             }
         } else {
@@ -243,16 +239,14 @@ public class PnLivro extends javax.swing.JPanel {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         buscarExemplares();
-        lbQuantidade.setText("Possuímos " + Integer.toString(contarDisponivel) + " livros disponíveis para empréstimo");
-        contarDisponivel = 0;
     }//GEN-LAST:event_btBuscarActionPerformed
 
     private void buscarExemplares() {
         sessao = HibernateUtil.abrirConexao();
         exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
+        popularTabela(exemplares);
         sessao.close();
 
-                popularTabela(exemplares);
     }
 
     private void popularTabela(List<Exemplar> exemplares1) {
@@ -264,7 +258,6 @@ public class PnLivro extends javax.swing.JPanel {
                 tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
                     exemplar.getLivro().getEditora(), exemplar.getLivro().getEdicao(), exemplar.getLivro().getIsbn(),
                     exemplar.getCodigoLivro(), exemplar.getStatus() ? "Disponível" : "Emprestado"});
-                    contarDisponivel++;
             }
         }
     }
