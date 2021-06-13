@@ -33,7 +33,7 @@ public class LivroDaoImplTest {
         assertNotNull(livro.getId());
     }
 
-//    @Test
+    @Test
     public void testAlterar() {
         System.out.println("#################");
         System.out.println("# Teste Alterar #");
@@ -52,6 +52,12 @@ public class LivroDaoImplTest {
         System.out.println("#################");
         System.out.println("# Teste Excluir #");
         System.out.println("#################");
+        gerarLivroBd();
+        sessao = HibernateUtil.abrirConexao();
+        livroDao.excluir(livro, sessao);
+        Livro livroExc = livroDao.pesquisarPorId(livro.getId(), sessao);
+        sessao.close();
+        assertNull(livroExc);
     }
 
     @Test

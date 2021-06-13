@@ -328,6 +328,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
 
                 if (exemplar.getLivro().getId() != null) {
                     exemplarDao.salvarOuAlterar(exemplar, sessao);
+                    sessao.close();
                     popularTabelaExemplar();
 
                     if (btSalvarExemplar.getText().equals("Salvar Exemplar")) {

@@ -217,7 +217,7 @@ public class PnLivro extends javax.swing.JPanel {
             if (opcao == 0) {
                 try {
                     Exemplar exemplarSelecionado = exemplares.get(linhaSelecionada);
-                    if (exemplarSelecionado.getStatus()) {
+                    if (exemplarSelecionado.getStatus() == true) {
                         exemplarSelecionado.setCondicao(false);
                         exemplarDao.salvarOuAlterar(exemplarSelecionado, sessao);
                         JOptionPane.showMessageDialog(null, "Exemplar excluído com sucesso!", "Exemplar Excluído", 1);
@@ -229,9 +229,9 @@ public class PnLivro extends javax.swing.JPanel {
                     }
                 } catch (HeadlessException | HibernateException e) {
                     System.err.println("Erro ao excluir " + e.getMessage());
-                    JOptionPane.showMessageDialog(null, "Exemplar com Status EMPRESTADO não pode ser excluído.\n\n"
-                            + "Aguarde sua devolução, para prosseguir com a exclusão.",
-                            "Erro ao excluir exemplar emprestado", 0);
+//                    JOptionPane.showMessageDialog(null, "Exemplar com Status EMPRESTADO não pode ser excluído.\n\n"
+//                            + "Aguarde sua devolução, para prosseguir com a exclusão.",
+//                            "Erro ao excluir exemplar emprestado", 0);
                 } finally {
                     sessao.close();
                 }
@@ -264,10 +264,7 @@ public class PnLivro extends javax.swing.JPanel {
                 tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
                     exemplar.getLivro().getEditora(), exemplar.getLivro().getEdicao(), exemplar.getLivro().getIsbn(),
                     exemplar.getCodigoLivro(), exemplar.getStatus() ? "Disponível" : "Emprestado"});
-
-                if (exemplar.getStatus() == true) {
                     contarDisponivel++;
-                }
             }
         }
     }
