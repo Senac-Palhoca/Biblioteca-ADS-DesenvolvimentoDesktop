@@ -52,61 +52,7 @@ public class PnUsuario extends javax.swing.JPanel {
         listarTurma();
     }
 
-    private void listarPerfil() {
-        sessao = HibernateUtil.abrirConexao();
-        PerfilDao impl = new PerfilDaoImpl();
-        perfils = impl.pesquisarPerfil(sessao);
-        sessao.close();
-    }
-
-    private void listarCurso() {
-        sessao = HibernateUtil.abrirConexao();
-        CursoDao impl = new CursoDaoImpl();
-        cursos = impl.listarTodos(sessao);
-        sessao.close();
-    }
-
-    private void listarTurma() {
-        sessao = HibernateUtil.abrirConexao();
-        TurmaDao impl = new TurmaDaoImpl();
-        turmas = impl.listarTodos(sessao);
-        sessao.close();
-
-    }
-
-    private void listarAlunos() {
-        sessao = HibernateUtil.abrirConexao();
-        AlunoDao implAluno = new AlunoDaoImpl();
-        alunos = implAluno.listarTodos(sessao);
-        sessao.close();
-
-        DefaultListModel listaAluno = new DefaultListModel();
-
-        alunos.forEach(al -> {
-            listaAluno.addElement(al);
-        });
-
-        lsAluno.setModel(listaAluno);
-    }
-
-    private void listarFuncionarios() {
-
-        sessao = HibernateUtil.abrirConexao();
-
-        FuncionarioDao implFuncionario = new FuncionarioDaoImpl();
-        funcionarios = implFuncionario.listarTodos(sessao);
-
-        sessao.close();
-
-        DefaultListModel listaFuncionario = new DefaultListModel();
-        for (Funcionario funcionario1 : funcionarios) {
-            listaFuncionario.addElement(funcionario1);
-
-        }
-
-        lsFuncionario.setModel(listaFuncionario);
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -456,29 +402,30 @@ public class PnUsuario extends javax.swing.JPanel {
                     aluno.setEmail(txEmail.getText());
                     aluno.setMatricula(UtilGerador.gerarNumero(16));
                     aluno.setSenha(txSenha.getText());
-
+                    aluno.setPerfil(perfils.get(cbPerfil.getSelectedIndex() - 1));
                     if (cbCurso.getSelectedIndex() == 0) {
                         int validaSemCurso = JOptionPane.showConfirmDialog(null, "Confirma aluno não possui curso e turma?");
-                        if (validaSemCurso != JOptionPane.YES_OPTION) {
+                        if (validaSemCurso == JOptionPane.YES_OPTION) {
+                            aluno.setTurma(null);
+                        } else {
                             aluno.setPerfil(perfils.get(cbPerfil.getSelectedIndex() - 1));
                             aluno.setTurma(turmas.get(cbTurma.getSelectedIndex() - 1));
                         }
+                    } else {
+                        aluno.setTurma(turmas.get(cbTurma.getSelectedIndex() - 1));
                     }
                     try {
-
                         AlunoDao implAluno = new AlunoDaoImpl();
                         implAluno.salvarOuAlterar(aluno, sessao);
                         JOptionPane.showMessageDialog(null, "Usuário criado com sucesso.");
                         limparCampos();
                         listarAlunos();
-
                     } catch (HibernateException e) {
                         String erro = e.getCause().toString();
                         if (erro.contains("Duplicate")) {
-                            JOptionPane.showMessageDialog(null, "Cpf já cadastrado");
+                            JOptionPane.showMessageDialog(null, "E-mail ou Cpf já cadastrado");
                         }
-
-                    } finally {
+                    } finally{
                         sessao.close();
                     }
                     listarAlunos();
@@ -578,7 +525,7 @@ public class PnUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void lsAlunoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsAlunoMousePressed
-        
+
         DefaultListModel aa = (DefaultListModel) this.lsAluno.getModel();
         aluno = (Aluno) aa.get(lsAluno.getSelectedIndex());
         pessoa = aluno;
@@ -618,6 +565,61 @@ public class PnUsuario extends javax.swing.JPanel {
             pnAlunoAtributo.setVisible(false);
         }
     }
+    
+    private void listarPerfil() {
+        sessao = HibernateUtil.abrirConexao();
+        PerfilDao impl = new PerfilDaoImpl();
+        perfils = impl.pesquisarPerfil(sessao);
+        sessao.close();
+    }
+
+    private void listarCurso() {
+        sessao = HibernateUtil.abrirConexao();
+        CursoDao impl = new CursoDaoImpl();
+        cursos = impl.listarTodos(sessao);
+        sessao.close();
+    }
+
+    private void listarTurma() {
+        sessao = HibernateUtil.abrirConexao();
+        TurmaDao impl = new TurmaDaoImpl();
+        turmas = impl.listarTodos(sessao);
+        sessao.close();
+
+    }
+
+    private void listarAlunos() {
+        sessao = HibernateUtil.abrirConexao();
+        AlunoDao implAluno = new AlunoDaoImpl();
+        alunos = implAluno.listarTodos(sessao);
+        sessao.close();
+
+        DefaultListModel listaAluno = new DefaultListModel();
+
+        alunos.forEach(al -> {
+            listaAluno.addElement(al);
+        });
+
+        lsAluno.setModel(listaAluno);
+    }
+
+    private void listarFuncionarios() {
+
+        sessao = HibernateUtil.abrirConexao();
+
+        FuncionarioDao implFuncionario = new FuncionarioDaoImpl();
+        funcionarios = implFuncionario.listarTodos(sessao);
+
+        sessao.close();
+
+        DefaultListModel listaFuncionario = new DefaultListModel();
+        for (Funcionario funcionario1 : funcionarios) {
+            listaFuncionario.addElement(funcionario1);
+
+        }
+
+        lsFuncionario.setModel(listaFuncionario);
+    }
 
     private void preencherCampos() {
         if (!pnUsuarioAtual.isVisible()) {
@@ -632,7 +634,6 @@ public class PnUsuario extends javax.swing.JPanel {
         cbPerfil.setEnabled(false);
         cbTurma.setEnabled(false);
         preencherPerfil();
-        
 
         txNome.setText(pessoa.getNome());
         txCPF.setText(pessoa.getCpf());
@@ -671,7 +672,7 @@ public class PnUsuario extends javax.swing.JPanel {
     }
 
     private void preencherCurso() {
-        
+
         if (cbCurso.getItemCount() == 1) {
             cursos.forEach(pe -> {
                 cbCurso.addItem(pe.getNome());
