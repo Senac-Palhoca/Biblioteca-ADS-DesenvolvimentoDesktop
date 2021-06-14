@@ -8,6 +8,7 @@ package br.com.view.menu;
 import br.com.view.admin.PnCursoTurma;
 import br.com.view.admin.PnUsuario;
 import br.com.view.Principal;
+import br.com.view.admin.PnUsuarioNew;
 
 /**
  *
@@ -230,7 +231,7 @@ public class PnMenuAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_pnCursosMouseClicked
 
     private void pnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnUsuariosMouseClicked
-        abrirPanel(new PnUsuario(), evt.getComponent());
+        abrirPanel(new PnUsuarioNew(), evt.getComponent());
     }//GEN-LAST:event_pnUsuariosMouseClicked
 
     private void abrirPanel(javax.swing.JPanel panel, java.awt.Component component){

@@ -1,5 +1,6 @@
 package br.com.dao;
 
+import br.com.model.Curso;
 import br.com.model.Turma;
 import java.util.List;
 import org.hibernate.*;
@@ -30,5 +31,12 @@ public class TurmaDaoImpl extends BaseDaoImpl<Turma, Long> implements TurmaDao{
     @Override
     public List<Turma> listarRanking(Session sessao) throws HibernateException {
         return sessao.createQuery("FROM Turma t order by t.quantidadeEmprestimo desc").list();
+    }
+
+    @Override
+    public List<Turma> listarPorCurso(Curso curso, Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery("from Turma where curso.id like :idCurso");
+        consulta.setParameter("idCurso", curso.getId());
+        return consulta.list();
     }
 }

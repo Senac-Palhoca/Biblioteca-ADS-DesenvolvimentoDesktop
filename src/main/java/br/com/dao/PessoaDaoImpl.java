@@ -5,7 +5,9 @@
  */
 package br.com.dao;
 
+import br.com.model.Perfil;
 import br.com.model.Pessoa;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,4 +22,16 @@ public class PessoaDaoImpl implements PessoaDao {
         return (Pessoa) consulta.uniqueResult();
     }
 
+    @Override
+    public List<Pessoa> listarTodo(Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery(("FROM Pessoa"));
+        return consulta.list();
+    }
+
+    @Override
+    public List<Pessoa> listarPorPerfil(Perfil perfil, Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery("from Pessoa where perfil.id like :idPerfil");
+        consulta.setParameter("idPerfil", perfil.getId());
+        return consulta.list();
+    }
 }

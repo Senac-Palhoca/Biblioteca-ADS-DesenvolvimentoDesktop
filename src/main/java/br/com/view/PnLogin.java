@@ -104,6 +104,12 @@ public class PnLogin extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Email:");
 
+        txSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLoginActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -194,24 +200,9 @@ public class PnLogin extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        sessao = HibernateUtil.abrirConexao();
-        Pessoa pessoa = pessoaDao.login(txUsuario.getText(), new String(txSenha.getPassword()), sessao);
-
-        if (pessoa != null) {
-            Principal.usuario = pessoa;
-            if (pessoa instanceof Aluno) {
-                abrir("aluno", new PnMeuEmprestimo());
-            } else if (pessoa instanceof Funcionario) {
-                if (pessoa.getPerfil().getFuncao().toLowerCase().equals("admin") || pessoa.getPerfil().getFuncao().toLowerCase().equals("administrador")) {
-                    abrir("admin", new PnCursoTurma());
-                } else {
-                    abrir("funcionario", new PnEmprestimo());
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuário/senha inválido ou inexistente.");
-            txSenha.setText("");
-        }
+        validarLogin();
+        btLogin.setText("Aguarde...");
+        btLogin.setEnabled(false);
     }//GEN-LAST:event_btLoginActionPerformed
 
     private void lbEsqueciSenhaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbEsqueciSenhaMouseEntered
@@ -226,6 +217,37 @@ public class PnLogin extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(null, "Azar o seu! Método não implementado.");
     }//GEN-LAST:event_lbEsqueciSenhaMousePressed
 
+    private void validarLogin() {
+        new Thread() {
+            public void run() {
+                try {
+                    sessao = HibernateUtil.abrirConexao();
+                    Pessoa pessoa = pessoaDao.login(txUsuario.getText(), new String(txSenha.getPassword()), sessao);
+
+                    if (pessoa != null) {
+                        Principal.usuario = pessoa;
+                        if (pessoa instanceof Aluno) {
+                            abrir("aluno", new PnMeuEmprestimo());
+                        } else if (pessoa instanceof Funcionario) {
+                            if (pessoa.getPerfil().getFuncao().toLowerCase().equals("admin") || pessoa.getPerfil().getFuncao().toLowerCase().equals("administrador")) {
+                                abrir("admin", new PnCursoTurma());
+                            } else {
+                                abrir("funcionario", new PnEmprestimo());
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuário/senha inválido ou inexistente.");
+                        txSenha.setText("");
+                        btLogin.setText("Logar");
+                        btLogin.setEnabled(true);
+                    }
+                } catch (Exception e) {
+                } finally{
+                    sessao.close();
+                }
+            }
+        }.start();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btLogin;
