@@ -307,11 +307,11 @@ public class PnEmprestimo extends javax.swing.JPanel {
                 emprestimosAberto.remove(linhaSelecionada);
                 devolucao();
                 listarAtrasados();
+                carregaTabela();
             } catch (HibernateException h) {
                 System.out.println("Erro ao salvar devolução!" + h.getMessage());
             } finally {
                 sessao.close();
-                carregaTabela();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");

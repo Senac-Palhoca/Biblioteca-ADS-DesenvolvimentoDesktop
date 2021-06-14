@@ -46,7 +46,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }
 
     private void popularListaTurma() {
-        List<String> strList = new ArrayList<String>();
+        List<String> strList = new ArrayList<>();
         strList.add("Todos");
 
         listarTurma();
@@ -219,7 +219,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
 
             tabelaModelo.setNumRows(0);
             for (Turma turma : turmasRanking) {
-                tabelaModelo.addRow(new Object[]{"      ------", turma.getNome(), turma.getCurso().getNome(), turma.getQuantidadeEmprestimo()});
+                tabelaModelo.addRow(new Object[]{"        ------", turma.getNome(), turma.getCurso().getNome(), turma.getQuantidadeEmprestimo()});
             }
         } else {
             try {

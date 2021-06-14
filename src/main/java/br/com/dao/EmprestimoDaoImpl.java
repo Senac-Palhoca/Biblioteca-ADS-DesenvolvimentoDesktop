@@ -31,11 +31,11 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
 
     @Override
     public List<Emprestimo> pesquisarPorAlunoAberto(String nome, Session sessao) throws HibernateException {
-        StringBuilder sql = new StringBuilder("from Emprestimo e where ");
+        StringBuilder sql = new StringBuilder("from Emprestimo e where dataDevolucao is null ");
         if (!nome.equals("")) {
-            sql.append("dataDevolucao is null and e.aluno.nome like :nome order by e.aluno.nome");
+            sql.append("and e.aluno.nome like :nome order by e.aluno.nome");
         } else {
-            sql.append("dataDevolucao is null order by e.aluno.nome");
+            sql.append("order by e.aluno.nome");
             return sessao.createQuery(sql.toString()).list();
         }
         Query consulta = sessao.createQuery(sql.toString());

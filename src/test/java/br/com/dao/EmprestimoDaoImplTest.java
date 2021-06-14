@@ -72,7 +72,7 @@ public class EmprestimoDaoImplTest {
         assertNotNull(emprestimoId);
     }
 
-    // @Test
+     @Test
     public void testPesquisarPorId() {
         gerarEmprestimoBd();
         sessao = HibernateUtil.abrirConexao();
