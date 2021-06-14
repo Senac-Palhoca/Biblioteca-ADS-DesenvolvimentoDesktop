@@ -44,6 +44,7 @@ public class PnUsuarioNew extends javax.swing.JPanel {
         try {
             sessao = HibernateUtil.abrirConexao();
             PessoaDao pessoaDao = new PessoaDaoImpl();
+            pessoas = null;
             if (cbPerfis.getSelectedIndex() > 0) {
                 pessoas = pessoaDao.listarPorPerfil(perfils.get(cbPerfis.getSelectedIndex() - 1), sessao);
             } else {

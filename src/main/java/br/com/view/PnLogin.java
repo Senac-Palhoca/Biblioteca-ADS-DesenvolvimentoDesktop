@@ -243,7 +243,7 @@ public class PnLogin extends javax.swing.JPanel {
                     }
                 } catch (Exception e) {
                 } finally{
-                    sessao.close();
+                    //sessao.close();
                 }
             }
         }.start();
