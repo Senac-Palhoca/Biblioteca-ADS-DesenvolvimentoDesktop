@@ -233,10 +233,13 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
+        <Property name="text" type="java.lang.String" value="C&#xf3;digo do Exemplar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfCodigoLivro">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Digite o C&#xf3;digo do Exemplar"/>
+      </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>

@@ -105,7 +105,9 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setText("Código");
+        jLabel2.setText("Código do Exemplar");
+
+        tfCodigoLivro.setToolTipText("Digite o Código do Exemplar");
 
         tbCodigoLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -282,6 +284,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     private void salvarLivro() {
         if (!validarLivro()) {
             try {
+                livro = new Livro();
                 sessao = HibernateUtil.abrirConexao();
                 setarLivro();
                 livroDao.salvarOuAlterar(livro, sessao);
