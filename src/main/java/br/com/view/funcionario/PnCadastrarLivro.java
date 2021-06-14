@@ -242,6 +242,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
         limparLivro();
         limparExemplar();
+        tabelaModelo.setNumRows(0);
     }//GEN-LAST:event_btLimparActionPerformed
 
     private void btSalvarLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarLivroActionPerformed

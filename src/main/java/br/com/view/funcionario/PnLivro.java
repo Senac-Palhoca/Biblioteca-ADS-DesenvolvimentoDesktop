@@ -18,7 +18,6 @@ public class PnLivro extends javax.swing.JPanel {
 
     private Session sessao;
     private DefaultTableModel tabelaModelo;
-//    private Exemplar exemplar;
     private ExemplarDao exemplarDao;
     private LivroDao livroDao;
     private List<Exemplar> exemplares;
@@ -244,8 +243,8 @@ public class PnLivro extends javax.swing.JPanel {
     private void buscarExemplares() {
         sessao = HibernateUtil.abrirConexao();
         exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
-        popularTabela();
         sessao.close();
+        popularTabela();
 
     }
 
