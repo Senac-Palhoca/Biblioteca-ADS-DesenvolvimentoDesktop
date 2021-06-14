@@ -244,21 +244,19 @@ public class PnLivro extends javax.swing.JPanel {
     private void buscarExemplares() {
         sessao = HibernateUtil.abrirConexao();
         exemplares = exemplarDao.pesquisarPorTituloAutor(tfTituloAutor.getText(), tfTituloAutor.getText(), sessao);
-        popularTabela(exemplares);
+        popularTabela();
         sessao.close();
 
     }
 
-    private void popularTabela(List<Exemplar> exemplares1) {
+    private void popularTabela() {
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
 
-        for (Exemplar exemplar : exemplares1) {
-            if (exemplar.getCondicao() == true) {
-                tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
-                    exemplar.getLivro().getEditora(), exemplar.getLivro().getEdicao(), exemplar.getLivro().getIsbn(),
-                    exemplar.getCodigoLivro(), exemplar.getStatus() ? "Disponível" : "Emprestado"});
-            }
+        for (Exemplar exemplar : exemplares) {
+            tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),
+                exemplar.getLivro().getEditora(), exemplar.getLivro().getEdicao(), exemplar.getLivro().getIsbn(),
+                exemplar.getCodigoLivro(), exemplar.getStatus() ? "Disponível" : "Emprestado"});
         }
     }
 

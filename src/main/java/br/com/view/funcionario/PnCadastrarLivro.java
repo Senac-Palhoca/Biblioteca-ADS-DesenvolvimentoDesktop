@@ -260,8 +260,8 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     private void popularTabelaExemplar() {
         tabelaModelo = (DefaultTableModel) tbCodigoLivro.getModel();
         tabelaModelo.setNumRows(0);
-        sessao = HibernateUtil.abrirConexao();
         List<Exemplar> exemplaresLivro = new ArrayList<>();
+        sessao = HibernateUtil.abrirConexao();
         exemplares = exemplarDao.listarTodos(sessao);
         sessao.close();
 
@@ -284,6 +284,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 sessao = HibernateUtil.abrirConexao();
                 setarLivro();
                 livroDao.salvarOuAlterar(livro, sessao);
+                sessao.close();
                 if (btSalvarLivro.getText().equals("Salvar Livro")) {
                     JOptionPane.showMessageDialog(null, "Livro Salvo com sucesso!", "Livro Salvo", 1);
                 } else {
@@ -292,7 +293,6 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
             } catch (Exception e) {
                 System.err.println("Erro a salvar Livro - Causa: " + e);
             } finally {
-                sessao.close();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Preencha todas os campos corretamente", "Campos em Branco", 1);
@@ -319,7 +319,6 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     private void salvarExemplar() {
         if (!validarExemplar()) {
             try {
-                sessao = HibernateUtil.abrirConexao();
                 exemplar = new Exemplar();
                 exemplar.setStatus(true);
                 exemplar.setCondicao(true);
@@ -327,7 +326,9 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 exemplar.setLivro(livro);
 
                 if (exemplar.getLivro().getId() != null) {
+                    sessao = HibernateUtil.abrirConexao();
                     exemplarDao.salvarOuAlterar(exemplar, sessao);
+                    sessao.close();
                     popularTabelaExemplar();
 
                     if (btSalvarExemplar.getText().equals("Salvar Exemplar")) {
@@ -342,7 +343,6 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Código do exemplar já cadastrado.\n\nCadastre um novo código!", "Verfique Código Exemplar", 0);
                 System.err.println("Erro a salvar Exemplar - Causa: " + e);
             } finally {
-                sessao.close();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente", "Verfique campos vazios", 0);

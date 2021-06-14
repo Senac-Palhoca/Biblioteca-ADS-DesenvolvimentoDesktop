@@ -315,7 +315,7 @@ public class PnEmprestimo extends javax.swing.JPanel {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
-        }
+        }btBuscarActionPerformed(evt);
     }//GEN-LAST:event_btDevolucaoActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
