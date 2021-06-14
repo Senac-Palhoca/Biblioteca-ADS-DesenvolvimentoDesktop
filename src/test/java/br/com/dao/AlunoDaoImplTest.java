@@ -87,16 +87,6 @@ public class AlunoDaoImplTest {
         assertFalse(isEmpty);
     }
     
-    //@Test
-    public void testExcluir() {
-        gerarAlunoBd();
-        sessao = HibernateUtil.abrirConexao();
-        alunoDao.excluir(aluno, sessao);
-        Aluno alunoExc = alunoDao.pesquisarPorId(aluno.getId(), sessao);
-        sessao.close();
-        assertNull(alunoExc);
-    }
-    
     @Test
     public void testPesquisarPorMatricula(){
         gerarAlunoBd();

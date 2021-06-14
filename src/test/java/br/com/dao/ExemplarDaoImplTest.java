@@ -90,19 +90,6 @@ public class ExemplarDaoImplTest {
         assertNotNull(exemplarId);
     }
 
-//    @Test
-    public void testExcluir() {
-        System.out.println("#################");
-        System.out.println("# Teste Excluir #");
-        System.out.println("#################");
-        gerarExemplarBd();
-        sessao = HibernateUtil.abrirConexao();
-        exemplarDao.excluir(exemplar, sessao);
-        Exemplar exemplarExc = exemplarDao.pesquisarPorId(exemplar.getId(), sessao);
-        sessao.close();
-        assertNull(exemplarExc);
-    }
-
     public Exemplar gerarExemplarBd() {
         sessao = HibernateUtil.abrirConexao();
         Query consulta = sessao.createQuery("from Exemplar");

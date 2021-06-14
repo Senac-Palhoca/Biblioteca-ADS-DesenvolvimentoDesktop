@@ -15,4 +15,6 @@ public interface CursoDao extends BaseDao<Curso, Long>{
     
     List<Curso> listarTodos(Session sessao) throws HibernateException;
     
+    void excluir(Curso curso, Session session) throws HibernateException;
+    
 }

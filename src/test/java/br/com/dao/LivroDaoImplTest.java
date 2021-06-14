@@ -48,19 +48,6 @@ public class LivroDaoImplTest {
     }
 
     @Test
-    public void testExcluir() {
-        System.out.println("#################");
-        System.out.println("# Teste Excluir #");
-        System.out.println("#################");
-        gerarLivroBd();
-        sessao = HibernateUtil.abrirConexao();
-        livroDao.excluir(livro, sessao);
-        Livro livroExc = livroDao.pesquisarPorId(livro.getId(), sessao);
-        sessao.close();
-        assertNull(livroExc);
-    }
-
-    @Test
     public void testPesquisarPorId() {
         System.out.println("##########################");
         System.out.println("# Teste Pesquisar por ID #");

@@ -99,16 +99,6 @@ public class EmprestimoDaoImplTest {
         assertFalse(isEmpty);
     }
 
-    //@Test
-    public void testExcluir() {
-        gerarEmprestimoBd();
-        sessao = HibernateUtil.abrirConexao();
-        emprestimoDao.excluir(emprestimo, sessao);
-        Emprestimo emprestimoExc = emprestimoDao.pesquisarPorId(emprestimo.getId(), sessao);
-        sessao.close();
-        assertNull(emprestimoExc);
-    }
-
     public Emprestimo gerarEmprestimoBd() {
         sessao = HibernateUtil.abrirConexao();
         Query consulta = sessao.createQuery("from Emprestimo");

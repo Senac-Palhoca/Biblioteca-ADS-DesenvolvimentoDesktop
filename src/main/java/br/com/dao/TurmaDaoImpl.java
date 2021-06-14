@@ -39,4 +39,12 @@ public class TurmaDaoImpl extends BaseDaoImpl<Turma, Long> implements TurmaDao{
         consulta.setParameter("idCurso", curso.getId());
         return consulta.list();
     }
+    
+    @Override
+    public void excluir(Turma turma, Session session) throws HibernateException {
+        Transaction transacao;
+        transacao = session.beginTransaction();
+        session.delete(turma);
+        transacao.commit();
+    }
 }
