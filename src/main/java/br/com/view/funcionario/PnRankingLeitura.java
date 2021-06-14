@@ -214,10 +214,18 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         if (cbTurma.getSelectedIndex() == 0) {
             TurmaDao turmaDao = new TurmaDaoImpl();
             sessao = HibernateUtil.abrirConexao();
-            List<Turma> turmasRanking = turmaDao.listarRanking(sessao);
-            sessao.close();
-
+            List<Turma> turmasRanking;
             tabelaModelo.setNumRows(0);
+            if (cbMes.getSelectedIndex() == 0) {
+                turmasRanking = turmaDao.listarRanking(sessao);
+            } else {
+                String mes = ""+cbMes.getSelectedIndex();
+                if (mes.length() < 2) {
+                    mes = "0" + mes;
+                }
+                turmasRanking = turmaDao.listarRankingMes(mes, txAno.getText(), sessao);
+            }
+            sessao.close();
             for (Turma turma : turmasRanking) {
                 tabelaModelo.addRow(new Object[]{"        ------", turma.getNome(), turma.getCurso().getNome(), turma.getQuantidadeEmprestimo()});
             }
@@ -225,7 +233,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
             try {
                 Integer ano = Integer.parseInt(txAno.getText());
                 Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex(), 1).getTime();
-                popularTabela(data, turmas.get(cbTurma.getSelectedIndex()-1).getId());
+                popularTabela(data, turmas.get(cbTurma.getSelectedIndex() - 1).getId());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Ano inválido!");
             }

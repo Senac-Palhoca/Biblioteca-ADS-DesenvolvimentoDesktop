@@ -20,5 +20,7 @@ public interface TurmaDao extends BaseDao<Turma, Long>{
     
     List<Turma> listarTodos(Session sessao) throws HibernateException;
     
+    List<Turma> listarRankingMes(String mes, String ano, Session sessao) throws HibernateException;
+    
     void excluir(Turma turma, Session sessao) throws HibernateException;
 }
