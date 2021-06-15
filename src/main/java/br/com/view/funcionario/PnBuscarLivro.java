@@ -52,6 +52,8 @@ public class PnBuscarLivro extends javax.swing.JPanel {
         tbLivro = new javax.swing.JTable();
         btSelecionar = new javax.swing.JButton();
 
+        setPreferredSize(new java.awt.Dimension(900, 350));
+
         jLabel1.setText("Titulo/Autor");
 
         tfTituloAutor.setToolTipText("Digite o titulo do liro ou o autor que deseja pesquisar");
@@ -94,11 +96,9 @@ public class PnBuscarLivro extends javax.swing.JPanel {
                         .addGap(4, 4, 4))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(btSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 808, Short.MAX_VALUE)))
+                        .addGap(0, 808, Short.MAX_VALUE))
+                    .addComponent(btSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -111,10 +111,10 @@ public class PnBuscarLivro extends javax.swing.JPanel {
                     .addComponent(btBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(tfTituloAutor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btSelecionar)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

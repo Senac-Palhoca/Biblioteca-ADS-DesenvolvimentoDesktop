@@ -14,7 +14,7 @@ import org.hibernate.*;
 
 /**
  *
- * @author Felip
+ * @author Felipe Araujo
  */
 public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements EmprestimoDao {
 

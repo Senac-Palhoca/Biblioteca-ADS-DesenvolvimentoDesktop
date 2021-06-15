@@ -25,8 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
 
 /**
- *
- * @author Felipe
+ * @author Ambos os Felipes
  */
 public class PnRankingLeitura extends javax.swing.JPanel {
 
@@ -38,9 +37,8 @@ public class PnRankingLeitura extends javax.swing.JPanel {
      * Creates new form PnRankingLeitura
      */
     public PnRankingLeitura() {
-        Date data = new Date();
         initComponents();
-        cbMes.setSelectedIndex(data.getMonth() + 1);
+        cbMes.setSelectedIndex(0);
         txAno.setText("2021");
         popularListaTurma();
     }
@@ -240,12 +238,17 @@ public class PnRankingLeitura extends javax.swing.JPanel {
             }
             sessao.close();
         } else {
-            try {
-                Integer ano = Integer.parseInt(txAno.getText());
-                Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex() - 1, 1).getTime();
-                popularTabela(data, turmas.get(cbTurma.getSelectedIndex() - 1).getId());
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Ano inválido!");
+
+            if (cbMes.getSelectedIndex() != 0) {
+                try {
+                    Integer ano = Integer.parseInt(txAno.getText());
+                    Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex() - 1, 1).getTime();
+                    popularTabela(data, turmas.get(cbTurma.getSelectedIndex() - 1).getId());
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Ano inválido!");
+                }
+            } else {
+
             }
         }
     }//GEN-LAST:event_btFiltrarActionPerformed
