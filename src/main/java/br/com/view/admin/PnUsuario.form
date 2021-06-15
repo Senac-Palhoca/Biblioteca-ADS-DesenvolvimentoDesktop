@@ -29,14 +29,14 @@
                           <Component id="jScrollPane1" alignment="0" min="-2" pref="258" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" alignment="0" min="-2" pref="258" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btBuscarAlunos" min="-2" pref="127" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tfBuscarNomeAluno" min="-2" pref="121" max="-2" attributes="0"/>
+                              <Component id="btBuscarAlunos" min="-2" pref="143" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="tfBuscarNomeAluno" min="-2" pref="101" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btBuscarFuncionarios" min="-2" pref="127" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tfBuscarNomeFuncionario" min="-2" pref="121" max="-2" attributes="0"/>
+                              <Component id="btBuscarFuncionarios" min="-2" pref="143" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="tfBuscarNomeFuncionario" min="-2" pref="101" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>

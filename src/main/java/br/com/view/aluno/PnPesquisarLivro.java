@@ -49,8 +49,21 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
             new String [] {
                 "Título", "Autor", "Editora", "Isbn"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbLivro);
+        if (tbLivro.getColumnModel().getColumnCount() > 0) {
+            tbLivro.getColumnModel().getColumn(0).setResizable(false);
+            tbLivro.getColumnModel().getColumn(1).setResizable(false);
+            tbLivro.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         tfTituloAutor.setToolTipText("Digite o titulo do liro ou o autor que deseja pesquisar");
 

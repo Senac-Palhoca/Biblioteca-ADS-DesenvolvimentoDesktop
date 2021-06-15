@@ -82,6 +82,12 @@ public class PnBuscarLivro extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tbLivro);
+        if (tbLivro.getColumnModel().getColumnCount() > 0) {
+            tbLivro.getColumnModel().getColumn(0).setResizable(false);
+            tbLivro.getColumnModel().getColumn(1).setResizable(false);
+            tbLivro.getColumnModel().getColumn(2).setResizable(false);
+            tbLivro.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         btSelecionar.setText("Selecionar");
         btSelecionar.addActionListener(new java.awt.event.ActionListener() {
