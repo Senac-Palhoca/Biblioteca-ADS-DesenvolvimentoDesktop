@@ -220,11 +220,11 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
+        tabelaModelo = (DefaultTableModel) tbRanking.getModel();
         tabelaModelo.setNumRows(0);
         if (cbTurma.getSelectedIndex() == 0) {
             TurmaDao turmaDao = new TurmaDaoImpl();
             sessao = HibernateUtil.abrirConexao();
-            tabelaModelo = (DefaultTableModel) tbRanking.getModel();
             if (cbMes.getSelectedIndex() == 0) {
                 List<Turma> turmasRanking;
                 turmasRanking = turmaDao.listarRanking(sessao);
