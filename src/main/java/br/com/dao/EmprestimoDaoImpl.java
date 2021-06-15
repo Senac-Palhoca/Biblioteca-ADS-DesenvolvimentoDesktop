@@ -53,9 +53,9 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
     }
 
     @Override
-    public List<Emprestimo> pesquisarPorTurmaMes(Turma turma, String mes, String ano, Session sessao) throws HibernateException {
+    public List<Emprestimo> pesquisarPorTurmaMes(Long id, String mes, String ano, Session sessao) throws HibernateException {
         Query consulta = sessao.createQuery("from Emprestimo e where e.aluno.turma.id = :turma and DATE_FORMAT(e.dataRetirada, '%Y%m') = :anoMes");
-        consulta.setParameter("turma", turma.getId());
+        consulta.setParameter("turma", id);
         consulta.setParameter("anoMes", ano + mes);
         return consulta.list();
     }

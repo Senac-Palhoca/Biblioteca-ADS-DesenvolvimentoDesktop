@@ -129,7 +129,7 @@ public class EmprestimoDaoImplTest {
         TurmaDaoImplTest turma = new TurmaDaoImplTest();
 
         sessao = HibernateUtil.abrirConexao();
-        emprestimos = emprestimoDao.pesquisarPorTurmaMes(turma.buscarTurmaBd(), "06", "2021", sessao);
+        emprestimos = emprestimoDao.pesquisarPorTurmaMes(turma.buscarTurmaBd().getId(), "06", "2021", sessao);
         sessao.close();
         assertTrue(!emprestimos.isEmpty());
     }

@@ -18,7 +18,7 @@ public interface EmprestimoDao extends BaseDao<Emprestimo, Long> {
 
     List<Emprestimo> pesquisarPorAlunoAberto(String nome, Session sessao) throws HibernateException;
 
-    List<Emprestimo> pesquisarPorTurmaMes(Turma turma, String mes, String ano, Session sessao) throws HibernateException;
+    List<Emprestimo> pesquisarPorTurmaMes(Long id, String mes, String ano, Session sessao) throws HibernateException;
 
     List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, String mes, String ano, Session sessao) throws HibernateException;
 
