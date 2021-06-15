@@ -74,7 +74,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
 
         jLabel3.setText("Título");
 
-        tfTitulo.setToolTipText("");
+        tfTitulo.setToolTipText("Digite o título do livro a ser cadastrado");
 
         txAutor.setText("Autor");
 
@@ -132,6 +132,9 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tbCodigoLivro);
+        if (tbCodigoLivro.getColumnModel().getColumnCount() > 0) {
+            tbCodigoLivro.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         btSalvarExemplar.setText("Salvar Exemplar");
         btSalvarExemplar.addActionListener(new java.awt.event.ActionListener() {
