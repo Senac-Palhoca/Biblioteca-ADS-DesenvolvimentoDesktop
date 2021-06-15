@@ -26,19 +26,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane1" min="-2" pref="258" max="-2" attributes="0"/>
-                                  <Component id="btBuscarFuncionarios" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <Component id="jScrollPane1" alignment="0" min="-2" pref="258" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" min="-2" pref="258" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="btBuscarAlunos" min="-2" pref="127" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tfBuscarNomeAluno" min="-2" pref="121" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="btBuscarAlunos" min="-2" pref="124" max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="258" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="btBuscarFuncionarios" min="-2" pref="127" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tfBuscarNomeFuncionario" min="-2" pref="121" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="pnUsuarioAtual" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   </Group>
@@ -71,12 +72,17 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="pnUsuarioAtual" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                      <Component id="btBuscarFuncionarios" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btBuscarFuncionarios" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfBuscarNomeFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="199" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="btBuscarAlunos" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btBuscarAlunos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfBuscarNomeAluno" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="199" max="-2" attributes="0"/>
                   </Group>
@@ -460,7 +466,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="btBuscarFuncionarios">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Listar Funcion&#xe1;rios"/>
+        <Property name="text" type="java.lang.String" value="Buscar Funcion&#xe1;rios"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btBuscarFuncionariosActionPerformed"/>
@@ -468,10 +474,20 @@
     </Component>
     <Component class="javax.swing.JButton" name="btBuscarAlunos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Listar Alunos"/>
+        <Property name="text" type="java.lang.String" value="Buscar Alunos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btBuscarAlunosActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfBuscarNomeFuncionario">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfBuscarNomeFuncionarioKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfBuscarNomeAluno">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfBuscarNomeAlunoKeyPressed"/>
       </Events>
     </Component>
   </SubComponents>

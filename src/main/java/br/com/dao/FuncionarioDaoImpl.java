@@ -28,4 +28,10 @@ public class FuncionarioDaoImpl extends BaseDaoImpl<Funcionario, Long> implement
         return consulta.list();
     }
     
+    @Override
+    public List<Funcionario> pesquisarPorNome(String nome, Session sessao) throws HibernateException {
+        Query consulta = sessao.createQuery("from Funcionario where nome like :nome order by nome");
+        consulta.setParameter("nome", "%" + nome + "%");
+        return consulta.list();
+    }
 }

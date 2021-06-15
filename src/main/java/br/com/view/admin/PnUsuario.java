@@ -90,6 +90,8 @@ public class PnUsuario extends javax.swing.JPanel {
         lsAluno = new javax.swing.JList<>();
         btBuscarFuncionarios = new javax.swing.JButton();
         btBuscarAlunos = new javax.swing.JButton();
+        tfBuscarNomeFuncionario = new javax.swing.JTextField();
+        tfBuscarNomeAluno = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -309,17 +311,29 @@ public class PnUsuario extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lsAluno);
 
-        btBuscarFuncionarios.setText("Listar Funcionários");
+        btBuscarFuncionarios.setText("Buscar Funcionários");
         btBuscarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBuscarFuncionariosActionPerformed(evt);
             }
         });
 
-        btBuscarAlunos.setText("Listar Alunos");
+        btBuscarAlunos.setText("Buscar Alunos");
         btBuscarAlunos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBuscarAlunosActionPerformed(evt);
+            }
+        });
+
+        tfBuscarNomeFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfBuscarNomeFuncionarioKeyPressed(evt);
+            }
+        });
+
+        tfBuscarNomeAluno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfBuscarNomeAlunoKeyPressed(evt);
             }
         });
 
@@ -332,15 +346,17 @@ public class PnUsuario extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btBuscarFuncionarios)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btBuscarAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btBuscarAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfBuscarNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btBuscarFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfBuscarNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnUsuarioAtual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(15, 15, 15))
                     .addGroup(layout.createSequentialGroup()
@@ -366,12 +382,15 @@ public class PnUsuario extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pnUsuarioAtual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(btBuscarFuncionarios)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btBuscarFuncionarios)
+                            .addComponent(tfBuscarNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
-                        .addComponent(btBuscarAlunos)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btBuscarAlunos)
+                            .addComponent(tfBuscarNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -454,7 +473,7 @@ public class PnUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_cbCursoItemStateChanged
 
     private void btBuscarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarFuncionariosActionPerformed
-        listarFuncionarios();
+            listarFuncionarios();
     }//GEN-LAST:event_btBuscarFuncionariosActionPerformed
 
     private void btBuscarAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarAlunosActionPerformed
@@ -488,6 +507,14 @@ public class PnUsuario extends javax.swing.JPanel {
         cbTurma.setEnabled(false);
         btAlterar.setEnabled(true);
     }//GEN-LAST:event_btCancelarActionPerformed
+
+    private void tfBuscarNomeFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscarNomeFuncionarioKeyPressed
+        listarFuncionarios();
+    }//GEN-LAST:event_tfBuscarNomeFuncionarioKeyPressed
+
+    private void tfBuscarNomeAlunoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscarNomeAlunoKeyPressed
+        listarAlunos();
+    }//GEN-LAST:event_tfBuscarNomeAlunoKeyPressed
 
     private void cadastrarFuncionario() throws HibernateException, HeadlessException {
         sessao = HibernateUtil.abrirConexao();
@@ -582,7 +609,7 @@ public class PnUsuario extends javax.swing.JPanel {
         lsAluno.setBackground(Color.WHITE);
         sessao = HibernateUtil.abrirConexao();
         AlunoDao implAluno = new AlunoDaoImpl();
-        alunos = implAluno.listarTodos(sessao);
+        alunos = implAluno.pesquisarPorNome(tfBuscarNomeAluno.getText(),sessao);
         sessao.close();
         DefaultListModel listaAluno = new DefaultListModel();
         alunos.forEach(al -> {
@@ -596,7 +623,7 @@ public class PnUsuario extends javax.swing.JPanel {
         lsFuncionario.setBackground(Color.WHITE);
         sessao = HibernateUtil.abrirConexao();
         FuncionarioDao implFuncionario = new FuncionarioDaoImpl();
-        funcionarios = implFuncionario.listarTodos(sessao);
+        funcionarios = implFuncionario.pesquisarPorNome(tfBuscarNomeFuncionario.getText(), sessao);
         sessao.close();
         DefaultListModel listaFuncionario = new DefaultListModel();
         for (Funcionario funcionario1 : funcionarios) {
@@ -731,6 +758,8 @@ public class PnUsuario extends javax.swing.JPanel {
     private javax.swing.JList<String> lsFuncionario;
     private javax.swing.JPanel pnAlunoAtributo;
     private javax.swing.JPanel pnUsuarioAtual;
+    private javax.swing.JTextField tfBuscarNomeAluno;
+    private javax.swing.JTextField tfBuscarNomeFuncionario;
     private javax.swing.JFormattedTextField txCPF;
     private javax.swing.JTextField txEmail;
     private javax.swing.JTextField txMatricula;

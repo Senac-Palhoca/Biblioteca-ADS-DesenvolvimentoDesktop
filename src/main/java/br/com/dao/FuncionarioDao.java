@@ -14,5 +14,8 @@ import org.hibernate.Session;
  * @author Felipe
  */
 public interface FuncionarioDao extends BaseDao<Funcionario, Long>{
+    
+    List<Funcionario> pesquisarPorNome(String nome, Session sessao) throws HibernateException;
+    
     List<Funcionario> listarTodos(Session sessao) throws HibernateException;
 }
