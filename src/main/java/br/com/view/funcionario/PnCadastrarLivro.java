@@ -74,13 +74,19 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
 
         jLabel3.setText("Título");
 
+        tfTitulo.setToolTipText("");
+
         txAutor.setText("Autor");
+
+        tfAutor.setToolTipText("");
 
         jLabel6.setText("Editora");
 
         jLabel5.setText("Edição");
 
         tfEdicao.setVerifyInputWhenFocusTarget(false);
+
+        tfEditora.setToolTipText("");
 
         jLabel7.setText("ISBN");
 
@@ -107,7 +113,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
 
         jLabel2.setText("Código do Exemplar");
 
-        tfCodigoLivro.setToolTipText("Digite o Código do Exemplar");
+        tfCodigoLivro.setToolTipText("");
 
         tbCodigoLivro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,18 +169,13 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tfIsbn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfCodigoLivro)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel2)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(tfCodigoLivro)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btSalvarExemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(62, 62, 62))))
+                                        .addComponent(jLabel2)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(btSalvarExemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(tfAutor, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -269,7 +270,7 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
         sessao.close();
 
         for (Exemplar exemplar : exemplares) {
-            if (exemplar.getLivro().getTitulo().equals(livro.getTitulo())) {
+            if (exemplar.getLivro().getIsbn().equals(livro.getIsbn())) {
                 if (exemplar.getCondicao() == true) {
                     exemplaresLivro.add(exemplar);
                 }
@@ -284,7 +285,9 @@ public class PnCadastrarLivro extends javax.swing.JPanel {
     private void salvarLivro() {
         if (!validarLivro()) {
             try {
+                if(livro == null){                    
                 livro = new Livro();
+                }
                 sessao = HibernateUtil.abrirConexao();
                 setarLivro();
                 livroDao.salvarOuAlterar(livro, sessao);

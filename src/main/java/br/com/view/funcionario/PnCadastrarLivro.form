@@ -53,22 +53,14 @@
                                   <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="tfIsbn" alignment="0" pref="300" max="32767" attributes="0"/>
                               </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tfCodigoLivro" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Component id="tfCodigoLivro" max="32767" attributes="0"/>
-                                      </Group>
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="btSalvarExemplar" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="btSalvarExemplar" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="tfAutor" alignment="0" max="32767" attributes="0"/>
@@ -175,6 +167,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfTitulo">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="txAutor">
       <Properties>
@@ -182,6 +177,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfAutor">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -199,6 +197,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfEditora">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
@@ -238,7 +239,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfCodigoLivro">
       <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="Digite o C&#xf3;digo do Exemplar"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
