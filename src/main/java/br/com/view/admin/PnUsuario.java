@@ -358,6 +358,7 @@ public class PnUsuario extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lsFuncionarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsFuncionarioMousePressed
+        aluno = null;
         lsAluno.clearSelection();
         lsFuncionario.setBackground(Color.WHITE);
         funcionario = funcionarios.get(lsFuncionario.getSelectedIndex());
@@ -407,6 +408,7 @@ public class PnUsuario extends javax.swing.JPanel {
 
 
     private void lsAlunoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsAlunoMousePressed
+        funcionario = null;
         lsFuncionario.clearSelection();
         aluno = alunos.get(lsAluno.getSelectedIndex());
         if (!pnUsuarioAtual.isVisible()) {
