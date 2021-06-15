@@ -56,10 +56,6 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         }
         DefaultComboBoxModel defaultComboBox = new DefaultComboBoxModel(strList.toArray());
         cbTurma.setModel(defaultComboBox);
-//        listaModelo = (DefaultTableModel) cbTurma.getModel();
-//        listaModelo.setNumRows(0);
-
-//        turmas = turmasAux.stream().filter(c -> Objects.equals(c.getCurso().getId(), curso.getId())).collect(Collectors.toList());
     }
 
     private void listarTurma() {
@@ -75,7 +71,6 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         sessao = HibernateUtil.abrirConexao();
         List<Object[]> objetoAlunos = alunoDao.listarRankingMes(data, idTurma, sessao);
         sessao.close();
-        tabelaModelo = (DefaultTableModel) tbRanking.getModel();
         tabelaModelo.setNumRows(0);
 
         for (Object[] obj : objetoAlunos) {
