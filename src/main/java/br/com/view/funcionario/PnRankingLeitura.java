@@ -220,11 +220,11 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
+        tabelaModelo.setNumRows(0);
         if (cbTurma.getSelectedIndex() == 0) {
             TurmaDao turmaDao = new TurmaDaoImpl();
             sessao = HibernateUtil.abrirConexao();
             tabelaModelo = (DefaultTableModel) tbRanking.getModel();
-            tabelaModelo.setNumRows(0);
             if (cbMes.getSelectedIndex() == 0) {
                 List<Turma> turmasRanking;
                 turmasRanking = turmaDao.listarRanking(sessao);
@@ -250,7 +250,6 @@ public class PnRankingLeitura extends javax.swing.JPanel {
             sessao.close();
         } else {
             sessao = HibernateUtil.abrirConexao();
-            tabelaModelo.setNumRows(0);
             if (cbMes.getSelectedIndex() != 0) {
                 try {
                     Integer ano = Integer.parseInt(txAno.getText());
@@ -262,8 +261,8 @@ public class PnRankingLeitura extends javax.swing.JPanel {
             } else {
                 alunoDao = new AlunoDaoImpl();
                 List<Aluno> alunos = alunoDao.listarTodos(sessao);
-                alunos.sort((s1, s2)-> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
-                
+                alunos.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+
                 for (Aluno aluno : alunos) {
                     tabelaModelo.addRow(new Object[]{aluno.getNome(),
                         aluno.getTurma().getNome(),
