@@ -274,7 +274,6 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                             emprestimo.getAluno().getEmprestimos().size()});
                     }
                 }
-
                 break;
         }
         sessao.close();
