@@ -43,7 +43,7 @@ public class SplashScreen extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/imagem/biblioteca-bg.jpg"))); // NOI18N
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Xuxu 1.0");
+        jLabel2.setText("Xuxu 0.987452311789974");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

@@ -43,8 +43,8 @@ public class PnUsuario extends javax.swing.JPanel {
         pnAlunoAtributo.setVisible(true);
         cbCurso.setVisible(true);
         cbTurma.setVisible(true);
-        listarAlunos();
-        listarFuncionarios();
+//        listarAlunos();
+//        listarFuncionarios();
         listarPerfil();
         listarCurso();
         listarTurma();
@@ -61,7 +61,6 @@ public class PnUsuario extends javax.swing.JPanel {
 
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lsFuncionario = new javax.swing.JList<>();
         btAddAluno = new javax.swing.JButton();
@@ -86,17 +85,16 @@ public class PnUsuario extends javax.swing.JPanel {
         btAlterar = new javax.swing.JButton();
         lbAluno = new javax.swing.JLabel();
         txCPF = new javax.swing.JFormattedTextField();
+        btCancelar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lsAluno = new javax.swing.JList<>();
-        jLabel11 = new javax.swing.JLabel();
+        btBuscarFuncionarios = new javax.swing.JButton();
+        btBuscarAlunos = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
         jLabel1.setText("Usuários");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Funcionários");
 
         lsFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -212,6 +210,13 @@ public class PnUsuario extends javax.swing.JPanel {
             ex.printStackTrace();
         }
 
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnUsuarioAtualLayout = new javax.swing.GroupLayout(pnUsuarioAtual);
         pnUsuarioAtual.setLayout(pnUsuarioAtualLayout);
         pnUsuarioAtualLayout.setHorizontalGroup(
@@ -246,6 +251,8 @@ public class PnUsuario extends javax.swing.JPanel {
                                     .addComponent(jLabel7)))
                             .addGroup(pnUsuarioAtualLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btCancelar)
+                                .addGap(18, 18, 18)
                                 .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -290,7 +297,8 @@ public class PnUsuario extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(pnUsuarioAtualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSalvar)
-                    .addComponent(btAlterar))
+                    .addComponent(btAlterar)
+                    .addComponent(btCancelar))
                 .addContainerGap())
         );
 
@@ -301,8 +309,19 @@ public class PnUsuario extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lsAluno);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel11.setText("Alunos");
+        btBuscarFuncionarios.setText("Listar Funcionários");
+        btBuscarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarFuncionariosActionPerformed(evt);
+            }
+        });
+
+        btBuscarAlunos.setText("Listar Alunos");
+        btBuscarAlunos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarAlunosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -317,9 +336,10 @@ public class PnUsuario extends javax.swing.JPanel {
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel11)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btBuscarFuncionarios)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btBuscarAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(pnUsuarioAtual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(15, 15, 15))
@@ -343,21 +363,23 @@ public class PnUsuario extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pnUsuarioAtual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addComponent(btBuscarFuncionarios)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addComponent(btBuscarAlunos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void lsFuncionarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsFuncionarioMousePressed
+        btAlterar.setEnabled(true);
         aluno = null;
         lsAluno.clearSelection();
         lsFuncionario.setBackground(Color.WHITE);
@@ -370,6 +392,7 @@ public class PnUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_lsFuncionarioMousePressed
 
     private void btAddAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddAlunoActionPerformed
+        btAlterar.setEnabled(true);
         funcionario = null;
         aluno = null;
         limparCampos();
@@ -404,10 +427,12 @@ public class PnUsuario extends javax.swing.JPanel {
         }
         preencherCurso();
         preencherTurma();
+        btAlterar.setVisible(true);
     }//GEN-LAST:event_btSalvarActionPerformed
 
 
     private void lsAlunoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsAlunoMousePressed
+        btAlterar.setEnabled(true);
         funcionario = null;
         lsFuncionario.clearSelection();
         aluno = alunos.get(lsAluno.getSelectedIndex());
@@ -422,7 +447,22 @@ public class PnUsuario extends javax.swing.JPanel {
         cbTurma.setSelectedItem(aluno.getTurma().getNome());
     }//GEN-LAST:event_lsAlunoMousePressed
 
+    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
+        if (cbCurso.getSelectedItem() != null) {
+            preencherTurma();
+        }
+    }//GEN-LAST:event_cbCursoItemStateChanged
+
+    private void btBuscarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarFuncionariosActionPerformed
+        listarFuncionarios();
+    }//GEN-LAST:event_btBuscarFuncionariosActionPerformed
+
+    private void btBuscarAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarAlunosActionPerformed
+        listarAlunos();
+    }//GEN-LAST:event_btBuscarAlunosActionPerformed
+
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
+        btAlterar.setEnabled(false);
         liberarCamposAlterar();
 
         if (funcionario != null) {
@@ -430,15 +470,24 @@ public class PnUsuario extends javax.swing.JPanel {
         } else {
             cbPerfil.setEnabled(false);
         }
-
-//        btSalvar.setText("Salvar alteração");
     }//GEN-LAST:event_btAlterarActionPerformed
 
-    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
-        if (cbCurso.getSelectedItem() != null) {
-            preencherTurma();
-        }
-    }//GEN-LAST:event_cbCursoItemStateChanged
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+        txNome.setBackground(Color.LIGHT_GRAY);
+        txNome.setEditable(false);
+        txCPF.setBackground(Color.LIGHT_GRAY);
+        txCPF.setEditable(false);
+        txEmail.setBackground(Color.LIGHT_GRAY);
+        txEmail.setEditable(false);
+        txMatricula.setBackground(Color.LIGHT_GRAY);
+        txMatricula.setEditable(false);
+        txSenha.setBackground(Color.LIGHT_GRAY);
+        txSenha.setEditable(false);
+        cbCurso.setEnabled(false);
+        cbPerfil.setEnabled(false);
+        cbTurma.setEnabled(false);
+        btAlterar.setEnabled(true);
+    }//GEN-LAST:event_btCancelarActionPerformed
 
     private void cadastrarFuncionario() throws HibernateException, HeadlessException {
         sessao = HibernateUtil.abrirConexao();
@@ -451,7 +500,7 @@ public class PnUsuario extends javax.swing.JPanel {
         try {
             FuncionarioDao implFunc = new FuncionarioDaoImpl();
             implFunc.salvarOuAlterar(funcionario, sessao);
-            JOptionPane.showMessageDialog(null, "Usuário criado com sucesso.");
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso.");
             limparCampos();
             funcionario = null;
         } catch (HibernateException e) {
@@ -483,7 +532,7 @@ public class PnUsuario extends javax.swing.JPanel {
         try {
             AlunoDao implAluno = new AlunoDaoImpl();
             implAluno.salvarOuAlterar(aluno, sessao);
-            JOptionPane.showMessageDialog(null, "Usuário criado com sucesso.");
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso.");
             aluno = null;
             limparCampos();
         } catch (HibernateException e) {
@@ -658,14 +707,15 @@ public class PnUsuario extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddAluno;
     private javax.swing.JButton btAlterar;
+    private javax.swing.JButton btBuscarAlunos;
+    private javax.swing.JButton btBuscarFuncionarios;
+    private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox<String> cbCurso;
     private javax.swing.JComboBox<String> cbPerfil;
     private javax.swing.JComboBox<String> cbTurma;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
