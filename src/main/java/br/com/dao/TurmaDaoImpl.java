@@ -35,13 +35,6 @@ public class TurmaDaoImpl extends BaseDaoImpl<Turma, Long> implements TurmaDao {
     }
 
     @Override
-    public List<Turma> listarRankingMes(String mes, String ano, Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Turma t where DATE_FORMAT(t.aluno.emprestimo.dataRetirada, '%Y%m') = :anoMes");
-        consulta.setParameter("anoMes", ano + mes);
-        return consulta.list();
-    }
-
-    @Override
     public List<Turma> listarPorCurso(Curso curso, Session sessao) throws HibernateException {
         Query consulta = sessao.createQuery("from Turma where curso.id like :idCurso");
         consulta.setParameter("idCurso", curso.getId());

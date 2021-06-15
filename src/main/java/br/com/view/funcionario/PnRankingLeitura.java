@@ -6,6 +6,8 @@
 package br.com.view.funcionario;
 
 import br.com.dao.AlunoDaoImpl;
+import br.com.dao.EmprestimoDao;
+import br.com.dao.EmprestimoDaoImpl;
 import br.com.dao.HibernateUtil;
 import br.com.dao.TurmaDao;
 import br.com.dao.TurmaDaoImpl;
@@ -24,12 +26,11 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Felip
+ * @author Felipe
  */
 public class PnRankingLeitura extends javax.swing.JPanel {
 
     private DefaultTableModel tabelaModelo;
-    private DefaultTableModel listaModelo;
     private Session sessao;
     private List<Turma> turmas;
 
@@ -39,10 +40,9 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     public PnRankingLeitura() {
         Date data = new Date();
         initComponents();
-        cbMes.setSelectedIndex(data.getMonth());
+        cbMes.setSelectedIndex(data.getMonth() + 1);
         txAno.setText("2021");
         popularListaTurma();
-        popularTabela(data, 1);
     }
 
     private void popularListaTurma() {
@@ -115,7 +115,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
 
         jLabel2.setText("Turma:");
 
-        cbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        cbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
 
         jLabel3.setText("Mês:");
 
@@ -214,25 +214,35 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         if (cbTurma.getSelectedIndex() == 0) {
             TurmaDao turmaDao = new TurmaDaoImpl();
             sessao = HibernateUtil.abrirConexao();
-            List<Turma> turmasRanking;
+            tabelaModelo = (DefaultTableModel) tbRanking.getModel();
             tabelaModelo.setNumRows(0);
             if (cbMes.getSelectedIndex() == 0) {
+                List<Turma> turmasRanking;
                 turmasRanking = turmaDao.listarRanking(sessao);
+                for (Turma turma : turmasRanking) {
+                    tabelaModelo.addRow(new Object[]{"        ------",
+                        turma.getNome(),
+                        turma.getCurso().getNome(),
+                        turma.getQuantidadeEmprestimo()});
+                }
             } else {
-                String mes = ""+cbMes.getSelectedIndex();
+                String mes = Integer.toString(cbMes.getSelectedIndex());
                 if (mes.length() < 2) {
                     mes = "0" + mes;
                 }
-                turmasRanking = turmaDao.listarRankingMes(mes, txAno.getText(), sessao);
+                EmprestimoDao emprestimoDao = new EmprestimoDaoImpl();
+                for (Turma turma : turmas) {
+                    tabelaModelo.addRow(new Object[]{"        ------",
+                        turma.getNome(),
+                        turma.getCurso().getNome(),
+                        emprestimoDao.pesquisarPorTurmaMes(turma, mes, txAno.getText(), sessao).size()});
+                }
             }
             sessao.close();
-            for (Turma turma : turmasRanking) {
-                tabelaModelo.addRow(new Object[]{"        ------", turma.getNome(), turma.getCurso().getNome(), turma.getQuantidadeEmprestimo()});
-            }
         } else {
             try {
                 Integer ano = Integer.parseInt(txAno.getText());
-                Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex(), 1).getTime();
+                Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex() - 1, 1).getTime();
                 popularTabela(data, turmas.get(cbTurma.getSelectedIndex() - 1).getId());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Ano inválido!");
