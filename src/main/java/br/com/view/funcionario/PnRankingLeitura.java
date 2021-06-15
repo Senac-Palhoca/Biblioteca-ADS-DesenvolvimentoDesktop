@@ -15,9 +15,11 @@ import br.com.model.Aluno;
 import br.com.model.Emprestimo;
 import br.com.model.Turma;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Stream;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -32,6 +34,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     private DefaultTableModel tabelaModelo;
     private Session sessao;
     private List<Turma> turmas;
+    private AlunoDaoImpl alunoDao;
 
     /**
      * Creates new form PnRankingLeitura
@@ -67,7 +70,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }
 
     private void popularTabela(Date data, long idTurma) {
-        AlunoDaoImpl alunoDao = new AlunoDaoImpl();
+        alunoDao = new AlunoDaoImpl();
 
         sessao = HibernateUtil.abrirConexao();
         List<Object[]> objetoAlunos = alunoDao.listarRankingMes(data, idTurma, sessao);
@@ -133,7 +136,15 @@ public class PnRankingLeitura extends javax.swing.JPanel {
             new String [] {
                 "Aluno", "Turma", "Curso", "Qtd. Emprestimos"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbRanking);
 
         txAno.setText("2020");
@@ -238,7 +249,8 @@ public class PnRankingLeitura extends javax.swing.JPanel {
             }
             sessao.close();
         } else {
-
+            sessao = HibernateUtil.abrirConexao();
+            tabelaModelo.setNumRows(0);
             if (cbMes.getSelectedIndex() != 0) {
                 try {
                     Integer ano = Integer.parseInt(txAno.getText());
@@ -248,8 +260,18 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Ano inválido!");
                 }
             } else {
-
+                alunoDao = new AlunoDaoImpl();
+                List<Aluno> alunos = alunoDao.listarTodos(sessao);
+                alunos.sort((s1, s2)-> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+                
+                for (Aluno aluno : alunos) {
+                    tabelaModelo.addRow(new Object[]{aluno.getNome(),
+                        aluno.getTurma().getNome(),
+                        aluno.getTurma().getCurso().getNome(),
+                        aluno.getEmprestimos().size()});
+                }
             }
+            sessao.close();
         }
     }//GEN-LAST:event_btFiltrarActionPerformed
 

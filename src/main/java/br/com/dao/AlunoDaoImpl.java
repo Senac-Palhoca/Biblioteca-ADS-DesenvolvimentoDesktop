@@ -24,14 +24,14 @@ public class AlunoDaoImpl extends BaseDaoImpl<Aluno, Long> implements AlunoDao{
     
     @Override
     public List<Aluno> pesquisarPorNome(String nome, Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Aluno where nome like :nome");
+        Query consulta = sessao.createQuery("from Aluno where nome like :nome order by nome");
         consulta.setParameter("nome", "%" + nome + "%");
         return consulta.list();
     }
     
     @Override
     public List<Aluno> listarTodos(Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery(("FROM Aluno order by nome"));
+        Query consulta = sessao.createQuery("FROM Aluno order by nome");
         return consulta.list();
     }
 

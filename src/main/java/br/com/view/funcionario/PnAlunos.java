@@ -14,7 +14,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Felip
+ * @author Felipe
  */
 public class PnAlunos extends javax.swing.JPanel {
     private Session sessao;

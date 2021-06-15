@@ -70,7 +70,15 @@ public class PnBuscarAluno extends javax.swing.JPanel {
             new String [] {
                 "Nome", "Matrícula", "E-mail", "CPF"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbAluno);
 
         btSelecionar.setText("Selecionar");
