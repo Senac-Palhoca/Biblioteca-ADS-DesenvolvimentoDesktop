@@ -248,12 +248,16 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                             aluno.getEmprestimos().size()});
                     }
                 } else {
-                    for (Aluno aluno : alunos) {
-                        int qtd = emprestimoDao.pesquisarPorAlunoMes(aluno, mes, txAno.getText(), sessao).size();
-                            tabelaModelo.addRow(new Object[]{aluno.getNome(),
-                                aluno.getTurma().getNome(),
-                                aluno.getTurma().getCurso().getNome(),
-                                qtd});
+                    List<Aluno> alunosOrdem = alunos;
+                    for (Aluno aluno : alunosOrdem) {
+                        aluno.setEmprestimos(emprestimoDao.pesquisarPorAlunoMes(aluno, mes, txAno.getText(), sessao));
+                    }
+                    alunosOrdem.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+                    for (Aluno aluno : alunosOrdem) {
+                        tabelaModelo.addRow(new Object[]{aluno.getNome(),
+                            aluno.getTurma().getNome(),
+                            aluno.getTurma().getCurso().getNome(),
+                            aluno.getEmprestimos().size()});
                     }
                 }
                 break;
