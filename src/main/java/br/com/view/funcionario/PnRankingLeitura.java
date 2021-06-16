@@ -65,21 +65,6 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         sessao.close();
     }
 
-    private void popularTabela(Date data, long idTurma) {
-        alunoDao = new AlunoDaoImpl();
-
-        sessao = HibernateUtil.abrirConexao();
-        List<Object[]> objetoAlunos = alunoDao.listarRankingMes(data, idTurma, sessao);
-        sessao.close();
-
-        for (Object[] obj : objetoAlunos) {
-            Aluno aluno = (Aluno) obj[0];
-            Emprestimo emprestimo = (Emprestimo) obj[1];
-            tabelaModelo.addRow(new Object[]{aluno.getNome(), aluno.getTurma().getNome(), aluno.getTurma().getCurso().getNome(), aluno.getEmprestimos().size()});
-        }
-
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -229,10 +214,10 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                 }
                 break;
             default:
-                if (cbMes.getSelectedIndex() != 0) {
-                    alunosTurmaMes(mes);
-                } else {
+                if (cbMes.getSelectedIndex() == 0) {
                     turmaTodosMeses();
+                } else {
+                    alunosTurmaMes(mes);
                 }
                 break;
         }
@@ -254,13 +239,6 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                 aluno.getEmprestimos().size()});
         }
         sessao.close();
-//                    try {
-//                        Integer ano = Integer.parseInt(txAno.getText());
-//                        Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex() - 1, 1).getTime();
-//                        popularTabela(data, turmas.get(cbTurma.getSelectedIndex() - 2).getId());
-//                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(null, "Ano inválido!");
-//                    }
     }
 
     private void turmaTodosMeses() throws HibernateException {
