@@ -22,6 +22,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
@@ -33,14 +34,14 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     private Session sessao;
     private List<Turma> turmas;
     private AlunoDaoImpl alunoDao;
+    private TurmaDao turmaDao;
+    private EmprestimoDao emprestimoDao;
 
-    /**
-     * Creates new form PnRankingLeitura
-     */
     public PnRankingLeitura() {
         initComponents();
         cbMes.setSelectedIndex(0);
         txAno.setText("2021");
+        tabelaModelo = (DefaultTableModel) tbRanking.getModel();
         popularListaTurma();
     }
 
@@ -58,9 +59,9 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }
 
     private void listarTurma() {
-        TurmaDao impl = new TurmaDaoImpl();
+        turmaDao = new TurmaDaoImpl();
         sessao = HibernateUtil.abrirConexao();
-        turmas = impl.listarTodos(sessao);
+        turmas = turmaDao.listarTodos(sessao);
         sessao.close();
     }
 
@@ -70,7 +71,6 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         sessao = HibernateUtil.abrirConexao();
         List<Object[]> objetoAlunos = alunoDao.listarRankingMes(data, idTurma, sessao);
         sessao.close();
-        tabelaModelo.setNumRows(0);
 
         for (Object[] obj : objetoAlunos) {
             Aluno aluno = (Aluno) obj[0];
@@ -207,68 +207,26 @@ public class PnRankingLeitura extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
-        tabelaModelo = (DefaultTableModel) tbRanking.getModel();
-//        tbRanking.setAutoCreateRowSorter(true);
         tabelaModelo.setNumRows(0);
         String mes = Integer.toString(cbMes.getSelectedIndex());
-        EmprestimoDao emprestimoDao = new EmprestimoDaoImpl();
-        TurmaDao turmaDao = new TurmaDaoImpl();
         if (mes.length() == 1) {
             mes = "0" + mes;
         }
         switch (cbTurma.getSelectedIndex()) {
             case 0:
-                sessao = HibernateUtil.abrirConexao();
                 if (cbMes.getSelectedIndex() == 0) {
-                    List<Turma> turmasRanking;
-                    turmasRanking = turmaDao.listarRanking(sessao);
-                    for (Turma turma : turmasRanking) {
-                        tabelaModelo.addRow(new Object[]{"        ------",
-                            turma.getNome(),
-                            turma.getCurso().getNome(),
-                            turma.getQuantidadeEmprestimo()});
-                    }
+                    todasTurmasTodosMeses();
                 } else {
-                    List<Turma> turmaMes = turmas;
-                    for (Turma turmaMe : turmaMes) {
-                        turmaMe.setQuantidadeEmprestimo(emprestimoDao.pesquisarPorTurmaMes(turmaMe.getId(), mes, txAno.getText(), sessao).size());
-                    }
-                    turmaMes.sort((t1, t2) -> Integer.compare(t2.getQuantidadeEmprestimo(), t1.getQuantidadeEmprestimo()));
-                    for (Turma turma : turmaMes) {
-                        tabelaModelo.addRow(new Object[]{"        ------",
-                            turma.getNome(),
-                            turma.getCurso().getNome(),
-                            turma.getQuantidadeEmprestimo()});
-                    }
+                    todasTurmasNoMes(mes);
                 }
-                sessao.close();
                 break;
             case 1:
-                sessao = HibernateUtil.abrirConexao();
-                alunoDao = new AlunoDaoImpl();
-                List<Aluno> alunos = alunoDao.listarTodos(sessao);
-                alunos.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+
                 if (cbMes.getSelectedIndex() == 0) {
-                    for (Aluno aluno : alunos) {
-                        tabelaModelo.addRow(new Object[]{aluno.getNome(),
-                            aluno.getTurma().getNome(),
-                            aluno.getTurma().getCurso().getNome(),
-                            aluno.getEmprestimos().size()});
-                    }
+                    todosAlunosTodosMeses();
                 } else {
-                    List<Aluno> alunosOrdem = alunos;
-                    for (Aluno aluno : alunosOrdem) {
-                        aluno.setEmprestimos(emprestimoDao.pesquisarPorAlunoMes(aluno, mes, txAno.getText(), sessao));
-                    }
-                    alunosOrdem.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
-                    for (Aluno aluno : alunosOrdem) {
-                        tabelaModelo.addRow(new Object[]{aluno.getNome(),
-                            aluno.getTurma().getNome(),
-                            aluno.getTurma().getCurso().getNome(),
-                            aluno.getEmprestimos().size()});
-                    }
+                    todosAlunosNoMes(mes);
                 }
-                sessao.close();
                 break;
             default:
                 if (cbMes.getSelectedIndex() != 0) {
@@ -280,21 +238,86 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Ano inválido!");
                     }
                 } else {
-                    sessao = HibernateUtil.abrirConexao();
-                    Turma turma = turmaDao.pesquisarPorId(turmas.get(cbTurma.getSelectedIndex() - 2).getId(), sessao);
-                    List<Aluno> alunosTurma = turma.getAlunos();
-                    alunosTurma.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
-                    for (Aluno aluno : alunosTurma) {
-                        tabelaModelo.addRow(new Object[]{aluno.getNome(),
-                            aluno.getTurma().getNome(),
-                            aluno.getTurma().getCurso().getNome(),
-                            aluno.getEmprestimos().size()});
-                    }
-                    sessao.close();
+                    turmaTodosMeses();
                 }
                 break;
         }
     }//GEN-LAST:event_btFiltrarActionPerformed
+
+    private void turmaTodosMeses() throws HibernateException {
+        sessao = HibernateUtil.abrirConexao();
+        Turma turma = turmaDao.pesquisarPorId(turmas.get(cbTurma.getSelectedIndex() - 2).getId(), sessao);
+        List<Aluno> alunosTurma = turma.getAlunos();
+        alunosTurma.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+        for (Aluno aluno : alunosTurma) {
+            tabelaModelo.addRow(new Object[]{aluno.getNome(),
+                aluno.getTurma().getNome(),
+                aluno.getTurma().getCurso().getNome(),
+                aluno.getEmprestimos().size()});
+        }
+        sessao.close();
+    }
+
+    private void todosAlunosNoMes(String mes) throws HibernateException {
+        alunoDao = new AlunoDaoImpl();
+        sessao = HibernateUtil.abrirConexao();
+        List<Aluno> alunos = alunoDao.listarTodos(sessao);
+        for (Aluno aluno : alunos) {
+            aluno.setEmprestimos(emprestimoDao.pesquisarPorAlunoMes(aluno, mes, txAno.getText(), sessao));
+        }
+        alunos.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+        for (Aluno aluno : alunos) {
+            tabelaModelo.addRow(new Object[]{aluno.getNome(),
+                aluno.getTurma().getNome(),
+                aluno.getTurma().getCurso().getNome(),
+                aluno.getEmprestimos().size()});
+        }
+        sessao.close();
+    }
+
+    private void todosAlunosTodosMeses() throws HibernateException {
+        alunoDao = new AlunoDaoImpl();
+        sessao = HibernateUtil.abrirConexao();
+        List<Aluno> alunos = alunoDao.listarTodos(sessao);
+        sessao.close();
+        alunos.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+        for (Aluno aluno : alunos) {
+            tabelaModelo.addRow(new Object[]{aluno.getNome(),
+                aluno.getTurma().getNome(),
+                aluno.getTurma().getCurso().getNome(),
+                aluno.getEmprestimos().size()});
+        }
+    }
+
+    private void todasTurmasNoMes(String mes) throws HibernateException {
+        emprestimoDao = new EmprestimoDaoImpl();
+        sessao = HibernateUtil.abrirConexao();
+        List<Turma> turmaMes = turmas;
+        for (Turma turmaMe : turmaMes) {
+            turmaMe.setQuantidadeEmprestimo(emprestimoDao.pesquisarPorTurmaMes(turmaMe.getId(), mes, txAno.getText(), sessao).size());
+        }
+        sessao.close();
+        turmaMes.sort((t1, t2) -> Integer.compare(t2.getQuantidadeEmprestimo(), t1.getQuantidadeEmprestimo()));
+        for (Turma turma : turmaMes) {
+            tabelaModelo.addRow(new Object[]{"        ------",
+                turma.getNome(),
+                turma.getCurso().getNome(),
+                turma.getQuantidadeEmprestimo()});
+        }
+    }
+
+    private void todasTurmasTodosMeses() throws HibernateException {
+        turmaDao = new TurmaDaoImpl();
+        sessao = HibernateUtil.abrirConexao();
+        List<Turma> turmasRanking = turmaDao.listarRanking(sessao);
+        sessao.close();
+        for (Turma turma : turmasRanking) {
+            tabelaModelo.addRow(new Object[]{"        ------",
+                turma.getNome(),
+                turma.getCurso().getNome(),
+                turma.getQuantidadeEmprestimo()});
+        }
+    }
 
     private void txAnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txAnoKeyPressed
         JTextField jtf = (JTextField) evt.getComponent();
