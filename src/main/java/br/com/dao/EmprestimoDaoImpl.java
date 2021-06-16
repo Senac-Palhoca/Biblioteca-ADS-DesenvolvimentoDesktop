@@ -7,7 +7,6 @@ package br.com.dao;
 
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
-import br.com.model.Turma;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.*;
@@ -80,5 +79,4 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
         consulta.setParameter("data", new Date());
         return consulta.list();
     }
-
 }

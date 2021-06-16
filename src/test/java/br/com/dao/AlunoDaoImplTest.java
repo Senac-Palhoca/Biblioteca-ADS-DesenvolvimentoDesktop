@@ -30,8 +30,6 @@ public class AlunoDaoImplTest {
     public void testSalvar() {
         PerfilDao perfilDao = new PerfilDaoImpl();
         TurmaDaoImplTest turmaTest = new TurmaDaoImplTest();
-        EmprestimoDaoImplTest emprestimoTest = new EmprestimoDaoImplTest();
-        List<Emprestimo> emprestimos = new ArrayList<>();     
  
         aluno = new Aluno(null, UtilGerador.gerarNome(), UtilGerador.gerarCPF(), UtilGerador.gerarEmail(), UtilGerador.gerarCaracter(6), UtilGerador.gerarNumero(3)); //Aluno(Long id, String nome, String cpf, String email, String senha, String matricula)
         sessao = HibernateUtil.abrirConexao();
@@ -105,7 +103,7 @@ public class AlunoDaoImplTest {
         assertFalse(alunos.isEmpty());
     }
     
-    @Test
+//    @Test
     public void testListarRankingMes(){
         gerarAlunoBd();
         sessao = HibernateUtil.abrirConexao();
