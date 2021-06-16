@@ -138,6 +138,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbRanking.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbRanking);
 
         txAno.setText("2020");
@@ -174,7 +175,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txAno, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                        .addComponent(txAno, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                         .addGap(10, 10, 10)
                         .addComponent(btFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(41, 41, 41))
@@ -248,10 +249,11 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                     }
                 } else {
                     for (Aluno aluno : alunos) {
-                        tabelaModelo.addRow(new Object[]{aluno.getNome(),
-                            aluno.getTurma().getNome(),
-                            aluno.getTurma().getCurso().getNome(),
-                            emprestimoDao.pesquisarPorAlunoMes(aluno, mes, txAno.getText(), sessao).size()});
+                        int qtd = emprestimoDao.pesquisarPorAlunoMes(aluno, mes, txAno.getText(), sessao).size();
+                            tabelaModelo.addRow(new Object[]{aluno.getNome(),
+                                aluno.getTurma().getNome(),
+                                aluno.getTurma().getCurso().getNome(),
+                                qtd});
                     }
                 }
                 break;
@@ -268,9 +270,9 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                     Turma turma = turmaDao.pesquisarPorId(turmas.get(cbTurma.getSelectedIndex() - 2).getId(), sessao);
 
                     for (Aluno aluno : turma.getAlunos()) {
-                        tabelaModelo.addRow(new Object[]{aluno.getNome(), 
-                            aluno.getTurma().getNome(), 
-                            aluno.getTurma().getCurso().getNome(), 
+                        tabelaModelo.addRow(new Object[]{aluno.getNome(),
+                            aluno.getTurma().getNome(),
+                            aluno.getTurma().getCurso().getNome(),
                             aluno.getEmprestimos().size()});
                     }
                 }
