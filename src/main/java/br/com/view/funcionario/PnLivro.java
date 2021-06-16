@@ -261,6 +261,7 @@ public class PnLivro extends javax.swing.JPanel {
     private void popularTabela() {
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
+        tbLivro.setAutoCreateRowSorter(true);
 
         for (Exemplar exemplar : exemplares) {
             tabelaModelo.addRow(new Object[]{exemplar.getLivro().getTitulo(), exemplar.getLivro().getAutor(),

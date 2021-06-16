@@ -156,6 +156,7 @@ public class PnPesquisarLivro extends javax.swing.JPanel {
     private void popularTabela() {
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);
+        tbLivro.setAutoCreateRowSorter(true);
 
         for (Livro livro : livros) {
             tabelaModelo.addRow(new Object[]{livro.getTitulo(), livro.getAutor(),
