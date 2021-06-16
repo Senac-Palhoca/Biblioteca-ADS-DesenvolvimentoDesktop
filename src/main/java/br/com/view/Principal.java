@@ -5,13 +5,9 @@
  */
 package br.com.view;
 
-import br.com.dao.HibernateUtil;
-import br.com.dao.*;
 import br.com.model.*;
-import br.com.util.GeradorTabela;
 import br.com.util.PopulaPerfis;
 import javax.swing.JOptionPane;
-import org.hibernate.Session;
 
 /**
  *
@@ -28,6 +24,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        
     }
 
     /**
@@ -105,6 +102,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
     }
+    
+    public Long mostrarPerfil(){
+        return usuario.getPerfil().getId();
+    }
+    
 
     private static void popularPerfil() {
         try {

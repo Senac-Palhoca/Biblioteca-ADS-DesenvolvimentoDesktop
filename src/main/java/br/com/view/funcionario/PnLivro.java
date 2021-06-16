@@ -21,9 +21,11 @@ public class PnLivro extends javax.swing.JPanel {
     private ExemplarDao exemplarDao;
     private LivroDao livroDao;
     private List<Exemplar> exemplares;
+    Principal principal = new Principal();
 
     public PnLivro() {
         initComponents();
+        validaPerfil(principal.mostrarPerfil());
         livroDao = new LivroDaoImpl();
         exemplarDao = new ExemplarDaoImpl();
     }
@@ -236,6 +238,14 @@ public class PnLivro extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
+    private void validaPerfil(Long idPerfil){
+        if (idPerfil == 2) {
+            btNovoLivro.setVisible(false);
+            btExcluir.setVisible(false);
+            btAlterarLivroSelecionado.setVisible(false);
+        }
+    }
+    
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         buscarExemplares();
     }//GEN-LAST:event_btBuscarActionPerformed

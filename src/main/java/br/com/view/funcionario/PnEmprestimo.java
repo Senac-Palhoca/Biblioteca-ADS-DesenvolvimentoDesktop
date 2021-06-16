@@ -37,12 +37,16 @@ public class PnEmprestimo extends javax.swing.JPanel {
     private List<Emprestimo> emprestimosAberto;
     private DefaultTableModel tabelaModelo;
     private SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/YYYY");
+    private Principal principal = new Principal();
 
     /**
      * Creates new form PnEmprestimo
      */
+    
     public PnEmprestimo() {
+        
         initComponents();
+        validaPerfil(principal.mostrarPerfil());
         emprestimoDao = new EmprestimoDaoImpl();
         exemplarDao = new ExemplarDaoImpl();
         alunoDao = new AlunoDaoImpl();
@@ -61,6 +65,14 @@ public class PnEmprestimo extends javax.swing.JPanel {
         sessao.close();
     }
 
+    private void validaPerfil(Long idPerfil){
+        if (idPerfil == 2) {
+            btNovoEmprestimo.setVisible(false);
+            btDevolucao.setVisible(false);
+        }
+    }
+    
+    
     private void carregaTabela() {
         tabelaModelo = (DefaultTableModel) tbLivro.getModel();
         tabelaModelo.setNumRows(0);

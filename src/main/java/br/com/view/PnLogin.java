@@ -59,7 +59,6 @@ public class PnLogin extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         txUsuario = new javax.swing.JTextField();
         btLogin = new javax.swing.JButton();
-        lbEsqueciSenha = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txSenha = new javax.swing.JPasswordField();
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
@@ -87,20 +86,6 @@ public class PnLogin extends javax.swing.JPanel {
             }
         });
 
-        lbEsqueciSenha.setForeground(new java.awt.Color(204, 204, 255));
-        lbEsqueciSenha.setText("Esqueci a senha");
-        lbEsqueciSenha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbEsqueciSenhaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbEsqueciSenhaMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lbEsqueciSenhaMousePressed(evt);
-            }
-        });
-
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Email:");
 
@@ -123,7 +108,6 @@ public class PnLogin extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txUsuario)
                     .addComponent(btLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbEsqueciSenha, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
                 .addContainerGap(81, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -153,9 +137,7 @@ public class PnLogin extends javax.swing.JPanel {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btLogin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbEsqueciSenha)
-                .addContainerGap())
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -206,18 +188,6 @@ public class PnLogin extends javax.swing.JPanel {
         btLogin.setEnabled(false);
     }//GEN-LAST:event_btLoginActionPerformed
 
-    private void lbEsqueciSenhaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbEsqueciSenhaMouseEntered
-        lbEsqueciSenha.setForeground(new java.awt.Color(204, 255, 255));
-    }//GEN-LAST:event_lbEsqueciSenhaMouseEntered
-
-    private void lbEsqueciSenhaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbEsqueciSenhaMouseExited
-        lbEsqueciSenha.setForeground(new java.awt.Color(204, 204, 255));
-    }//GEN-LAST:event_lbEsqueciSenhaMouseExited
-
-    private void lbEsqueciSenhaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbEsqueciSenhaMousePressed
-        JOptionPane.showMessageDialog(null, "Azar o seu! Método não implementado.");
-    }//GEN-LAST:event_lbEsqueciSenhaMousePressed
-
     private void validarLogin() {
         new Thread() {
             public void run() {
@@ -262,7 +232,6 @@ public class PnLogin extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lbEsqueciSenha;
     private javax.swing.JPasswordField txSenha;
     private javax.swing.JTextField txUsuario;
     // End of variables declaration//GEN-END:variables
