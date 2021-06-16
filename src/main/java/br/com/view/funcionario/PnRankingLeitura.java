@@ -208,6 +208,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
 
     private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
         tabelaModelo = (DefaultTableModel) tbRanking.getModel();
+//        tbRanking.setAutoCreateRowSorter(true);
         tabelaModelo.setNumRows(0);
         String mes = Integer.toString(cbMes.getSelectedIndex());
         EmprestimoDao emprestimoDao = new EmprestimoDaoImpl();
@@ -281,8 +282,9 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                 } else {
                     sessao = HibernateUtil.abrirConexao();
                     Turma turma = turmaDao.pesquisarPorId(turmas.get(cbTurma.getSelectedIndex() - 2).getId(), sessao);
-
-                    for (Aluno aluno : turma.getAlunos()) {
+                    List<Aluno> alunosTurma = turma.getAlunos();
+                    alunosTurma.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+                    for (Aluno aluno : alunosTurma) {
                         tabelaModelo.addRow(new Object[]{aluno.getNome(),
                             aluno.getTurma().getNome(),
                             aluno.getTurma().getCurso().getNome(),
