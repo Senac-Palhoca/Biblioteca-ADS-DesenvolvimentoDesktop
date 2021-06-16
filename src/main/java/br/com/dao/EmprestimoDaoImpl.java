@@ -62,7 +62,7 @@ public class EmprestimoDaoImpl extends BaseDaoImpl<Emprestimo, Long> implements 
 
     @Override
     public List<Emprestimo> pesquisarPorAlunoMes(Aluno aluno, String mes, String ano, Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Emprestimo e where e.aluno.id = :aluno and DATE_FORMAT(e.dataRetirada, '%Y%m') = :anoMes order by size(e.aluno.emprestimos) desc");
+        Query consulta = sessao.createQuery("from Emprestimo e where e.aluno.id = :aluno and DATE_FORMAT(e.dataRetirada, '%Y%m') = :anoMes");
         consulta.setParameter("aluno", aluno.getId());
         consulta.setParameter("anoMes", ano + mes);
         return consulta.list();

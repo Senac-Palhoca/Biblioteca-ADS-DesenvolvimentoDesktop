@@ -230,19 +230,38 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                 break;
             default:
                 if (cbMes.getSelectedIndex() != 0) {
-                    try {
-                        Integer ano = Integer.parseInt(txAno.getText());
-                        Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex() - 1, 1).getTime();
-                        popularTabela(data, turmas.get(cbTurma.getSelectedIndex() - 2).getId());
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Ano inválido!");
-                    }
+                    alunosTurmaMes(mes);
                 } else {
                     turmaTodosMeses();
                 }
                 break;
         }
     }//GEN-LAST:event_btFiltrarActionPerformed
+
+    private void alunosTurmaMes(String mes) throws HibernateException {
+        turmaDao = new TurmaDaoImpl();
+        emprestimoDao = new EmprestimoDaoImpl();
+        sessao = HibernateUtil.abrirConexao();
+        List<Aluno> alunos = turmaDao.pesquisarPorId(turmas.get(cbTurma.getSelectedIndex() - 2).getId(), sessao).getAlunos();
+        for (Aluno alun : alunos) {
+            alun.setEmprestimos(emprestimoDao.pesquisarPorAlunoMes(alun, mes, txAno.getText(), sessao));
+        }
+        alunos.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
+        for (Aluno aluno : alunos) {
+            tabelaModelo.addRow(new Object[]{aluno.getNome(),
+                aluno.getTurma().getNome(),
+                aluno.getTurma().getCurso().getNome(),
+                aluno.getEmprestimos().size()});
+        }
+        sessao.close();
+//                    try {
+//                        Integer ano = Integer.parseInt(txAno.getText());
+//                        Date data = new GregorianCalendar(ano, cbMes.getSelectedIndex() - 1, 1).getTime();
+//                        popularTabela(data, turmas.get(cbTurma.getSelectedIndex() - 2).getId());
+//                    } catch (Exception e) {
+//                        JOptionPane.showMessageDialog(null, "Ano inválido!");
+//                    }
+    }
 
     private void turmaTodosMeses() throws HibernateException {
         sessao = HibernateUtil.abrirConexao();
