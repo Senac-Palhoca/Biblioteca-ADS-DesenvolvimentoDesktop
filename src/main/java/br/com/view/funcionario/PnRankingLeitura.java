@@ -215,9 +215,9 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         if (mes.length() == 1) {
             mes = "0" + mes;
         }
-        sessao = HibernateUtil.abrirConexao();
         switch (cbTurma.getSelectedIndex()) {
             case 0:
+                sessao = HibernateUtil.abrirConexao();
                 if (cbMes.getSelectedIndex() == 0) {
                     List<Turma> turmasRanking;
                     turmasRanking = turmaDao.listarRanking(sessao);
@@ -228,15 +228,22 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                             turma.getQuantidadeEmprestimo()});
                     }
                 } else {
-                    for (Turma turma : turmas) {
+                    List<Turma> turmaMes = turmas;
+                    for (Turma turmaMe : turmaMes) {
+                        turmaMe.setQuantidadeEmprestimo(emprestimoDao.pesquisarPorTurmaMes(turmaMe.getId(), mes, txAno.getText(), sessao).size());
+                    }
+                    turmaMes.sort((t1, t2) -> Integer.compare(t2.getQuantidadeEmprestimo(), t1.getQuantidadeEmprestimo()));
+                    for (Turma turma : turmaMes) {
                         tabelaModelo.addRow(new Object[]{"        ------",
                             turma.getNome(),
                             turma.getCurso().getNome(),
-                            emprestimoDao.pesquisarPorTurmaMes(turma.getId(), mes, txAno.getText(), sessao).size()});
+                            turma.getQuantidadeEmprestimo()});
                     }
                 }
+                sessao.close();
                 break;
             case 1:
+                sessao = HibernateUtil.abrirConexao();
                 alunoDao = new AlunoDaoImpl();
                 List<Aluno> alunos = alunoDao.listarTodos(sessao);
                 alunos.sort((s1, s2) -> Integer.compare(s2.getEmprestimos().size(), s1.getEmprestimos().size()));
@@ -260,6 +267,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                             aluno.getEmprestimos().size()});
                     }
                 }
+                sessao.close();
                 break;
             default:
                 if (cbMes.getSelectedIndex() != 0) {
@@ -271,6 +279,7 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Ano inválido!");
                     }
                 } else {
+                    sessao = HibernateUtil.abrirConexao();
                     Turma turma = turmaDao.pesquisarPorId(turmas.get(cbTurma.getSelectedIndex() - 2).getId(), sessao);
 
                     for (Aluno aluno : turma.getAlunos()) {
@@ -279,10 +288,10 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                             aluno.getTurma().getCurso().getNome(),
                             aluno.getEmprestimos().size()});
                     }
+                    sessao.close();
                 }
                 break;
         }
-        sessao.close();
     }//GEN-LAST:event_btFiltrarActionPerformed
 
     private void txAnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txAnoKeyPressed

@@ -7,7 +7,6 @@ package br.com.dao;
 
 import br.com.model.Aluno;
 import br.com.model.Emprestimo;
-import br.com.model.Turma;
 import java.util.List;
 import org.hibernate.*;
 
