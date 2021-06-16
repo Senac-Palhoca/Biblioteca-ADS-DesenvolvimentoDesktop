@@ -34,6 +34,14 @@ Empréstimo biblioteca - Ranking por turma
 
 * Somente o bibliotecário faz os empréstimos. 
 
-* O coordenador do curso pode pesquisar os rankings de turmas e de alunos
+* O coordenador do curso pode pesquisar os rankings de turmas e de alunos.
 
 * Para cadastrar e gerenciar bibliotecários no sistema o usuário deverá ter permissão de administrador.
+
+
+## Como executar o projeto
+
+1) Rodar o arquivo br.com.util.GeradorTabela.java para gerar a tabela no Banco de Dados MySQL.
+2) Executar o projeto a primeira vez, onde será gerado o usuário Admin com senha admin, e poderá acessar o sistema e cadastrar os colaboradores e alunos.
+3) É recomendável que seja criado os perfis (administrador, coordenador, bibliotecario, aluno), e após criar os cursos e turmas.
+4) Caso queira realizar apenas testes, poderá executar os testes que estão em Test Packages, onde irá popular a tabela MySQL.
