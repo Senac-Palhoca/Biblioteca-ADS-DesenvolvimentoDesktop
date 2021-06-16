@@ -210,13 +210,13 @@ public class PnRankingLeitura extends javax.swing.JPanel {
         tabelaModelo.setNumRows(0);
         String mes = Integer.toString(cbMes.getSelectedIndex());
         EmprestimoDao emprestimoDao = new EmprestimoDaoImpl();
-        if (mes.length() < 2) {
+        TurmaDao turmaDao = new TurmaDaoImpl();
+        if (mes.length() == 1) {
             mes = "0" + mes;
         }
         sessao = HibernateUtil.abrirConexao();
         switch (cbTurma.getSelectedIndex()) {
             case 0:
-                TurmaDao turmaDao = new TurmaDaoImpl();
                 if (cbMes.getSelectedIndex() == 0) {
                     List<Turma> turmasRanking;
                     turmasRanking = turmaDao.listarRanking(sessao);
@@ -264,14 +264,14 @@ public class PnRankingLeitura extends javax.swing.JPanel {
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Ano inválido!");
                     }
-
                 } else {
-                    List<Emprestimo> emprestimos = emprestimoDao.pesquisarPorTurmaMes(turmas.get(cbTurma.getSelectedIndex() - 2).getId(), mes, txAno.getText(), sessao);
-                    for (Emprestimo emprestimo : emprestimos) {
-                        tabelaModelo.addRow(new Object[]{emprestimo.getAluno().getNome(),
-                            emprestimo.getAluno().getTurma().getNome(),
-                            emprestimo.getAluno().getTurma().getCurso().getNome(),
-                            emprestimo.getAluno().getEmprestimos().size()});
+                    Turma turma = turmaDao.pesquisarPorId(turmas.get(cbTurma.getSelectedIndex() - 2).getId(), sessao);
+
+                    for (Aluno aluno : turma.getAlunos()) {
+                        tabelaModelo.addRow(new Object[]{aluno.getNome(), 
+                            aluno.getTurma().getNome(), 
+                            aluno.getTurma().getCurso().getNome(), 
+                            aluno.getEmprestimos().size()});
                     }
                 }
                 break;
