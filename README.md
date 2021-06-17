@@ -47,7 +47,7 @@ Empréstimo biblioteca - Ranking por turma
 4) Caso queira realizar apenas testes, poderá executar os testes que estão em Test Packages, onde irá popular a tabela com o nome de biblioteca no banco de dados MySQL.
 
 ## Descrição Perfil
-* O perfil Administrador, é responsável em criar os usuários, cadastrar turmas e cursos.
-* O perfil Coordenador, pode visualizar os empréstimos ativos, pesquisar por livros e verificar quais estão emprestados/disponíveis e ver os ranking's disponíveis.
-* O perfil Bibliotecário é responsável por registrar o empréstimo/devolução dos livros, cadastrar/alterar/excluir livros e exemplares e visualizar os ranking's disponíveis.
-* O perfil Aluno, pode verificar seus empréstimos ativos e pesquisar o acervo dos livros.
+* O perfil Administrador, responsável em criar os usuários, cadastrar turmas e cursos.
+* O perfil Coordenador, visualiza os empréstimos ativos, pesquisa por livros e verifica quais estão emprestados/disponíveis e vê os ranking's disponíveis.
+* O perfil Bibliotecário, responsável por registrar o empréstimo/devolução dos livros, cadastrar/alterar/excluir livros e exemplares e visualizar os ranking's disponíveis.
+* O perfil Aluno, verifica seus empréstimos ativos e pesquisa o acervo dos livros.
