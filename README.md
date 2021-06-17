@@ -45,7 +45,9 @@ Empréstimo biblioteca - Ranking por turma
 2) Executar o projeto a primeira vez, onde será gerado o usuário Admin com senha admin, e poderá acessar o sistema e cadastrar os colaboradores e alunos.
 3) É recomendável popular os perfis (administrador, coordenador, bibliotecario, aluno), para poder realizar o login com os devidos Login's e após criar os cursos e turmas, conforme necessário.
 4) Caso queira realizar apenas testes, poderá executar os testes que estão em Test Packages, onde irá popular a tabela com o nome de biblioteca no banco de dados MySQL.
-5) O perfil Administrador, é responsável em criar os usuários, cadastrar turmas e cursos.
-6) O perfil Coordenador, pode visualizar os empréstimos ativos, pesquisar por livros e verificar quais estão emprestados/disponíveis e ver os ranking's disponíveis.
-7) O perfil Bibliotecário é responsável por registrar o empréstimo/devolução dos livros, cadastrar/alterar/excluir livros e exemplares e visualizar os ranking's disponíveis.
-8) O perfil Aluno, pode verificar seus empréstimos ativos e pesquisar o acervo dos livros.
+
+## Descrição Perfil
+* O perfil Administrador, é responsável em criar os usuários, cadastrar turmas e cursos.
+* O perfil Coordenador, pode visualizar os empréstimos ativos, pesquisar por livros e verificar quais estão emprestados/disponíveis e ver os ranking's disponíveis.
+* O perfil Bibliotecário é responsável por registrar o empréstimo/devolução dos livros, cadastrar/alterar/excluir livros e exemplares e visualizar os ranking's disponíveis.
+* O perfil Aluno, pode verificar seus empréstimos ativos e pesquisar o acervo dos livros.
